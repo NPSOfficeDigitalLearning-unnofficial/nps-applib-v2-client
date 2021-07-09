@@ -1,7 +1,8 @@
 import React from "react";
 import { Trans } from "react-i18next";
+import "./App.scss";
 
-export default class Test extends React.Component {
+export default class App extends React.Component {
     render() {
         return (<>
             <p>TEST LOL</p>

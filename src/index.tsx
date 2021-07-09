@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { I18nextProvider } from "react-i18next";
 import { BrowserRouter } from "react-router-dom";
-import Test from "./app/Test";
+import App from "./code/App";
 import i18n from "./i18n";
-import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 
 
@@ -12,7 +11,7 @@ ReactDOM.render(
     <React.StrictMode>
         <I18nextProvider i18n={i18n}>
             <BrowserRouter>
-                <Test/>
+                <App/>
             </BrowserRouter>
         </I18nextProvider>
     </React.StrictMode>,
