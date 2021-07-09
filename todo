@@ -8,7 +8,8 @@ ________________________________________________
 
 ________________________________________________
 ========== Needs React Implementation ==========
-  - src/code/*
+  - `src/code/*` 
+    !except: `src/code/leaf-component/MultiSelect/*`
 
 
 
