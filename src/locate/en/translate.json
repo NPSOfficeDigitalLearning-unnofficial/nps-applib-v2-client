@@ -1,5 +1,14 @@
 {
     "translations": {
+        "general": {
+            "number": "{{number, number}}",
+            "error": {
+                "format": {
+                    "typeMismatch": "[Format failed: type mismatch]",
+                    "noFormat": "[Format failed: no such format]"
+                }
+            }
+        },
         "test": {
             "entry1": "HELLO",
             "entry2": "other thing"
