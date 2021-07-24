@@ -10,6 +10,7 @@ ________________________________________________
 ========== Needs React Implementation ==========
   - `src/code/*` 
     !except: `src/code/leaf-component/MultiSelect/*`
+    !except: `src/code/appinfo/app-list/`
 
 
 
