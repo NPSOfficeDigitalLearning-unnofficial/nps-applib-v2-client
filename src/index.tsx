@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { I18nextProvider } from "react-i18next";
 import { BrowserRouter } from "react-router-dom";
-import App from "./code/App";
+import App from "./components/App";
 import i18n from "./i18n";
 import reportWebVitals from "./reportWebVitals";
 
