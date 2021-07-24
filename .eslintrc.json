@@ -11,7 +11,8 @@
         "@typescript-eslint/semi": ["warn", "always", { "omitLastInOneLineBlock": true }],
         "curly": ["warn", "multi-or-nest"],
         "eqeqeq": "warn",
-        "no-throw-literal": "warn"
+        "no-throw-literal": "warn",
+        "no-var": "error"
     },
     "ignorePatterns": [
         "node_modules/",
