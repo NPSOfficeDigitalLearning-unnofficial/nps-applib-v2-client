@@ -1,0 +1,53 @@
+@import "../../../colors.scss";
+
+$htransT: 0.25s;
+
+.AppElt {
+    > div {
+        background: $g-bg;
+        color: $g-fg;
+        border: 1px solid $g-shadow;
+        border-width: 0px 1px 1px 0px;
+        box-shadow: $g-shadow 4px 4px;
+        position: relative;
+    }
+    &:hover > div {
+        $d: 2px;
+        top: -$d; left: -$d;
+        box-shadow: $g-shadow 4px+$d 4px+$d;
+    }
+
+    display: inline-block;
+    text-align: start;
+    vertical-align: top;
+    margin: 20px;
+    width: 200px;
+    padding: 2px;
+
+    .-title {
+        font-size: 1.3em;
+        padding: 5px 10px;
+    }
+    .-StatusRow {
+        border: 0px solid #ff0000;
+        padding: 5px;
+        border-width: 0px 10px;
+    }
+    .-ButtonRow {
+        margin: 5px;
+        text-align: center;
+        > a {
+            display: block;
+            padding: 3px;
+            border: none;
+            text-decoration: none;
+            background: $g-btn-bg;
+            color: $g-btn-fg;
+            transition: color $htransT, background-color $htransT, border $htransT;
+            &:hover {
+                background: $g-btn-fg;
+                color: $g-btn-bg;
+            }
+        }
+    }
+}

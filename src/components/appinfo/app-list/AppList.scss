@@ -1,0 +1,57 @@
+@import "../../colors.scss";
+
+$pbsz: 30px;
+$pbmar: 5px;
+
+$htransT: 0.25s;
+
+.AppList {
+    text-align: center;
+}
+
+.PageSelector {
+    $color: $g-fg;
+    height: $pbsz+2*$pbmar;
+    
+    background: $g-bg;
+    color: $g-fg;
+    border: 1px solid $g-shadow;
+    border-width: 0px 1px 1px 0px;
+    box-shadow: $g-shadow 4px 4px;
+    
+    width: fit-content;
+    display: inline-block;
+
+    .-PageButton {
+        display: inline-block;
+        width: $pbsz;
+        height: $pbsz;
+        margin: $pbmar;
+        line-height: $pbsz;
+        vertical-align: top;
+        text-align: center;
+        font-weight: bold;
+        color: $color;
+        background: transparent;
+        transition: color $htransT, background-color $htransT, border $htransT;
+
+        &:hover, &.-current {
+            color: $g-bg;
+            background: $color;
+        }
+        &.-jump-small, &.-jump-large, &.-jump-ends {
+            border: 2px solid $color;
+        }
+        
+        > .-img {
+            $msz: $pbsz/2 - 10px;
+            margin: $msz;
+            width: calc(100% - #{2*$msz});
+            height: calc(100% - #{2*$msz});
+            position: relative;
+            background: currentColor;
+            mask-size: contain;
+            &.-reverse { transform: scaleX(-1); }
+        }
+    }
+}

@@ -21,7 +21,7 @@ export default class AppList extends React.Component<{apps:Application[]},{pageN
     get numAppPages():number { return Math.floor(this.props.apps.length / NUM_APPS_PER_PAGE)+1 }
     get page():number { return this.state.pageN }
 
-    setPage = (pageN:number):void => {console.log(pageN); this.setState({pageN})};
+    setPage = (pageN:number):void => this.setState({pageN});
 
     render():ReactNode {
         return (

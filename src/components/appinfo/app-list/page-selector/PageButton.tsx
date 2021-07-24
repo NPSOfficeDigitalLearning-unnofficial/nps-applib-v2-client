@@ -10,9 +10,13 @@ export default class PageButton extends React.Component<{page:number,onClick:(pa
     
     render():ReactNode {
         const child = this.props.children.type === "icon" ? (
-            <div className={"-img"+(this.props.children.reverse?" -reverse":"")}>
-                <img src={this.props.children.data} />
-            </div>
+            <div
+                className={"-img"+(this.props.children.reverse?" -reverse":"")}
+                style={{
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    WebkitMaskImage: `url(${this.props.children.data})`,
+                    maskImage: `url(${this.props.children.data})`
+                }} />
         ) : (
             <Trans values={{number:this.props.page}}>general.number</Trans>
         );
