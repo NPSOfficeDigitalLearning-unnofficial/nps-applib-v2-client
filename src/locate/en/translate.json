@@ -9,9 +9,69 @@
                 }
             }
         },
-        "test": {
-            "entry1": "HELLO",
-            "entry2": "other thing"
+        "app": {
+            "summary": {
+                "button": {
+                    "edit": "Edit App",
+                    "info": "More Info"
+                }
+            },
+            "approval": {
+                "UNK": "Unknown",
+                "APPROVED": "Approved",
+                "14_PARENTAL_CONSENT": "14 & Parent Consent",
+                "PARENT_INFORMED": "Parent Informed Use",
+                "PILOT": "Active Pilot",
+                "INSTRUCTOR_ONLY": "Instructor Use Only",
+                "PENDING": "Pending Approval",
+                "DENIED": "Denied"
+            },
+            "privacy": {
+                "UNK": "Unknown",
+                "COMPLIANT": "Compliant",
+                "NONCOMPLIANT": "Not Compliant",
+                "PARENTAL_CONSENT": "Parental Consent",
+                "INSTRUCTOR_ONLY": "Instructor Use Only",
+                "NO_INFO_COLLECTED": "No Info Collected",
+                "NOT_APPLICABLE": "Not Applicable"
+            },
+            "platform": {
+                "WINDOWS": "Windows",
+                "MACOS": "Mac",
+                "LINUX": "Linux",
+                "ANDROID_PHONE": "Android Phone",
+                "ANDROID_TABLET": "Android Tablet",
+                "IOS_PHONE": "iPhone",
+                "IOS_TABLET": "iPad",
+                "WEB": "Web",
+                "CHROMEBOOK": "Chromebook"
+            },
+            "grades": {
+                "PRE_K": "Pre-K",
+                "K": "Kindergarden",
+                "1": "1st Grade",
+                "2": "2nd Grade",
+                "3": "3rd Grade",
+                "4": "4th Grade",
+                "5": "5th Grade",
+                "6": "6th Grade",
+                "7": "7th Grade",
+                "8": "8th Grade",
+                "9": "Freshmen (9th)",
+                "10": "Sophmore (10th)",
+                "11": "Junior (11th)",
+                "12": "Senior (12th)"
+            },
+            "subjects": {
+                "MATH": "Math",
+                "SCIENCE": "Science",
+                "HISTORY": "History",
+                "ENGLISH": "English",
+                "LANGUAGE": "Foreign Lang.",
+                "CS": "Computer Sci.",
+                "ART": "Art",
+                "MUSIC": "Music"
+            }
         }
     }
 }

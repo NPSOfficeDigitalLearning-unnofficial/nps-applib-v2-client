@@ -1,7 +1,76 @@
-$g-bg: #454545;
-$g-fg: #ffffff;
+$g-bg: var(--g-bg);
+$g-fg: var(--g-fg);
+$g-bg2: var(--g-bg2);
+$g-fg2: var(--g-fg2);
 
-$g-shadow: #555555;
+$g-shadow: var(--g-shadow);
 
-$g-btn-bg: #2b2b2b;
-$g-btn-fg: #ffffff;
+$g-btn-bg: var(--g-btn-bg);
+$g-btn-fg: var(--g-btn-fg);
+
+$g-status-good: var(--g-status-good);
+$g-status-good-bg: var(--g-status-good-bg);
+$g-status-med: var(--g-status-med);
+$g-status-med-bg: var(--g-status-med-bg);
+$g-status-bad: var(--g-status-bad);
+$g-status-bad-bg: var(--g-status-bad-bg);
+$g-status-pending: var(--g-status-pending);
+$g-status-pending-bg: var(--g-status-pending-bg);
+$g-status-instructor: var(--g-status-instructor);
+$g-status-instructor-bg: var(--g-status-instructor-bg);
+$g-status-other: var(--g-status-other);
+$g-status-other-bg: var(--g-status-other-bg);
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --g-bg: #454545;
+        --g-fg: #ffffff;
+        --g-bg2: #282828;
+        --g-fg2: #eeeeee;
+
+        --g-shadow: #353535;
+
+        --g-btn-bg: #2b2b2b;
+        --g-btn-fg: #ffffff;
+
+        --g-status-good: #37de81;
+        --g-status-good-bg: #254630;
+        --g-status-med: #ffff00;
+        --g-status-med-bg: #4c531f;
+        --g-status-bad: #ff0000;
+        --g-status-bad-bg: #562222;
+        --g-status-pending: #3737e2;
+        --g-status-pending-bg: #2e336d;
+        --g-status-instructor: #7034b5;
+        --g-status-instructor-bg: #442450;
+        --g-status-other: #777777;
+        --g-status-other-bg: #3d3d3d;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --g-bg: #ffffff;
+        --g-fg: #444444;
+        --g-bg2: #ffffff;
+        --g-fg2: #606060;
+
+        --g-shadow: #dadada;
+
+        --g-btn-bg: #f5f5f5;
+        --g-btn-fg: #565656;
+
+        --g-status-good: #77f397;
+        --g-status-good-bg: #eefff2;
+        --g-status-med: #ffff15;
+        --g-status-med-bg: #faffdb;
+        --g-status-bad: #ff7027;
+        --g-status-bad-bg: #ffebeb;
+        --g-status-pending: #5998f3;
+        --g-status-pending-bg: #f0f9ff;
+        --g-status-instructor: #9e75f7;
+        --g-status-instructor-bg: #efe5ff;
+        --g-status-other: #eae9e9;
+        --g-status-other-bg: #f9f9f9;
+    }
+}

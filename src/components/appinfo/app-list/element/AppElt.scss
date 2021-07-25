@@ -7,7 +7,7 @@ $htransT: 0.25s;
         background: $g-bg;
         color: $g-fg;
         border: 1px solid $g-shadow;
-        border-width: 0px 1px 1px 0px;
+        //border-width: 0px 1px 1px 0px;
         box-shadow: $g-shadow 4px 4px;
         position: relative;
     }
@@ -27,13 +27,31 @@ $htransT: 0.25s;
     .-title {
         font-size: 1.3em;
         padding: 5px 10px;
+        font-weight: bold;
+        color: $g-fg2;
+    }
+    .-buttons {
+        display: flex;
     }
     .-StatusRow {
-        border: 0px solid #ff0000;
+        --status-color: #{$g-status-other};
+        --status-color-bg: #{$g-status-other-bg};
+        border: 0px solid var(--status-color);
         padding: 5px;
-        border-width: 0px 10px;
+        text-align: center;
+        border-width: 0px 15px;
+        background: var(--status-color-bg);
+        &.-c-good { --status-color: #{$g-status-good}; --status-color-bg: #{$g-status-good-bg}; }
+        &.-c-bad { --status-color: #{$g-status-bad}; --status-color-bg: #{$g-status-bad-bg}; }
+        &.-c-med { --status-color: #{$g-status-med}; --status-color-bg: #{$g-status-med-bg}; }
+        &.-c-instructor { --status-color: #{$g-status-instructor}; --status-color-bg: #{$g-status-instructor-bg}; }
+        &.-c-pending { --status-color: #{$g-status-pending}; --status-color-bg: #{$g-status-pending-bg}; }
+    }
+    .-ButtonRow + .-ButtonRow {
+        margin-left: 0px;
     }
     .-ButtonRow {
+        flex: 1;
         margin: 5px;
         text-align: center;
         > a {
