@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import Application from "../../../../data-structures/app/Application";
 import "./AppElt.scss";
 import ButtonRow from "./ButtonRow";
+import statusColorCSSClass from "./status-colors";
 import StatusRow from "./StatusRow";
 
 export default class AppElt extends React.Component<{app:Application}> {
@@ -9,7 +10,9 @@ export default class AppElt extends React.Component<{app:Application}> {
         const { app } = this.props;
         return (
             <div className="AppElt"><div>
-                <div className="-title">{app.name}</div>
+                <div className={["-title","-c-",statusColorCSSClass(app.approval)].join(" ")}>
+                    <span>{app.name}</span>
+                </div>
                 <StatusRow type="approval" status={app.approval}/>
                 <StatusRow type="privacy" status={app.privacy}/>
                 <div className="-buttons">

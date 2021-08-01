@@ -26,28 +26,25 @@ $htransT: 0.25s;
 
     .-title {
         font-size: 1.3em;
-        padding: 5px 10px;
+        padding: 5px;
         font-weight: bold;
-        color: $g-fg2;
+        --status-color-fg: #{$g-fg2};
+        color: var(--status-color-fg);
+        > span {
+            padding: 0px 5px;
+            background: var(--status-color-bg);
+        }
     }
     .-buttons {
         display: flex;
     }
     .-StatusRow {
-        --status-color: #{$g-status-other};
-        --status-color-bg: #{$g-status-other-bg};
-        --status-color-fg: #{$g-status-other-fg};
         border: 0px solid var(--status-color);
         color: var(--status-color-fg);
         padding: 5px;
         text-align: center;
         border-width: 0px 15px;
         background: var(--status-color-bg);
-        &.-c-good { --status-color: #{$g-status-good}; --status-color-bg: #{$g-status-good-bg}; --status-color-fg: #{$g-status-good-fg}; }
-        &.-c-bad { --status-color: #{$g-status-bad}; --status-color-bg: #{$g-status-bad-bg}; --status-color-fg: #{$g-status-bad-fg}; }
-        &.-c-med { --status-color: #{$g-status-med}; --status-color-bg: #{$g-status-med-bg}; --status-color-fg: #{$g-status-med-fg}; }
-        &.-c-instructor { --status-color: #{$g-status-instructor}; --status-color-bg: #{$g-status-instructor-bg}; --status-color-fg: #{$g-status-instructor-fg}; }
-        &.-c-pending { --status-color: #{$g-status-pending}; --status-color-bg: #{$g-status-pending-bg}; --status-color-fg: #{$g-status-pending-fg}; }
     }
     .-ButtonRow + .-ButtonRow {
         margin-left: 0px;
@@ -70,4 +67,15 @@ $htransT: 0.25s;
             }
         }
     }
+}
+
+.-c- {
+    --status-color: #{$g-status-other};
+    --status-color-bg: #{$g-status-other-bg};
+    --status-color-fg: #{$g-status-other-fg};
+    &.-c-good { --status-color: #{$g-status-good}; --status-color-bg: #{$g-status-good-bg}; --status-color-fg: #{$g-status-good-fg}; }
+    &.-c-bad { --status-color: #{$g-status-bad}; --status-color-bg: #{$g-status-bad-bg}; --status-color-fg: #{$g-status-bad-fg}; }
+    &.-c-med { --status-color: #{$g-status-med}; --status-color-bg: #{$g-status-med-bg}; --status-color-fg: #{$g-status-med-fg}; }
+    &.-c-instructor { --status-color: #{$g-status-instructor}; --status-color-bg: #{$g-status-instructor-bg}; --status-color-fg: #{$g-status-instructor-fg}; }
+    &.-c-pending { --status-color: #{$g-status-pending}; --status-color-bg: #{$g-status-pending-bg}; --status-color-fg: #{$g-status-pending-fg}; }
 }
