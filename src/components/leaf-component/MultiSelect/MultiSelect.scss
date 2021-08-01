@@ -1,9 +1,16 @@
+@import "../../colors.scss";
 
-
+/*
 $ms-bgCol: #ffffff;
 $ms-bgCol-hov: #f7f7f7;
 $ms-bgCol-hovTint: #00000008;
 $ms-color: #4e4e4e;
+*/
+
+$ms-bgCol: $g-bg;
+$ms-bgCol-hov: $g-ms-bg-hov;
+$ms-bgCol-hovTint: $g-ms-bg-hov-tint;
+$ms-color: $g-fg;
 
 @mixin MultiSelect-optionsAnim-visible { opacity: 1; top: 5px; }
 @mixin MultiSelect-optionsAnim-hidden { opacity: 0; top: 15px; }
@@ -21,8 +28,9 @@ $ms-color: #4e4e4e;
     user-select: none;
     min-width: 100px;
     --arrow-sz: 8px;
+    --elt-height: 35px;
     --arrow-margin: 6px;
-    height: var(--arrow-sz);
+    height: var(--elt-height);
     color: $ms-color;
     --bg: #{$ms-bgCol};
     --bg-hov: #{$ms-bgCol-hov};
@@ -59,6 +67,8 @@ $ms-color: #4e4e4e;
         border-radius: 3px;
         border: 1px solid;
         background: var(--bg);
+        height: var(--elt-height);
+        line-height: calc(var(--elt-height) - 6px - 3px);
         &:hover { background: var(--bg-hov); }
     }
     > .-options-aligner {

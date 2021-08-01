@@ -1,0 +1,25 @@
+@import "./colors.scss";
+
+@mixin FloatingBox($hoverable: false) {
+    @if $hoverable == true {
+        > div {
+            background: $g-bg;
+            color: $g-fg;
+            border: 1px solid $g-shadow;
+            //border-width: 0px 1px 1px 0px;
+            box-shadow: $g-shadow 4px 4px;
+            position: relative;
+        }
+        &:hover > div {
+            $d: 2px;
+            top: -$d; left: -$d;
+            box-shadow: $g-shadow 4px+$d 4px+$d;
+        }
+        padding: 2px;
+    }
+    @if $hoverable != true {
+        border: 1px solid $g-shadow;
+        //border-width: 0px 1px 1px 0px;
+        box-shadow: $g-shadow 4px 4px;
+    }
+}

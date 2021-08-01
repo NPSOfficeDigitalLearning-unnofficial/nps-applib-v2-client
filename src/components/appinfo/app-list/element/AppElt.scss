@@ -1,28 +1,16 @@
 @import "../../../colors.scss";
+@import "../../../FloatingBox.scss";
 
 $htransT: 0.25s;
 
 .AppElt {
-    > div {
-        background: $g-bg;
-        color: $g-fg;
-        border: 1px solid $g-shadow;
-        //border-width: 0px 1px 1px 0px;
-        box-shadow: $g-shadow 4px 4px;
-        position: relative;
-    }
-    &:hover > div {
-        $d: 2px;
-        top: -$d; left: -$d;
-        box-shadow: $g-shadow 4px+$d 4px+$d;
-    }
+    @include FloatingBox(true);
 
     display: inline-block;
     text-align: start;
     vertical-align: top;
     margin: 20px;
     width: 200px;
-    padding: 2px;
 
     .-title {
         font-size: 1.3em;

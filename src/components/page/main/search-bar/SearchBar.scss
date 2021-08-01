@@ -1,0 +1,35 @@
+@import "../../../FloatingBox.scss";
+@import "../../../colors.scss";
+
+
+$i-bgCol: $g-bg;
+$i-color: $g-fg;
+
+.SearchBar {
+    @include FloatingBox();
+
+    margin: 20px;
+
+    > .-entries {
+        margin: 5px;
+    }
+    .-SearchTerm {
+        margin: 5px;
+        vertical-align: top;
+        display: inline-block;
+        > .MultiSelect {
+            --elt-height: 35px;
+        }
+        > input {
+            height: 35px;
+            display: inline-block;
+            font: inherit;
+            padding: 8px;
+            border: 1px solid $i-color;
+            background: $i-bgCol;
+            color: $i-color;
+            border-radius: 2px;
+        }
+    }
+}
+

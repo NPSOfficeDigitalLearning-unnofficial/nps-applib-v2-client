@@ -8,6 +8,9 @@ $g-shadow: var(--g-shadow);
 $g-btn-bg: var(--g-btn-bg);
 $g-btn-fg: var(--g-btn-fg);
 
+$g-ms-bg-hov: var(--g-ms-bg-hov);
+$g-ms-bg-hov-tint: var(--g-ms-bg-hov-tint);
+
 $g-status-good: var(--g-status-good);
 $g-status-good-bg: var(--g-status-good-bg);
 $g-status-good-fg: var(--g-status-good-fg);
@@ -38,6 +41,9 @@ $g-status-other-fg: var(--g-status-other-fg);
 
         --g-btn-bg: #2b2b2b;
         --g-btn-fg: #ffffff;
+        
+        --g-ms-bg-hov: #505050;
+        --g-ms-bg-hov-tint: #ffffff08;
 
         $s-good: #37de81;
         $s-good-bg: #254630;
@@ -87,6 +93,8 @@ $g-status-other-fg: var(--g-status-other-fg);
         --g-btn-bg: #f5f5f5;
         --g-btn-fg: #565656;
 
+        --g-ms-bg-hov: #f1f1f1;
+        --g-ms-bg-hov-tint: #00000008;
 
         $s-good: #77f397;
         $s-good-bg: #eefff2;
