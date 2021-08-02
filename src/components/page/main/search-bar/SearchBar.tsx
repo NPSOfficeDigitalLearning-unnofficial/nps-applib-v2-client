@@ -1,15 +1,51 @@
 import React, { ReactNode } from "react";
+import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../../data-structures/app/application-enums";
 import MultiSelect, { OptionData } from "../../../leaf-component/MultiSelect/MultiSelect";
+import { SearchParams } from "../Main";
 import "./SearchBar.scss";
 import SearchTerm from "./SearchTerm";
 
-export default class SearchBar extends React.Component<{}> {
+export default class SearchBar extends React.Component<{searchParams:SearchParams,onEnumTermChange:(name:string,data:Set<any>)=>void,onStringTermChange:(name:string,data:string)=>void}> {
+    
+    renderEnumSearchTerm<Enum>(enumArr:readonly Enum[],enumName:string,value:Set<Enum>):ReactNode {
+        return (
+            <SearchTerm<ApprovalStatusEnum> type="dropdown"
+                text={`app.${enumName}.name`}
+                onChange={this.onEnumTermChange.bind(this,enumArr,enumName)}
+                value={Object.fromEntries([...value].map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
+                options={Object.fromEntries(enumArr.map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
+        />);
+    }
+    onEnumTermChange<Enum>(enumArr:readonly Enum[],enumName:string,data:OptionData<Enum>):void {
+        const newValue:Set<Enum> = new Set();
+        for (const {value} of Object.values(data))
+            newValue.add(value);
+        this.props.onEnumTermChange(enumName, newValue);
+    }
+
+    renderStringSearchTerm(name:string,value:string):ReactNode {
+        return (
+            <SearchTerm type="string"
+                text={`app.${name}.name`}
+                onChange={this.onStringTermChange.bind(this,name)}
+                value={value}
+        />);
+    }
+    onStringTermChange(name:string,data:string):void {
+        this.props.onStringTermChange(name, data);
+    }
+    
     render():ReactNode {
+        const { name, approval, privacy, platforms, grades, subjects } = this.props.searchParams;
         return (
             <div className="SearchBar">
                 <div className="-entries">
-                    <SearchTerm type="string" text="app.approval.UNK" onChange={console.log} value={""} />
-                    <SearchTerm<number> type="dropdown" text="app.approval.APPROVED" onChange={console.log} value={{k:{name:"4",value:5}}} options={{"54h4":{name:"te",value:3}}}/>
+                    {this.renderStringSearchTerm("name",name)}
+                    {this.renderEnumSearchTerm<ApprovalStatusEnum>(APPROVAL_STATUSES,"approval",approval)}
+                    {this.renderEnumSearchTerm<PrivacyStatusEnum>(PRIVACY_STATUSES,"privacy",privacy)}
+                    {this.renderEnumSearchTerm<PlatformEnum>(PLATFORMS,"platforms",platforms)}
+                    {this.renderEnumSearchTerm<SubjectEnum>(SUBJECTS,"subjects",subjects)}
+                    {this.renderEnumSearchTerm<GradeLevelEnum>(GRADE_LEVELS,"grades",grades)}
                 </div>
             </div>
         );

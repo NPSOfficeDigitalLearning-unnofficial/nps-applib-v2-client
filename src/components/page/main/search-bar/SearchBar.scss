@@ -9,6 +9,7 @@ $i-color: $g-fg;
     @include FloatingBox();
 
     margin: 20px;
+    font-size: 0.95em;
 
     > .-entries {
         margin: 5px;

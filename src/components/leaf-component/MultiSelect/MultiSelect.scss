@@ -80,6 +80,7 @@ $ms-color: $g-fg;
         }
         .-options {
             position: absolute;
+            z-index: 1;
             width: var(--options-width);
             animation: MultiSelect-optionsAnim 0.3s 1 both;
             background: var(--bg);

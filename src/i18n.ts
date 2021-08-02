@@ -34,9 +34,9 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
         }
     },
     react: {
-        wait: true,
         bindI18n: "languageChanged loaded",
-        nsMode: "default"
+        nsMode: "default",
+        useSuspense: true
     }
 },(e,tIn)=>{
     if (e) throw e;
