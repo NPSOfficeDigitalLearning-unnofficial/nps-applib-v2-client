@@ -6,17 +6,19 @@ import languageES from "./locate/es/translate.json";
 
 let t:TFunction;
 
+const isDeveloper = process.env.NODE_ENV === "development";
+
 i18n.use(LanguageDetector).use(initReactI18next).init({
+    /* debugger For Development environment */
+    debug: isDeveloper,
+
     resources: {
         en: languageEN,
         es: languageES
     },
-    /* default language when load the website in browser */
-    lng: "en",
-    /* When react i18next not finding any language to as default in borwser */
-    fallbackLng: "en",
-    /* debugger For Development environment */
-    debug: true,
+    supportedLngs: ["en","es"],
+    // Disable language fallbacks in dev mode to more easily find missing translation key problems.
+    fallbackLng: isDeveloper ? false : "en",
     ns: ["translations"],
     defaultNS: "translations",
     keySeparator: ".",
