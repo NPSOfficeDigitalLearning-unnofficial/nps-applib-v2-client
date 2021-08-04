@@ -18,16 +18,22 @@ export default class AppList extends React.Component<{apps:Application[]},{pageN
             (this.page+1) * NUM_APPS_PER_PAGE
         );
     }
-    get numAppPages():number { return Math.floor(this.props.apps.length / NUM_APPS_PER_PAGE)+1 }
+    static numAppPagesFromProps(props:AppList["props"]):number { return Math.floor(props.apps.length / NUM_APPS_PER_PAGE)+1 }
+    get numAppPages():number { return AppList.numAppPagesFromProps(this.props) }
     get page():number { return this.state.pageN }
 
     setPage = (pageN:number):void => this.setState({pageN});
 
+    static getDerivedStateFromProps(props: AppList["props"], state: AppList["state"]): Partial<AppList["state"]> {
+        // Ensure that when apps are added and removed from the list, that a page number that is empty is not stayed on.
+        return { pageN: Math.min(state.pageN,AppList.numAppPagesFromProps(props)-1) };
+    }
+
     render():ReactNode {
         return (
             <div className="AppList">
-                <AppPage apps={this.showingApps} />
                 <PageSelector numPages={this.numAppPages} onSwitch={this.setPage} page={this.page}/>
+                <AppPage apps={this.showingApps} />
             </div>
         );
     }

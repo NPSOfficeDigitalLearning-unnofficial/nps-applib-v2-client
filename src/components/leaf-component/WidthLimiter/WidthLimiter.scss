@@ -1,0 +1,16 @@
+$maxW: 1000px;
+
+.WidthLimiter {
+    display: flex;
+    align-content: center;
+    > .-content {
+        display: inline-block;
+        flex-grow: 0;
+        flex-basis: $maxW;
+        flex-shrink: 1;
+    }
+    > .-buffer {
+        content: "d";
+        flex: 1;
+    }
+}

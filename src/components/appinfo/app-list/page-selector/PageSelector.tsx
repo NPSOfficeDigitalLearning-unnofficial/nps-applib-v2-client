@@ -34,7 +34,7 @@ export default class PageSelector extends React.Component<{page:number,numPages:
     
     render():ReactNode {
         const { page, numPages } = this.props;
-        const indecesOffset = Math.max(0,Math.min(numPages-NUM_PAGE_OPTIONS-1,page-Math.round(NUM_PAGE_OPTIONS/2)));
+        const indecesOffset = Math.max(0,Math.min(numPages-NUM_PAGE_OPTIONS,page-Math.round(NUM_PAGE_OPTIONS/2)+1));
         const indeces = new Array(NUM_PAGE_OPTIONS).fill(null).map((_,i)=>i+indecesOffset).filter(v=>v>=0&&v<numPages);
         return (
             <div className="PageSelector">

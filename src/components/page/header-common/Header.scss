@@ -1,0 +1,72 @@
+
+
+
+.Header {
+    background: var(--g-bg2);
+    border-bottom: 1px solid var(--g-shadow);
+    color: var(--g-fg2);
+    > div > div { // used to jump over the WidthLimiter component
+        > .-left, > .-right {
+            > div, > a {
+                padding: 0px 10px;
+                color: inherit;
+
+                &.-pageName {
+                    font-size: 0.9em;
+                }
+            }
+            > div.-hoverable, > a {
+                transition: 0.3s background-color, 0.3s color;
+                &:hover {
+                    color: var(--g-btn-bg);
+                    background: var(--g-btn-fg);
+                }
+            }
+        }
+    }
+}
+
+$cuttoffWidth: 38.125em;
+@media (min-width: #{$cuttoffWidth}) {
+    .Header {
+        $h: 40px;
+        height: $h + 1;
+        > div > div { // used to jump over the WidthLimiter component
+            > .-left, > .-right {
+                > div, > a {
+                    display: inline-block;
+                    height: $h;
+                    line-height: $h - 2;
+
+                    &.-appName {
+                        border-right: 1px dashed var(--g-shadow);
+                        padding: 0px 20px;
+                    }
+                }
+            }
+            > .-left { float: left; }
+            > .-right { float: right; }
+        }
+    }
+}
+@media (max-width: #{$cuttoffWidth}) {
+    .Header {
+        $h: 30px;
+        text-align: center;
+        > div > div { // used to jump over the WidthLimiter component
+            > .-left, > .-right {
+                > div, > a {
+                    display: inline-block;
+                    height: $h;
+                    line-height: $h - 2;
+
+                    &.-appName {
+                        border-right: 1px dashed var(--g-shadow);
+                        padding: 0px 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+

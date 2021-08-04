@@ -9,6 +9,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   
   background: $g-bg2;
+
+  overflow-y: scroll;
 }
 
 code {

@@ -1,5 +1,10 @@
 {
     "translations": {
+        "thisApp": {
+            "name-long": "Natick Public Schools Application Library",
+            "name": "NPS App Library",
+            "name-short": "NPSAL"
+        },
         "general": {
             "number": "{{number, number}}",
             "error": {
@@ -9,8 +14,14 @@
                 }
             }
         },
+        "header": {
+            "settingsLink": "Settings",
+            "aboutLink": "About",
+            "homeLink": "Applications List"
+        },
         "page": {
             "main": {
+                "name": "Applications List",
                 "searchbarTitle": "Search Apps:"
             }
         },

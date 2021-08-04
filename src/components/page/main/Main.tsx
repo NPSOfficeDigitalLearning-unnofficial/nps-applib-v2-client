@@ -3,6 +3,7 @@ import Application from "../../../data-structures/app/Application";
 import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../data-structures/app/application-enums";
 import { castSetEltsToEnum } from "../../../util/array-util";
 import AppList from "../../appinfo/app-list/AppList";
+import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
 import Header from "./header/Header";
 import "./Main.scss";
 import SearchBar from "./search-bar/SearchBar";
@@ -73,12 +74,15 @@ export default class MainPage extends React.Component<{apps:Application[]},{sear
         const { searchOptions } = this.state;
         return (
             <div className="MainPage">
-                <Header/>
+                <Header />
                 <div className="-center">
                     <SearchBar searchParams={searchOptions}
                         onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
                 </div>
-                <AppList apps={this.filteredApps}/>
+                <WidthLimiter>
+                    <AppList apps={this.filteredApps}/>
+                </WidthLimiter>
+                
             </div>
         );
     }
