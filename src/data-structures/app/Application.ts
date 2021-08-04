@@ -16,7 +16,7 @@ export default class Application {
     public readonly _reactInstanceKey:string = new Array(4).fill(null).map(()=>Math.random().toString(16).substr(2)).join("");
 
     constructor(init?: ApplicationInit) {
-        let { id, approval, grades, name, platforms, privacy, subjects, url } = { ...DEFAULT_APP_DATA, ...(init || {}) };
+        let { id, approval, grades, name, platforms, privacy, subjects, url } = { ...DEFAULT_APP_DATA, ...(init ?? {}) };
         this._id = id;
         this._name = name;
         this._url = url;
