@@ -9,6 +9,11 @@
                 }
             }
         },
+        "page": {
+            "main": {
+                "searchbarTitle": "Search Apps:"
+            }
+        },
         "app": {
             "summary": {
                 "button": {

@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Trans } from "react-i18next";
 import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../../data-structures/app/application-enums";
 import MultiSelect, { OptionData } from "../../../leaf-component/MultiSelect/MultiSelect";
 import { SearchParams } from "../Main";
@@ -39,6 +40,7 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
         const { name, approval, privacy, platforms, grades, subjects } = this.props.searchParams;
         return (
             <div className="SearchBar">
+                <div className="-title"><span><Trans>page.main.searchbarTitle</Trans></span></div>
                 <div className="-entries">
                     {this.renderStringSearchTerm("name",name)}
                     {this.renderEnumSearchTerm<ApprovalStatusEnum>(APPROVAL_STATUSES,"approval",approval)}

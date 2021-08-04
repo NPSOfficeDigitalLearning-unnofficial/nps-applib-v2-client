@@ -10,9 +10,25 @@ $i-color: $g-fg;
 
     margin: 20px;
     font-size: 0.95em;
+    text-align: start;
 
+    display: inline-block;
+    width: fit-content;
+
+    > .-title {
+        span {
+            color: $g-fg2;
+            background: $g-status-other-bg;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: inline-block;
+            padding: 0px 5px;
+            margin: 8px 10px 0px 10px;
+        }
+    }
     > .-entries {
         margin: 5px;
+        margin-top: 0px;
     }
     .-SearchTerm {
         margin: 5px;
@@ -30,6 +46,9 @@ $i-color: $g-fg;
             background: $i-bgCol;
             color: $i-color;
             border-radius: 2px;
+            &:hover {
+                background: $g-ms-bg-hov;
+            }
         }
     }
 }
