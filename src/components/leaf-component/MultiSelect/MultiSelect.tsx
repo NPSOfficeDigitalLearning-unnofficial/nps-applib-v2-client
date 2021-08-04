@@ -31,8 +31,8 @@ export default class MultiSelect<T> extends React.Component<{text:string,options
         else visibleTimerId = setTimeout(()=>this.setState({visible:false}),VD);
         this.setState({open:!this.state.open,visibleTimerId});
     }
-    onToggleOpen = () => { this.setOpen(!this.state.open) };
-    onClose = () => { this.setOpen(false) };
+    onToggleOpen = () => this.setOpen(!this.state.open);
+    onClose = () => this.setOpen(false);
 
     render() {
         return (

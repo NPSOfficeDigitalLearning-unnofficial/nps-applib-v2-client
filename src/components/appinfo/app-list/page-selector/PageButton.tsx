@@ -4,9 +4,7 @@ import { Trans } from "react-i18next";
 export type HighlightMode = "none"|"current"|"jump-small"|"jump-large"|"jump-ends";
 
 export default class PageButton extends React.Component<{page:number,onClick:(page:number)=>void,highlight:HighlightMode,children:{type:"icon",data:string,reverse:boolean}|{type:"number"}}> {
-    onClick = ():void => {
-        this.props.onClick(this.props.page);
-    };
+    onClick = ():void => this.props.onClick(this.props.page);
     
     render():ReactNode {
         const child = this.props.children.type === "icon" ? (
