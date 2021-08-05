@@ -100,7 +100,8 @@
                 "LANGUAGE": "Foreign Lang.",
                 "CS": "Computer Sci.",
                 "ART": "Art",
-                "MUSIC": "Music"
+                "MUSIC": "Music",
+                "SEL": "SEL"
             }
         }
     }
