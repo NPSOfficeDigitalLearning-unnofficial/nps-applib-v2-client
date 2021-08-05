@@ -54,7 +54,7 @@ $htransT: 0.25s;
         }
         
         > .-img {
-            $msz: $pbsz/2 - 10px;
+            $msz: $pbsz * .5 - 10px;
             margin: $msz;
             width: calc(100% - #{2*$msz});
             height: calc(100% - #{2*$msz});
