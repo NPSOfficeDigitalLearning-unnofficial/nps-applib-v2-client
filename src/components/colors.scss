@@ -2,6 +2,7 @@ $g-bg: var(--g-bg);
 $g-fg: var(--g-fg);
 $g-bg2: var(--g-bg2);
 $g-fg2: var(--g-fg2);
+$g-bg3: var(--g-bg3);
 
 $g-shadow: var(--g-shadow);
 
@@ -36,6 +37,7 @@ $g-status-other-fg: var(--g-status-other-fg);
         --g-fg: #ffffff;
         --g-bg2: #282828;
         --g-fg2: #eeeeee;
+        --g-bg3: #202020;
 
         --g-shadow: #353535;
 
@@ -87,8 +89,9 @@ $g-status-other-fg: var(--g-status-other-fg);
         --g-fg: #444444;
         --g-bg2: #ffffff;
         --g-fg2: #606060;
+        --g-bg3: #ffffff;
 
-        --g-shadow: #efefef;
+        --g-shadow: #cccccc;
 
         --g-btn-bg: #f5f5f5;
         --g-btn-fg: #565656;

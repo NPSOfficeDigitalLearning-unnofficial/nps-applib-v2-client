@@ -9,11 +9,20 @@ $htransT: 0.25s;
 .AppList {
     text-align: center;
     padding: 20px 10px;
+
+    /*
+    .AppPage {
+        $grad: linear-gradient(0deg, var(--g-bg2), var(--g-bg2) calc(100% - 200px), transparent);
+        background: $grad;
+        border: 1px solid var(--g-shadow);
+        border-width: 0px 1px 1px 1px;
+    }
+    //*/
 }
 
 .PageSelector {
     $color: $g-fg2;
-    height: $pbsz+2*$pbmar;
+    //height: $pbsz+2*$pbmar;
     
     background: $g-bg;
     color: $color;
@@ -23,7 +32,7 @@ $htransT: 0.25s;
     width: fit-content;
     display: inline-block;
 
-    .-PageButton {
+    .-pages .-PageButton {
         display: inline-block;
         width: $pbsz;
         height: $pbsz;
@@ -53,6 +62,22 @@ $htransT: 0.25s;
             background: currentColor;
             mask-size: contain;
             &.-reverse { transform: scaleX(-1); }
+        }
+    }
+    .-page-size {
+        padding: $pbmar; padding-top: 0px;
+        input, label {
+            margin: 0px 5px;
+        }
+        input {
+            color: $g-fg;
+            background: $g-bg;
+            border: 1px solid $g-fg;
+            border-radius: 2px;
+            
+            display: inline-block;
+            font: inherit;
+            padding: 0px; padding-left: 5px;
         }
     }
 }

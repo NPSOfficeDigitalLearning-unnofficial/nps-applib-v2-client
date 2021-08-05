@@ -1,1 +1,0 @@
-export const NUM_APPS_PER_PAGE = 8;

@@ -22,7 +22,15 @@
         "page": {
             "main": {
                 "name": "Applications List",
-                "searchbarTitle": "Search Apps:"
+                "searchbarTitle": "Search Apps:",
+                "pageSelect": {
+                    "jump-ends": { "fwd": "Go last page", "back": "Go first page" },
+                    "jump-large": { "fwd": "Go several pages ahead", "back": "Go several pages back" },
+                    "jump-small": { "fwd": "Go next page", "back": "Go previous page" },
+                    "pageNButton": "Go to page {{pageN, number}}",
+                    "current": "On page {{pageN, number}}",
+                    "appsPerPageLabel": "Results per page:"
+                }
             }
         },
         "app": {

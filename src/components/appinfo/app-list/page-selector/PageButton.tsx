@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Trans } from "react-i18next";
+import { Trans, Translation } from "react-i18next";
 
 export type HighlightMode = "none"|"current"|"jump-small"|"jump-large"|"jump-ends";
 
@@ -7,18 +7,32 @@ export default class PageButton extends React.Component<{page:number,onClick:(pa
     onClick = ():void => this.props.onClick(this.props.page);
     
     render():ReactNode {
-        const child = this.props.children.type === "icon" ? (
+        const {children: childData, page, highlight} = this.props;
+        const pageTextNum = page+1;
+
+        let ariaLabelKey:string;
+        if (childData.type === "icon")
+            ariaLabelKey = `page.main.pageSelect.${highlight}.${childData.reverse?"back":"fwd"}`;
+        else ariaLabelKey = `page.main.pageSelect.${highlight==="current"?"current":"pageNButton"}`;
+        
+        const child = childData.type === "icon" ? (
             <div
-                className={"-img"+(this.props.children.reverse?" -reverse":"")}
+                className={"-img"+(childData.reverse?" -reverse":"")}
                 style={{
                     // eslint-disable-next-line @typescript-eslint/naming-convention
-                    WebkitMaskImage: `url(${this.props.children.data})`,
-                    maskImage: `url(${this.props.children.data})`
+                    WebkitMaskImage: `url(${childData.data})`,
+                    maskImage: `url(${childData.data})`
                 }} />
         ) : (
-            <Trans values={{number:this.props.page}}>general.number</Trans>
+            <Trans values={{number:pageTextNum}}>general.number</Trans>
         );
 
-        return <div className={`-PageButton -${this.props.highlight}`} onClick={this.onClick}>{child}</div>;
+        return (<Translation>{t=>(
+            <div className={`-PageButton -${highlight}`}
+                aria-label={t(ariaLabelKey,{replace:{pageN:pageTextNum}})}
+                onClick={this.onClick}>
+                    {child}
+            </div>
+        )}</Translation>);
     }
 }
