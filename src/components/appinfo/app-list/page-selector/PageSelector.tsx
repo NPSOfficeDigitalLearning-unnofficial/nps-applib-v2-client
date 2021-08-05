@@ -52,7 +52,8 @@ export default class PageSelector extends React.Component<{page:number,numPages:
         const indecesOffset = Math.max(0,Math.min(numPages-NUM_PAGE_OPTIONS,page-Math.round(NUM_PAGE_OPTIONS/2)+1));
         const indeces = new Array(NUM_PAGE_OPTIONS).fill(null).map((_,i)=>i+indecesOffset).filter(v=>v>=0&&v<numPages);
         return (
-            <div className="PageSelector">
+        <Translation>{t=>(
+            <div className="PageSelector" aria-label={t("page.main.pageSelectorLabel")} role="heading" aria-level={1}>
                 <div className="-pages">
                     {this.renderJumpButton(-Infinity,"jump-ends")}
                     {this.renderJumpButton(-JUMP_SIZE.LARGE,"jump-large")}
@@ -63,16 +64,16 @@ export default class PageSelector extends React.Component<{page:number,numPages:
                     {this.renderJumpButton(Infinity,"jump-ends")}
                 </div>
                 <div className="-page-size">
-                    <label><Trans>page.main.pageSelect.appsPerPageLabel</Trans></label>
-                    <Translation>{t=>(
-                        <input value={isNaN(appsPerPage)?"":appsPerPage}
-                            onChange={this.onAppsPerPageChange}
-                            onBlur={this.onAppsPerPageUnfocus}
-                            type="number" min={APPS_PER_PAGE.min} max={APPS_PER_PAGE.max} 
-                            aria-label={t("page.main.pageSelect.appsPerPageLabel")}/>
-                    )}</Translation>
+                    <label>{t("page.main.pageSelect.appsPerPageLabel")}</label>
+                    <input value={isNaN(appsPerPage)?"":appsPerPage}
+                        onChange={this.onAppsPerPageChange}
+                        onBlur={this.onAppsPerPageUnfocus}
+                        type="number" min={APPS_PER_PAGE.min} max={APPS_PER_PAGE.max} 
+                        aria-label={t("page.main.pageSelect.appsPerPageLabel")}/>
+                    
                 </div>
             </div>
+            )}</Translation>
         );
     }
 }

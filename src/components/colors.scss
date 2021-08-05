@@ -79,7 +79,7 @@ $g-status-other-fg: var(--g-status-other-fg);
         --g-status-bad-fg: #{lighten($s-bad,$lAmt)};
         --g-status-pending-fg: #{lighten($s-pending,$lAmt)};
         --g-status-instructor-fg: #{lighten($s-instructor,$lAmt)};
-        --g-status-other-fg: #{lighten($s-other,$lAmt)};
+        --g-status-other-fg: #{lighten($s-other,$lAmt*1.8)};
     }
 }
 
@@ -127,10 +127,10 @@ $g-status-other-fg: var(--g-status-other-fg);
         
         $dAmt: 30%;
         --g-status-good-fg: #{darken($s-good,$dAmt*1.5)};
-        --g-status-med-fg: #{darken($s-med,$dAmt)};
+        --g-status-med-fg: #{darken($s-med,$dAmt*1.2)};
         --g-status-bad-fg: #{darken($s-bad,$dAmt)};
         --g-status-pending-fg: #{darken($s-pending,$dAmt)};
         --g-status-instructor-fg: #{darken($s-instructor,$dAmt)};
-        --g-status-other-fg: #{darken($s-other,$dAmt)};
+        --g-status-other-fg: #{darken($s-other,$dAmt*1.8)};
     }
 }

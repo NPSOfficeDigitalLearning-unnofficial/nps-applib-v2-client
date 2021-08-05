@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Trans } from "react-i18next";
+import { Trans, Translation } from "react-i18next";
 import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../../data-structures/app/application-enums";
 import MultiSelect, { OptionData } from "../../../leaf-component/MultiSelect/MultiSelect";
 import { SearchParams } from "../Main";
@@ -12,6 +12,7 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
         return (
             <SearchTerm<ApprovalStatusEnum> type="dropdown"
                 text={`app.${enumName}.name`}
+                description={`app.${enumName}.name-long`}
                 onChange={this.onEnumTermChange.bind(this,enumArr,enumName)}
                 value={Object.fromEntries([...value].map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
                 options={Object.fromEntries(enumArr.map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
@@ -28,6 +29,7 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
         return (
             <SearchTerm type="string"
                 text={`app.${name}.name`}
+                description={`app.${name}.name-long`}
                 onChange={this.onStringTermChange.bind(this,name)}
                 value={value}
         />);
@@ -39,17 +41,19 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
     render():ReactNode {
         const { name, approval, privacy, platforms, grades, subjects } = this.props.searchParams;
         return (
-            <div className="SearchBar">
-                <div className="-title"><span><Trans>page.main.searchbarTitle</Trans></span></div>
-                <div className="-entries">
-                    {this.renderStringSearchTerm("name",name)}
-                    {this.renderEnumSearchTerm<ApprovalStatusEnum>(APPROVAL_STATUSES,"approval",approval)}
-                    {this.renderEnumSearchTerm<PrivacyStatusEnum>(PRIVACY_STATUSES,"privacy",privacy)}
-                    {this.renderEnumSearchTerm<PlatformEnum>(PLATFORMS,"platforms",platforms)}
-                    {this.renderEnumSearchTerm<SubjectEnum>(SUBJECTS,"subjects",subjects)}
-                    {this.renderEnumSearchTerm<GradeLevelEnum>(GRADE_LEVELS,"grades",grades)}
+            <Translation>{t=>(
+                <div className="SearchBar" aria-label={t("page.main.searchbarTitle")} role="heading" aria-level={1}>
+                    <div className="-title"><span>{t("page.main.searchbarTitle")}</span></div>
+                    <div className="-entries">
+                        {this.renderStringSearchTerm("name",name)}
+                        {this.renderEnumSearchTerm<ApprovalStatusEnum>(APPROVAL_STATUSES,"approval",approval)}
+                        {this.renderEnumSearchTerm<PrivacyStatusEnum>(PRIVACY_STATUSES,"privacy",privacy)}
+                        {this.renderEnumSearchTerm<PlatformEnum>(PLATFORMS,"platforms",platforms)}
+                        {this.renderEnumSearchTerm<SubjectEnum>(SUBJECTS,"subjects",subjects)}
+                        {this.renderEnumSearchTerm<GradeLevelEnum>(GRADE_LEVELS,"grades",grades)}
+                    </div>
                 </div>
-            </div>
+            )}</Translation>
         );
     }
 }

@@ -7,7 +7,7 @@ import "./Header.scss";
 export default class HeaderCommon extends React.Component<{pageName:string}> {
     render():ReactNode {
         return (
-            <div className="Header" role="heading">
+            <nav className="Header">
                 <WidthLimiter>
                     <div className="-left">
                         <div className="-appName"><Trans>thisApp.name</Trans></div>
@@ -19,7 +19,7 @@ export default class HeaderCommon extends React.Component<{pageName:string}> {
                         <Link to="/settings"><Trans>header.settingsLink</Trans></Link>
                     </div>
                 </WidthLimiter>
-            </div>
+            </nav>
         );
     }
 }

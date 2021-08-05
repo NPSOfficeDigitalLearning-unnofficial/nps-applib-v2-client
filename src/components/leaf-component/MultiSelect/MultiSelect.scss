@@ -98,6 +98,9 @@ $ms-color: $g-fg;
                         background: currentColor;
                     }
                 }
+                &:focus {
+                    outline: auto;
+                }
                 .-checkbox {
                     position: absolute;
                     width: $h; height: $h;

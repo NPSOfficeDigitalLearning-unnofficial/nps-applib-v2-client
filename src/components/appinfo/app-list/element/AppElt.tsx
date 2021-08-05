@@ -16,7 +16,9 @@ export default class AppElt extends React.Component<{app:Application}> {
                 <StatusRow type="approval" status={app.approval}/>
                 <StatusRow type="privacy" status={app.privacy}/>
                 <div className="-buttons">
-                    <ButtonRow text={`app.summary.button.${"TODO: is editor"?"edit":"info"}`} linkType="internal" link="TODO editor page of app"/>
+                    <ButtonRow
+                        text={`app.summary.button.${"TODO: is editor"?"edit":"info"}`} appName={app.name}
+                        linkType="internal" link="TODO editor page of app"/>
                 </div>
             </div></div>
         );

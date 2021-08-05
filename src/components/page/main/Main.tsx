@@ -75,14 +75,15 @@ export default class MainPage extends React.Component<{apps:Application[]},{sear
         return (
             <div className="MainPage">
                 <Header />
-                <div className="-center">
-                    <SearchBar searchParams={searchOptions}
-                        onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
-                </div>
-                <WidthLimiter>
-                    <AppList apps={this.filteredApps}/>
-                </WidthLimiter>
-                
+                <main>
+                    <div className="-center">
+                        <SearchBar searchParams={searchOptions}
+                            onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
+                    </div>
+                    <WidthLimiter>
+                        <AppList apps={this.filteredApps}/>
+                    </WidthLimiter>
+                </main>
             </div>
         );
     }

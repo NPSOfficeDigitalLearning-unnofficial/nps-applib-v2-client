@@ -30,14 +30,18 @@
                     "pageNButton": "Go to page {{pageN, number}}",
                     "current": "On page {{pageN, number}}",
                     "appsPerPageLabel": "Results per page:"
-                }
+                },
+                "appsHeadingLabel": "Application list:",
+                "pageSelectorLabel": "Application list page selector:"
             }
         },
         "app": {
             "summary": {
                 "button": {
                     "edit": "Edit App",
-                    "info": "More Info"
+                    "edit-ariaLabel": "Edit app \"{{appName}}\"",
+                    "info": "More Info",
+                    "info-ariaLabel": "More info about \"{{appName}}\""
                 }
             },
             "name": {
