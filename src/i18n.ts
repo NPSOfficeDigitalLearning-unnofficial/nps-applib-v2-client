@@ -27,11 +27,11 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
         formatSeparator: ",",
         format: (value?:any, format?:string, lang?:string, options?: (InterpolationOptions & { [key: string]: any; })):string => {
             switch (format) {
-                case "number":
-                    if (typeof(value) === "number")
-                        return value.toLocaleString(lang);
-                    else return t("general.error.format.typeMismatch");
-                default: return t("general.error.format.noFormat");
+            case "number":
+                if (typeof(value) === "number")
+                    return value.toLocaleString(lang);
+                else return t("general.error.format.typeMismatch");
+            default: return t("general.error.format.noFormat");
             }
         }
     },

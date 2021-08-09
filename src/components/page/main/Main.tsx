@@ -4,7 +4,6 @@ import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, Pl
 import { castSetEltsToEnum } from "../../../util/array-util";
 import AppList from "../../appinfo/app-list/AppList";
 import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
-import Header from "./header/Header";
 import "./Main.scss";
 import SearchBar from "./search-bar/SearchBar";
 
@@ -73,18 +72,15 @@ export default class MainPage extends React.Component<{apps:Application[]},{sear
     render():ReactNode {
         const { searchOptions } = this.state;
         return (
-            <div className="MainPage">
-                <Header />
-                <main>
-                    <div className="-center">
-                        <SearchBar searchParams={searchOptions}
-                            onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
-                    </div>
-                    <WidthLimiter>
-                        <AppList apps={this.filteredApps}/>
-                    </WidthLimiter>
-                </main>
-            </div>
+            <main className="MainPage">
+                <div className="-center">
+                    <SearchBar searchParams={searchOptions}
+                        onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
+                </div>
+                <WidthLimiter>
+                    <AppList apps={this.filteredApps}/>
+                </WidthLimiter>
+            </main>
         );
     }
 }

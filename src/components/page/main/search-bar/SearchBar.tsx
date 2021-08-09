@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
-import { Trans, Translation } from "react-i18next";
+import { Translation } from "react-i18next";
 import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../../data-structures/app/application-enums";
-import MultiSelect, { OptionData } from "../../../leaf-component/MultiSelect/MultiSelect";
+import { OptionData } from "../../../leaf-component/MultiSelect/MultiSelect";
 import { SearchParams } from "../Main";
 import "./SearchBar.scss";
 import SearchTerm from "./SearchTerm";
@@ -16,7 +16,7 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
                 onChange={this.onEnumTermChange.bind(this,enumArr,enumName)}
                 value={Object.fromEntries([...value].map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
                 options={Object.fromEntries(enumArr.map(v=>[v,{name:`app.${enumName}.${v}`,value:v}]))}
-        />);
+            />);
     }
     onEnumTermChange<Enum>(enumArr:readonly Enum[],enumName:string,data:OptionData<Enum>):void {
         const newValue:Set<Enum> = new Set();
@@ -32,7 +32,7 @@ export default class SearchBar extends React.Component<{searchParams:SearchParam
                 description={`app.${name}.name-long`}
                 onChange={this.onStringTermChange.bind(this,name)}
                 value={value}
-        />);
+            />);
     }
     onStringTermChange(name:string,data:string):void {
         this.props.onStringTermChange(name, data);

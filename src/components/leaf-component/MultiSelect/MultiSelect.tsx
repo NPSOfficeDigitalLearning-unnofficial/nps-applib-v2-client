@@ -43,39 +43,39 @@ export default class MultiSelect<T> extends React.Component<{text:string,ariaLab
         const containerElt = this.containerRef.current;
         if (this.state.open) {
             switch (e.key) {
-                case "ArrowUp":
-                case "ArrowLeft":
-                    this.incrementSubFocus(-1);
-                    break;
-                case "ArrowDown":
-                case "ArrowRight":
-                    this.incrementSubFocus(1);
-                    break;
-                case "Enter":
-                    if (containerElt && containerElt === document.activeElement)
-                        this.setOpen(false);
-                    else
-                        this.state.optionRefs[this.state.focusOption!].current?.keyboardClick();
-                    break;
-                case "Escape":
-                    containerElt?.focus();
+            case "ArrowUp":
+            case "ArrowLeft":
+                this.incrementSubFocus(-1);
+                break;
+            case "ArrowDown":
+            case "ArrowRight":
+                this.incrementSubFocus(1);
+                break;
+            case "Enter":
+                if (containerElt && containerElt === document.activeElement)
                     this.setOpen(false);
-                    break;
-                default: break;
+                else
+                    this.state.optionRefs[this.state.focusOption!].current?.keyboardClick();
+                break;
+            case "Escape":
+                containerElt?.focus();
+                this.setOpen(false);
+                break;
+            default: break;
             }
         } else {
             switch (e.key) {
-                case "ArrowUp":
-                case "ArrowLeft":
-                case "ArrowDown": // @ts-ignore Fallthrough is intended
-                case "ArrowRight":
-                    this.setState({focusOption:0});
-                    // vvv Continues through Enter case vvv
-                case "Enter":
-                    if (containerElt && containerElt === document.activeElement)
-                        this.setOpen(true);
-                    break;
-                default: break;
+            case "ArrowUp":
+            case "ArrowLeft":
+            case "ArrowDown": // @ts-ignore Fallthrough is intended
+            case "ArrowRight":
+                this.setState({focusOption:0});
+                // vvv Continues through Enter case vvv
+            case "Enter":
+                if (containerElt && containerElt === document.activeElement)
+                    this.setOpen(true);
+                break;
+            default: break;
             }
         }
     };
@@ -134,7 +134,7 @@ export default class MultiSelect<T> extends React.Component<{text:string,ariaLab
         return (
             <Translation>{t=>(
                 <div className={"MultiSelect"+(open?" -open":"")} tabIndex={0} onMouseLeave={this.onClose} onFocus={this.onFocus} onBlur={this.onUnfocus}
-                        aria-label={t(this.props.ariaLabel)} aria-expanded={open} role="combobox" ref={this.containerRef}>
+                    aria-label={t(this.props.ariaLabel)} aria-expanded={open} role="combobox" ref={this.containerRef}>
                     <div className="-content" onMouseDown={this.onToggleOpen} role="textbox" aria-label={t(this.props.ariaLabel)}>
                         {t(this.props.text)}
                     </div>

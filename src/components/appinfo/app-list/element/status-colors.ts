@@ -1,5 +1,3 @@
-import React, { ReactNode } from "react";
-import { Trans } from "react-i18next";
 import { ApprovalStatusEnum, PrivacyStatusEnum } from "../../../../data-structures/app/application-enums";
 
 type StatusColor = "good"|"bad"|"med"|"pending"|"instructor"|"other";

@@ -31,7 +31,7 @@ export default class PageButton extends React.Component<{page:number,onClick:(pa
             <div className={`-PageButton -${highlight}`}
                 aria-label={t(ariaLabelKey,{replace:{pageN:pageTextNum}})}
                 onClick={this.onClick}>
-                    {child}
+                {child}
             </div>
         )}</Translation>);
     }

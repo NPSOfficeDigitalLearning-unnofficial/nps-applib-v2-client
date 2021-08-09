@@ -5,9 +5,8 @@ import PageButton, { HighlightMode } from "./PageButton";
 import arrow1 from "./arrow/arrow-1.svg";
 import arrow2 from "./arrow/arrow-2.svg";
 import arrow3 from "./arrow/arrow-3.svg";
-import { Trans, Translation } from "react-i18next";
+import { Translation } from "react-i18next";
 import AppList, { APPS_PER_PAGE } from "../AppList";
-import { FocusEvent } from "react";
 
 
 export default class PageSelector extends React.Component<{page:number,numPages:number,onSwitch:(page:number)=>void,appsPerPage:number,onAppsPerPageChange:(n:number)=>void}> {
@@ -52,27 +51,27 @@ export default class PageSelector extends React.Component<{page:number,numPages:
         const indecesOffset = Math.max(0,Math.min(numPages-NUM_PAGE_OPTIONS,page-Math.round(NUM_PAGE_OPTIONS/2)+1));
         const indeces = new Array(NUM_PAGE_OPTIONS).fill(null).map((_,i)=>i+indecesOffset).filter(v=>v>=0&&v<numPages);
         return (
-        <Translation>{t=>(
-            <div className="PageSelector" aria-label={t("page.main.pageSelectorLabel")} role="heading" aria-level={1}>
-                <div className="-pages">
-                    {this.renderJumpButton(-Infinity,"jump-ends")}
-                    {this.renderJumpButton(-JUMP_SIZE.LARGE,"jump-large")}
-                    {this.renderJumpButton(-JUMP_SIZE.SMALL,"jump-small")}
-                    {indeces.map(n=>this.renderPageButton(n,n===page?"current":"none",{"type":"number"},n))}
-                    {this.renderJumpButton(JUMP_SIZE.SMALL,"jump-small")}
-                    {this.renderJumpButton(JUMP_SIZE.LARGE,"jump-large")}
-                    {this.renderJumpButton(Infinity,"jump-ends")}
-                </div>
-                <div className="-page-size">
-                    <label>{t("page.main.pageSelect.appsPerPageLabel")}</label>
-                    <input value={isNaN(appsPerPage)?"":appsPerPage}
-                        onChange={this.onAppsPerPageChange}
-                        onBlur={this.onAppsPerPageUnfocus}
-                        type="number" min={APPS_PER_PAGE.min} max={APPS_PER_PAGE.max} 
-                        aria-label={t("page.main.pageSelect.appsPerPageLabel")}/>
+            <Translation>{t=>(
+                <div className="PageSelector" aria-label={t("page.main.pageSelectorLabel")} role="heading" aria-level={1}>
+                    <div className="-pages">
+                        {this.renderJumpButton(-Infinity,"jump-ends")}
+                        {this.renderJumpButton(-JUMP_SIZE.LARGE,"jump-large")}
+                        {this.renderJumpButton(-JUMP_SIZE.SMALL,"jump-small")}
+                        {indeces.map(n=>this.renderPageButton(n,n===page?"current":"none",{"type":"number"},n))}
+                        {this.renderJumpButton(JUMP_SIZE.SMALL,"jump-small")}
+                        {this.renderJumpButton(JUMP_SIZE.LARGE,"jump-large")}
+                        {this.renderJumpButton(Infinity,"jump-ends")}
+                    </div>
+                    <div className="-page-size">
+                        <label>{t("page.main.pageSelect.appsPerPageLabel")}</label>
+                        <input value={isNaN(appsPerPage)?"":appsPerPage}
+                            onChange={this.onAppsPerPageChange}
+                            onBlur={this.onAppsPerPageUnfocus}
+                            type="number" min={APPS_PER_PAGE.min} max={APPS_PER_PAGE.max} 
+                            aria-label={t("page.main.pageSelect.appsPerPageLabel")}/>
                     
+                    </div>
                 </div>
-            </div>
             )}</Translation>
         );
     }

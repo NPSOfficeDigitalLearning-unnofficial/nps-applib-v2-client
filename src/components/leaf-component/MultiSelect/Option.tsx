@@ -9,7 +9,7 @@ export default class MultiSelectOption<T> extends React.Component<{selected:bool
     render() {
         return (
             <div className={"-Option"+(this.props.selected?" -selected":"")+(this.props.focused?" -focused":"")} onClick={this.onClick}
-                    role="option" aria-selected={this.props.focused} aria-checked={this.props.selected} tabIndex={-1} ref={this.ref}>
+                role="option" aria-selected={this.props.focused} aria-checked={this.props.selected} tabIndex={-1} ref={this.ref}>
                 <div className="-checkbox"/>
                 <label><Trans>{this.props.name}</Trans></label>
             </div>
