@@ -1,0 +1,71 @@
+@import "../../FloatingBox.scss";
+@import "../../colors.scss";
+
+$htransT: 0.25s;
+
+.SettingsPage {
+    > h1 {
+        text-align: center;
+        color: $g-fg2;
+    }
+    .-SettingsRow {
+        @include FloatingBox();
+
+        background: $g-bg;
+        color: $g-fg;
+
+        $w: 400px;
+        $m: 5px;
+        $h: 1.7em;
+
+        max-width: $w;
+        margin: 20px calc(50% - #{$w*0.5});
+        padding: 0px 0.5*$m;
+
+        display: flex;
+
+        > label, > div {
+            display: inline-block;
+            margin: $m $m*0.5;
+        }
+        > label {
+            flex: 0.3;
+            height: $h;
+            line-height: $h;
+        }
+        > div {
+            display: inline-flex;
+            flex: 0.7;
+            input, button, a {
+                display: inline-block;
+                width: 50px;
+                flex: 1 1;
+                margin: 0px 3px;
+                font: inherit;
+                transition: color $htransT, background-color $htransT, border $htransT;
+                height: $h;
+                line-height: $h;
+            }
+            input {
+                border: 1px solid $g-fg;
+                background: $g-bg;
+                color: $g-fg;
+                border-radius: 2px;
+                &:hover {
+                    background: $g-ms-bg-hov;
+                }
+            }
+            button, a {
+                text-align: center;
+                border: none;
+                text-decoration: none;
+                background: $g-btn-bg;
+                color: $g-btn-fg;
+                &:hover {
+                    background: $g-btn-fg;
+                    color: $g-btn-bg;
+                }
+            }
+        }
+    }
+}

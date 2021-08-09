@@ -2,15 +2,12 @@ TODO LIST
 
 ________________________________________________
 ============== Needs React Outline =============
-  - `src/code/appinfo/focus-popup/*`
-  - `src/code/page/settings/*`
+  - `src/component/appinfo/focus-popup/*`
   - Anything else I forgot.
 
 ________________________________________________
 ========== Needs React Implementation ==========
-  - `src/code/*` 
-    !except: `src/code/leaf-component/MultiSelect/*`
-    !except: `src/code/appinfo/app-list/`
+  - `src/component/*` partially
 
 
 

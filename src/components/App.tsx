@@ -4,6 +4,7 @@ import Application from "../data-structures/app/Application";
 import "./App.scss";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
+import AdminPage from "./page/admin/Admin";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -30,11 +31,15 @@ export default class App extends React.Component {
                 </Route>
                 <Route path="/settings">
                     <HeaderCommon pageName="settings" />
-                    <SettingsPage />
+                    <SettingsPage admin={{loggedIn:false,logout:()=>console.log("TODO LOGOUT")}} />
                 </Route>
                 <Route path="/about">
                     <HeaderCommon pageName="about" />
                     <AboutPage />
+                </Route>
+                <Route path="/admin">
+                    <HeaderCommon pageName="admin" />
+                    <AdminPage />
                 </Route>
                 <Route>
                     <HeaderCommon pageName="404" />

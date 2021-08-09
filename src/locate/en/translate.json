@@ -33,6 +33,16 @@
                 },
                 "appsHeadingLabel": "Application list:",
                 "pageSelectorLabel": "Application list page selector:"
+            },
+            "settings": {
+                "name": "Settings",
+                "row": {
+                    "adminAccount": {
+                        "label": "Admin account:",
+                        "login": "Login",
+                        "logout": "Logout"
+                    }
+                }
             }
         },
         "app": {
