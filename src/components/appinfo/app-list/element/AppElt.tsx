@@ -5,9 +5,9 @@ import ButtonRow from "./ButtonRow";
 import statusColorCSSClass from "./status-colors";
 import StatusRow from "./StatusRow";
 
-export default class AppElt extends React.Component<{app:Application}> {
+export default class AppElt extends React.Component<{app:Application,canEdit:boolean}> {
     render():ReactNode {
-        const { app } = this.props;
+        const { app, canEdit } = this.props;
         return (
             <div className="AppElt"><div>
                 <div className={["-title","-c-",statusColorCSSClass(app.approval)].join(" ")}>
@@ -17,7 +17,7 @@ export default class AppElt extends React.Component<{app:Application}> {
                 <StatusRow type="privacy" status={app.privacy}/>
                 <div className="-buttons">
                     <ButtonRow
-                        text={`app.summary.button.${"TODO: is editor"?"edit":"info"}`} appName={app.name}
+                        text={`app.summary.button.${canEdit?"edit":"info"}`} appName={app.name}
                         linkType="internal" link="TODO editor page of app"/>
                 </div>
             </div></div>

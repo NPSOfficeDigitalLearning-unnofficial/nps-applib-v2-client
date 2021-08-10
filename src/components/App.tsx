@@ -33,7 +33,7 @@ export default class App extends React.Component {
             <Switch>
                 <Route path="/" exact>
                     <Header pageName="main" />
-                    <MainPage apps={apps}/>
+                    <MainPage apps={apps} canEdit={adminLoggedIn}/>
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />

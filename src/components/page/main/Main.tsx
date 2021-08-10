@@ -16,7 +16,7 @@ export type SearchParams = {
     grades: Set<GradeLevelEnum>
 };
 
-export default class MainPage extends React.Component<{apps:Application[]},{searchOptions:SearchParams}> {
+export default class MainPage extends React.Component<{apps:Application[],canEdit:boolean},{searchOptions:SearchParams}> {
     constructor(props:MainPage["props"]) {
         super(props);
         this.state = {searchOptions:{name:"",approval:new Set(),privacy:new Set(),platforms:new Set(),subjects:new Set(),grades:new Set()}};
@@ -78,7 +78,7 @@ export default class MainPage extends React.Component<{apps:Application[]},{sear
                         onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
                 </div>
                 <WidthLimiter>
-                    <AppList apps={this.filteredApps}/>
+                    <AppList apps={this.filteredApps} canEdit={this.props.canEdit}/>
                 </WidthLimiter>
             </main>
         );

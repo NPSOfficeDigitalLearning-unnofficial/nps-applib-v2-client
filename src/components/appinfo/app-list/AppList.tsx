@@ -10,7 +10,7 @@ export const APPS_PER_PAGE:{
     readonly max: 80
 } = { default: 8, min: 4, max: 80 };
 
-export default class AppList extends React.Component<{apps:Application[]},{pageN:number,appsPerPage:number}> {
+export default class AppList extends React.Component<{apps:Application[],canEdit:boolean},{pageN:number,appsPerPage:number}> {
     constructor(props:AppList["props"]) {
         super(props);
         this.state = { pageN: 0, appsPerPage: APPS_PER_PAGE.default };
@@ -52,7 +52,7 @@ export default class AppList extends React.Component<{apps:Application[]},{pageN
                 <PageSelector
                     numPages={this.numAppPages} onSwitch={this.setPage} page={this.page}
                     appsPerPage={this.rawAppsPerPage} onAppsPerPageChange={this.setAppsPerPage}/>
-                <AppPage apps={this.showingApps} />
+                <AppPage apps={this.showingApps} canEdit={this.props.canEdit} />
             </div>
         );
     }
