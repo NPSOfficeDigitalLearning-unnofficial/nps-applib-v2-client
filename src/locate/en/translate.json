@@ -17,7 +17,8 @@
         "header": {
             "settingsLink": "Settings",
             "aboutLink": "About",
-            "homeLink": "Applications List"
+            "homeLink": "Applications List",
+            "adminLink": "Admin Home"
         },
         "page": {
             "main": {
@@ -42,6 +43,26 @@
                         "login": "Login",
                         "logout": "Logout"
                     }
+                }
+            },
+            "admin": {
+                "name": "Admin Home",
+                "header": "Administration Page",
+                "acLink": {
+                    "title": "ACLink",
+                    "create": "Click to generate account creation link.",
+                    "createDescription": "Account Creation Link: when sent to new admin, allows them to create their own account on the linked page.",
+                    "clickToCopy": "New ACLink created. Copied to clipboard, click to re-copy.",
+                    "expired": "Generated ACLink has expired, click to generate a new one."
+                },
+                "login": {
+                    "submit": "Login",
+                    "username": "Username",
+                    "password": "Password"
+                },
+                "signup": {
+                    "infoBlurb": "Create your new administrative account by providing the username and password for the account to use.",
+                    "submit": "Signup"
                 }
             }
         },

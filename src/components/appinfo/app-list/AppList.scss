@@ -1,10 +1,9 @@
 @import "../../colors.scss";
 @import "../../FloatingBox.scss";
+@import "../../interactables.scss";
 
 $pbsz: 30px;
 $pbmar: 5px;
-
-$htransT: 0.25s;
 
 .AppList {
     text-align: center;
@@ -43,7 +42,7 @@ $htransT: 0.25s;
         font-weight: bold;
         color: $color;
         background: transparent;
-        transition: color $htransT, background-color $htransT, border $htransT;
+        @include interactablesCommon();
 
         &:hover, &.-current {
             color: $g-bg;
@@ -70,10 +69,7 @@ $htransT: 0.25s;
             margin: 0px 5px;
         }
         input {
-            color: $g-fg;
-            background: $g-bg;
-            border: 1px solid $g-fg;
-            border-radius: 2px;
+            @include input();
             
             display: inline-block;
             font: inherit;

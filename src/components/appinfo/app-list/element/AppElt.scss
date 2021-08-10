@@ -1,7 +1,6 @@
 @import "../../../colors.scss";
 @import "../../../FloatingBox.scss";
-
-$htransT: 0.25s;
+@import "../../../interactables.scss";
 
 .AppElt {
     @include FloatingBox(true);
@@ -44,15 +43,8 @@ $htransT: 0.25s;
         > a {
             display: block;
             padding: 3px;
-            border: none;
             text-decoration: none;
-            background: $g-btn-bg;
-            color: $g-btn-fg;
-            transition: color $htransT, background-color $htransT, border $htransT;
-            &:hover {
-                background: $g-btn-fg;
-                color: $g-btn-bg;
-            }
+            @include button();
         }
     }
 }

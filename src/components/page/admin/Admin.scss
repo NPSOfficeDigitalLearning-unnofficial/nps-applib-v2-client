@@ -1,0 +1,54 @@
+@import "../../FloatingBox.scss";
+@import "../../colors.scss";
+@import "../../interactables.scss";
+
+.AdminPage {
+    > h1 {
+        text-align: center;
+        color: $g-fg2;
+    }
+    .-ACLink {
+        @include FloatingBox(true);
+        $w: 400px;
+
+        max-width: $w;
+        margin: 20px calc(50% - #{$w*0.5});
+        > div {
+            background: $g-bg;
+            color: $g-fg;
+
+            padding: 10px;
+            label,p {
+                display: block;
+                margin: 5px;
+            }
+            label {
+                font-size: 1.1em;
+                font-weight: bold;
+                color: $g-fg2;
+            }
+            p {
+                color: $g-fg;
+            }
+        }
+    }
+    .-LoginPanel {
+        $wLP: 250px;
+        > .WidthLimiter {
+            --maxW: #{$wLP};
+        }
+        input, button {
+            display: block;
+            height: 30px;
+            width: $wLP;
+            margin: 10px 0px;
+            padding: 0px 5px;
+        }
+        input {
+            @include input();
+        }
+        button {
+            @include button();
+        }
+    }
+}

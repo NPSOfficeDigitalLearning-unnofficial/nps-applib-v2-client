@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
 import Application from "../data-structures/app/Application";
 import "./App.scss";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
-import AdminPage from "./page/admin/Admin";
+import AdminPage, { AdminNewPage } from "./page/admin/Admin";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -21,28 +21,38 @@ const apps = [
     new Application({name:"obnoxios app with stupidly long name"})
 ];
 
+const adminLoggedIn = false; // TODO
+
 export default class App extends React.Component {
-    render() {
+    render():ReactNode {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        const Header = (props:{pageName:string}):JSX.Element => (
+            <HeaderCommon pageName={props.pageName} isAdmin={adminLoggedIn}/>
+        );
         return (<>
             <Switch>
                 <Route path="/" exact>
-                    <HeaderCommon pageName="main" />
+                    <Header pageName="main" />
                     <MainPage apps={apps}/>
                 </Route>
                 <Route path="/settings">
-                    <HeaderCommon pageName="settings" />
-                    <SettingsPage admin={{loggedIn:false,logout:()=>console.log("TODO LOGOUT")}} />
+                    <Header pageName="settings" />
+                    <SettingsPage admin={{loggedIn:adminLoggedIn,logout:()=>console.log("TODO LOGOUT")}} />
                 </Route>
                 <Route path="/about">
-                    <HeaderCommon pageName="about" />
+                    <Header pageName="about" />
                     <AboutPage />
                 </Route>
                 <Route path="/admin">
-                    <HeaderCommon pageName="admin" />
-                    <AdminPage />
+                    <Header pageName="admin" />
+                    <AdminPage login={{loggedIn:adminLoggedIn,isSignup:false,login:async()=>console.log("TODO LOGIN")}} adminToken={{create:async ()=>console.log("TODO CREATE ADMIN TOKEN")}}/>
+                </Route>
+                <Route path="/admin-new/:acToken">
+                    <Header pageName="admin" />
+                    <AdminNewPage signup={async(tok,cred)=>console.log("TODO SIGNUP",tok,cred)}/>
                 </Route>
                 <Route>
-                    <HeaderCommon pageName="404" />
+                    <Header pageName="404" />
                     <Error404Page />
                 </Route>
             </Switch>

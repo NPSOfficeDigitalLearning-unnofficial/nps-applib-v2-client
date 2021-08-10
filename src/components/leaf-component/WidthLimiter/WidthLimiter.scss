@@ -3,10 +3,11 @@ $maxW: 1000px;
 .WidthLimiter {
     display: flex;
     align-content: center;
+    --maxW: #{$maxW};
     > .-content {
         display: inline-block;
         flex-grow: 0;
-        flex-basis: $maxW;
+        flex-basis: var(--maxW);
         flex-shrink: 1;
     }
     > .-buffer {

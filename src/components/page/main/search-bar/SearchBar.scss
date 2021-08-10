@@ -1,5 +1,6 @@
 @import "../../../FloatingBox.scss";
 @import "../../../colors.scss";
+@import "../../../interactables.scss";
 
 
 $i-bgCol: $g-bg;
@@ -44,13 +45,7 @@ $i-color: $g-fg;
             display: inline-block;
             font: inherit;
             padding: 8px;
-            border: 1px solid $i-color;
-            background: $i-bgCol;
-            color: $i-color;
-            border-radius: 2px;
-            &:hover {
-                background: $g-ms-bg-hov;
-            }
+            @include input();
         }
     }
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
 import "./Header.scss";
 
-export default class HeaderCommon extends React.Component<{pageName:string}> {
+export default class HeaderCommon extends React.Component<{pageName:string,isAdmin:boolean}> {
     render():ReactNode {
         return (
             <nav className="Header">
@@ -17,6 +17,7 @@ export default class HeaderCommon extends React.Component<{pageName:string}> {
                         <Link to="/"><Trans>header.homeLink</Trans></Link>
                         <Link to="/about"><Trans>header.aboutLink</Trans></Link>
                         <Link to="/settings"><Trans>header.settingsLink</Trans></Link>
+                        {this.props.isAdmin && <Link to="/admin"><Trans>header.adminLink</Trans></Link>}
                     </div>
                 </WidthLimiter>
             </nav>
