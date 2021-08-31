@@ -1,4 +1,4 @@
-import { APIResponse } from "./apiTypes";
+import { APIResponse } from "./api-types";
 
 type FetchMethod = "GET"|"POST"|"PATCH"|"DELETE";
 type Status = {code:number,message:string};
