@@ -1,6 +1,8 @@
 import { apiFetch } from "../../api/apiFetch";
 import Session, { SessionData } from "./Session";
 
+type SessionChangeHandler = (manager:SessionManager,newSession:Session)=>void;
+
 export default class SessionManager {
     
     currentSession:Session|null = null;
@@ -34,4 +36,14 @@ export default class SessionManager {
         this.currentSession = null;
         // TODO handle error.
     }
+
+    private readonly _sessionChangeHandlers:Set<SessionChangeHandler> = new Set();
+
+    addChangeHandler   (callback:SessionChangeHandler):void { this._sessionChangeHandlers.add   (callback) }
+    removeChangeHandler(callback:SessionChangeHandler):void { this._sessionChangeHandlers.delete(callback) }
+    clearChangeHandlers():void                              { this._sessionChangeHandlers.clear ()         }
+    private onSessionChange:SessionChangeHandler = (manager,newSession)=>{
+        for (let handler of this._sessionChangeHandlers.values())
+            handler(manager,newSession);
+    };
 }
