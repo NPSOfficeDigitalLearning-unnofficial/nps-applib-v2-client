@@ -151,6 +151,13 @@
                 "MUSIC": "Music",
                 "SEL": "SEL"
             }
+        },
+        "error": {
+            "popupBox": {
+                "closeLabel": "Dismiss error"
+            },
+            "general": "An error ocurred",
+            "wrongCredentials": "Email or password incorrect."
         }
     }
 }

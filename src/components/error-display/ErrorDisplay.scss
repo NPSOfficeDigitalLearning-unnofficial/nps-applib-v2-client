@@ -1,0 +1,76 @@
+@import "../colors.scss";
+@import "../FloatingBox.scss";
+
+$ed-anim-t: 300ms;
+
+.ErrorDisplay {
+    
+    @include FloatingBox();
+    background: $g-bg;
+    z-index: 2;
+
+    display: none;
+    position: absolute;
+    left: calc(50% - 200px);
+    right: calc(50% - 200px);
+
+    &.-show-true, &.-show-false {
+        display: block;
+    }
+
+    &.-show-true {
+        animation: ErrorDisplay-in $ed-anim-t both 1;
+    }
+    &.-show-false {
+        animation: ErrorDisplay-out $ed-anim-t both 1;
+    }
+
+    h1 {
+        color: $g-fg2;
+        text-align: center;
+    }
+    p {
+        color: $g-fg;
+        padding: 0 1em;
+    }
+    > .-close {
+        display: block;
+        position: absolute;
+        top: 5px; right: 5px;
+        $s: 2em; $m: .4em;
+        padding: $m;
+        height: $s;
+        width: $s;
+        border: none;
+        background: #{$g-btn-fg};
+        transition: 0.3s background-color;
+        > svg {
+            width: $s - 2*$m;
+            height: $s - 2*$m;
+            --svg-fill: #{$g-btn-bg};
+            transition: 0.3s var(--svg-fill);
+        }
+        &:hover {
+            background: #{$g-btn-bg};
+            svg { --svg-fill: #{$g-btn-fg}; }
+        }
+    }
+}
+
+@mixin ED-shown {
+    opacity: 1;
+    top: 2em;
+}
+@mixin ED-hidden {
+    opacity: 0;
+    top: 1em;
+}
+
+@keyframes ErrorDisplay-in {
+    0% { @include ED-hidden() }
+    100% { @include ED-shown() }
+}
+@keyframes ErrorDisplay-out {
+    0% { @include ED-shown() }
+    100% { @include ED-hidden() }
+}

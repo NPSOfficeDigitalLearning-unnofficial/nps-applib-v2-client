@@ -1,7 +1,14 @@
+import { APIErrorResponse } from "../../api/api-types";
 import { apiFetch } from "../../api/apiFetch";
+import { ErrorData } from "../../components/error-display/ErrorDisplay";
 import Session, { SessionData } from "./Session";
 
 type SessionChangeHandler = (manager:SessionManager,newSession:Session|null)=>void;
+
+function apiErrResData(res:APIErrorResponse):ErrorData {
+    const { error, moreInfo } = res;
+    return { error, detail: moreInfo };
+}
 
 export default class SessionManager {
     
@@ -13,36 +20,38 @@ export default class SessionManager {
     }
 
     /** Use the API to fetch data on the current logged in user. */
-    async fetchCurrentSession():Promise<void> {
+    async fetchCurrentSession():Promise<void|ErrorData> {
         // use `GET /api/session` to get the current session data.
-        const session = await apiFetch<never,SessionData&{loggedIn:true}|{loggedIn:false}>(["session"],"GET");
-        if (session.type === "data")
-            this.currentSession = session.data.loggedIn ? new Session(session.data) : null;
-        else // TODO handle error.
+        const res = await apiFetch<never,SessionData&{loggedIn:true}|{loggedIn:false}>(["session"],"GET");
+        if (res.type === "data")
+            this.currentSession = res.data.loggedIn ? new Session(res.data) : null;
+        else if (res.type === "error") {
             this.currentSession = null;
+            return apiErrResData(res);
+        }
     }
 
     /** Use the API to log the user in. */
-    async login(email:string,password:string):Promise<void> {
+    async login(email:string,password:string):Promise<void|{error:string,moreInfo?:string}> {
         // use `POST /api/session` to log the user in.
-        const session = await apiFetch<{email:string,password:string},SessionData>(["session"],"POST",{email,password});
-        
-        console.log(session);
-        
+        const res = await apiFetch<{email:string,password:string},SessionData>(["session"],"POST",{email,password});
 
-        if (session.type === "data")
-            this.currentSession = new Session(session.data);
-        else // TODO handle error.
+        if (res.type === "data")
+            this.currentSession = new Session(res.data);
+        else if (res.type === "error") {
             this.currentSession = null;
+            return apiErrResData(res);
+        }
     }
 
     /** Use the API to log out the user. */
-    async logout():Promise<void> {
+    async logout():Promise<void|ErrorData> {
         // use `DELETE /api/session` to log the user out.
-        await apiFetch<never,SessionData>(["session"],"DELETE");
+        const res = await apiFetch<never,SessionData>(["session"],"DELETE");
         
         this.currentSession = null;
-        // TODO handle error.
+        if (res.type === "error")
+            return apiErrResData(res);
     }
 
     private readonly _sessionChangeHandlers:Set<SessionChangeHandler> = new Set();

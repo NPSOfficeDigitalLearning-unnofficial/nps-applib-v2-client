@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Application from "../data-structures/app/Application";
 import SessionManager from "../data-structures/session/SessionManager";
 import "./App.scss";
+import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
 import AdminPage, { AdminNewPage } from "./page/admin/Admin";
@@ -24,15 +25,24 @@ const apps = [
 ];
 
 export default class App extends React.Component<{sessionManager:SessionManager}> {
+    readonly errDisplayRef = React.createRef<ErrorDisplay>();
+
     onLogin:(cred:{[x in CredentialsEnum]:string})=>Promise<void> = async(cred)=>{
         const { sessionManager } = this.props;
         const { email, password } = cred;
-        sessionManager.login(email, password);
+        this.showErrorIfExists(await sessionManager.login(email, password));
     };
     onLogout:()=>Promise<void> = async()=>{
         const { sessionManager } = this.props;
-        sessionManager.logout();
+        this.showErrorIfExists(await sessionManager.logout());
     };
+
+    showErrorIfExists = (errData?:ErrorData|void):void => errData && this.showError(errData);
+    showError = (errData:ErrorData):void=>{
+        const { error, detail } = errData;
+        this.errDisplayRef.current?.showError(error,detail);
+    };
+
     render():ReactNode {
         const { sessionManager } = this.props;
         const loggedIn = sessionManager.currentSession !== null,
@@ -45,6 +55,7 @@ export default class App extends React.Component<{sessionManager:SessionManager}
         );
 
         return (<>
+            <ErrorDisplay ref={this.errDisplayRef} />
             <Switch>
                 <Route path="/" exact>
                     <Header pageName="main" />
