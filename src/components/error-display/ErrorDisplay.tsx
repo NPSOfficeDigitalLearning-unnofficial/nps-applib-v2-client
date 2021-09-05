@@ -9,7 +9,7 @@ export default class ErrorDisplay extends React.Component<{},{isShown?:boolean,h
     hideBtnRef:RefObject<HTMLButtonElement> = React.createRef();
     constructor(props:ErrorDisplay["props"]) {
         super(props);
-        this.state = {error:"",detail:""}; 
+        this.state = {}; 
     }
 
     showError(error:string,detailIn?:string):void {
