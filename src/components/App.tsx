@@ -6,6 +6,7 @@ import "./App.scss";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
 import AdminPage, { AdminNewPage } from "./page/admin/Admin";
+import { CredentialsEnum } from "./page/admin/login-panel/CredentialsEnum";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -23,6 +24,15 @@ const apps = [
 ];
 
 export default class App extends React.Component<{sessionManager:SessionManager}> {
+    onLogin:(cred:{[x in CredentialsEnum]:string})=>Promise<void> = async(cred)=>{
+        const { sessionManager } = this.props;
+        const { email, password } = cred;
+        sessionManager.login(email, password);
+    };
+    onLogout:()=>Promise<void> = async()=>{
+        const { sessionManager } = this.props;
+        sessionManager.logout();
+    };
     render():ReactNode {
         const { sessionManager } = this.props;
         const loggedIn = sessionManager.currentSession !== null,
@@ -42,7 +52,7 @@ export default class App extends React.Component<{sessionManager:SessionManager}
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />
-                    <SettingsPage admin={{loggedIn,logout:()=>console.log("TODO LOGOUT")}} />
+                    <SettingsPage admin={{loggedIn,logout:this.onLogout}} />
                 </Route>
                 <Route path="/about">
                     <Header pageName="about" />
@@ -50,11 +60,11 @@ export default class App extends React.Component<{sessionManager:SessionManager}
                 </Route>
                 <Route path="/admin">
                     <Header pageName="admin" />
-                    <AdminPage login={{loggedIn,isSignup:false,login:async()=>console.log("TODO LOGIN")}} adminToken={{create:async ()=>console.log("TODO CREATE ADMIN TOKEN")}}/>
+                    <AdminPage login={{loggedIn,isSignup:false,login:this.onLogin}} adminToken={{create:async ()=>console.log("TODO CREATE ADMIN TOKEN")}}/>
                 </Route>
                 <Route path="/admin-new/:acToken">
                     <Header pageName="admin" />
-                    <AdminNewPage signup={async(tok,cred)=>console.log("TODO SIGNUP",tok,cred)}/>
+                    <AdminNewPage signup={async(cred)=>console.log("TODO SIGNUP",cred)}/>
                 </Route>
                 <Route>
                     <Header pageName="404" />

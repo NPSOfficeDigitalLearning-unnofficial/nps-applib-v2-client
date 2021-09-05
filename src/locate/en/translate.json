@@ -57,11 +57,11 @@
                 },
                 "login": {
                     "submit": "Login",
-                    "username": "Username",
+                    "email": "Email",
                     "password": "Password"
                 },
                 "signup": {
-                    "infoBlurb": "Create your new administrative account by providing the username and password for the account to use.",
+                    "infoBlurb": "Create your new administrative account by providing the email and password for the account to use.",
                     "submit": "Signup"
                 }
             },

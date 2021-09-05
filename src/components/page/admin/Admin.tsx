@@ -4,20 +4,19 @@ import ACLink from "./ACLink";
 import LoginPanel from "./login-panel/LoginPanel";
 import { Trans } from "react-i18next";
 import { CredentialsEnum } from "./login-panel/CredentialsEnum";
-import { useParams } from "react-router-dom";
 
 
+// TODO, remake admin signup to reflect new system.
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function AdminNewPage(props:{signup:(token:string,cred:{[x in CredentialsEnum]:string})=>void,signupError?:string}):JSX.Element {
-    const { acToken } = useParams() as { acToken: string };
+export function AdminNewPage(props:{signup:(cred:{[x in CredentialsEnum]:string})=>void,signupError?:string}):JSX.Element {
     return (
         <AdminPage
             login={{
                 loggedIn: false,
                 isSignup: true,
                 error: props.signupError, 
-                login: cred=>props.signup(acToken,cred)
+                login: cred=>props.signup(cred)
             }}
             adminToken={{create:()=>{}}}/>
     );

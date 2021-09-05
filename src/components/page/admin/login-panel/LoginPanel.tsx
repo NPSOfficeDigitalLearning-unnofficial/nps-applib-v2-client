@@ -8,7 +8,7 @@ import "./LoginPanel.scss";
 export default class LoginPanel extends React.Component<{loginError?:string, isSignup:boolean, login:(cred:{[x in CredentialsEnum]:string})=>void}, {[x in CredentialsEnum]: string}> {
     constructor(props:LoginPanel["props"]) {
         super(props);
-        this.state = {username:"",password:""};
+        this.state = {email:"",password:""};
     }
 
     onChange = (which:CredentialsEnum,e:React.ChangeEvent<HTMLInputElement>):void => {
@@ -41,7 +41,7 @@ export default class LoginPanel extends React.Component<{loginError?:string, isS
                 <WidthLimiter>
                     {this.props.isSignup && <p><Trans>page.admin.signup.infoBlurb</Trans></p>}
                     {this.props.loginError && <div className="-loginError"><Trans>{this.props.loginError}</Trans></div>}
-                    {this.renderCredentialInput("username")}
+                    {this.renderCredentialInput("email")}
                     {this.renderCredentialInput("password")}
                     <button onClick={this.onSubmit} onKeyPress={this.onSubmit}><Trans>{`page.admin.${this.props.isSignup?"signup":"login"}.submit`}</Trans></button>
                 </WidthLimiter>

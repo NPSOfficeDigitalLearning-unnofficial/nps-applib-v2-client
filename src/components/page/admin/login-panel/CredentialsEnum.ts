@@ -1,1 +1,1 @@
-export type CredentialsEnum = "username" | "password";
+export type CredentialsEnum = "email" | "password";
