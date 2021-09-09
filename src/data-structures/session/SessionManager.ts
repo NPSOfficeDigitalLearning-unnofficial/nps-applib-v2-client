@@ -1,16 +1,12 @@
-import { APIErrorResponse } from "../../api/api-types";
 import { apiFetch } from "../../api/apiFetch";
 import { ErrorData } from "../../components/error-display/ErrorDisplay";
+import { apiErrResData } from "../apiErrResData";
+import DataManager from "../DataManager";
 import Session, { SessionData } from "./Session";
 
 type SessionChangeHandler = (manager:SessionManager,newSession:Session|null)=>void;
 
-function apiErrResData(res:APIErrorResponse):ErrorData {
-    const { error, moreInfo } = res;
-    return { error, detail: moreInfo };
-}
-
-export default class SessionManager {
+export default class SessionManager extends DataManager<SessionChangeHandler> {
     
     private _currentSession:Session|null = null;
     public get currentSession():Session|null { return this._currentSession }
@@ -20,7 +16,7 @@ export default class SessionManager {
     }
 
     /** Use the API to fetch data on the current logged in user. */
-    async fetchCurrentSession():Promise<void|ErrorData> {
+    async fetchCurrent():Promise<void|ErrorData> {
         // use `GET /api/session` to get the current session data.
         const res = await apiFetch<never,SessionData&{loggedIn:true}|{loggedIn:false}>(["session"],"GET");
         if (res.type === "data")
@@ -32,7 +28,7 @@ export default class SessionManager {
     }
 
     /** Use the API to log the user in. */
-    async login(email:string,password:string):Promise<void|{error:string,moreInfo?:string}> {
+    async login(email:string,password:string):Promise<void|ErrorData> {
         // use `POST /api/session` to log the user in.
         const res = await apiFetch<{email:string,password:string},SessionData>(["session"],"POST",{email,password});
 
@@ -54,13 +50,8 @@ export default class SessionManager {
             return apiErrResData(res);
     }
 
-    private readonly _sessionChangeHandlers:Set<SessionChangeHandler> = new Set();
-
-    addChangeHandler   (callback:SessionChangeHandler):void { this._sessionChangeHandlers.add   (callback) }
-    removeChangeHandler(callback:SessionChangeHandler):void { this._sessionChangeHandlers.delete(callback) }
-    clearChangeHandlers():void                              { this._sessionChangeHandlers.clear ()         }
+    /** Private function which is called to update the client of changes. */
     private onSessionChange():void {
-        for (let handler of this._sessionChangeHandlers.values())
-            handler(this,this.currentSession);
+        this._callChangeHandlers(this,this.currentSession);
     };
 }

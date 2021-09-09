@@ -1,5 +1,6 @@
 import ApplicationInit from "./ApplicationInit";
 import { ApprovalStatusEnum, PrivacyStatusEnum, PlatformEnum, GradeLevelEnum, SubjectEnum } from "./application-enums";
+import _ from "lodash";
 
 const DEFAULT_APP_DATA:Required<ApplicationInit> = { id: null, name: "", url: "", approval: "UNK", privacy: "UNK", grades: [], platforms: [], subjects: [] };
 
@@ -54,5 +55,9 @@ export default class Application {
     }
     toString():string {
         return `[ApplicationData "${this.name}" (id: ${this.id})]`;
+    }
+
+    static equals(a:Application,b:Application) {
+        return _.isEqual(a.toJSON(),b.toJSON());
     }
 }
