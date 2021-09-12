@@ -2,12 +2,12 @@ import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
 import ApplicationsManager from "../data-structures/app/ApplicationsManager";
 import SessionManager from "../data-structures/session/SessionManager";
+import { AsyncVoid } from "../util/ts-util";
 import "./App.scss";
 import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
-import AdminPage, { AdminNewPage } from "./page/admin/Admin";
-import { CredentialsEnum } from "./page/admin/login-panel/CredentialsEnum";
+import AdminPage, { LoginFunc } from "./page/admin/Admin";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -16,16 +16,27 @@ import SettingsPage from "./page/settings/Settings";
 export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager}> {
     readonly errDisplayRef = React.createRef<ErrorDisplay>();
 
-    onLogin:(cred:{[x in CredentialsEnum]:string})=>Promise<void> = async(cred)=>{
+    onLogin:LoginFunc = async(cred)=>{
         const { sessionManager } = this.props;
         const { email, password } = cred;
-        this.showErrorIfExists(await sessionManager.login(email, password));
+        try {
+            this.showErrorIfExists(await sessionManager.login(email, password));
+        } catch (e) {
+            console.error(e);
+            this.showRawError(e);
+        }
     };
-    onLogout:()=>Promise<void> = async()=>{
+    onLogout:AsyncVoid = async()=>{
         const { sessionManager } = this.props;
-        this.showErrorIfExists(await sessionManager.logout());
+        try {
+            this.showErrorIfExists(await sessionManager.logout());
+        } catch (e) {
+            console.error(e);
+            this.showRawError(e);
+        }
     };
 
+    showRawError = (err:any) => this.showError({error:"general",detail:(err instanceof Error)?err.stack:err});
     showErrorIfExists = (errData?:ErrorData|void):void => errData && this.showError(errData);
     showError = (errData:ErrorData):void=>{
         const { error, detail } = errData;
@@ -35,8 +46,8 @@ export default class App extends React.Component<{sessionManager:SessionManager,
     render():ReactNode {
         const { sessionManager, appsManager } = this.props;
         const loggedIn = sessionManager.currentSession !== null,
-            isEditor = sessionManager.currentSession?.isEditor ?? false,
-            isAdmin = sessionManager.currentSession?.isAdmin ?? false;
+            isAdmin = sessionManager.currentSession?.isAdmin ?? false,
+            isEditor = isAdmin || (sessionManager.currentSession?.isEditor ?? false);
 
         const apps = appsManager.allApps;
 
@@ -62,11 +73,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/admin">
                     <Header pageName="admin" />
-                    <AdminPage login={{loggedIn,isSignup:false,login:this.onLogin}} adminToken={{create:async ()=>console.log("TODO CREATE ADMIN TOKEN")}}/>
-                </Route>
-                <Route path="/admin-new/:acToken">
-                    <Header pageName="admin" />
-                    <AdminNewPage signup={async(cred)=>console.log("TODO SIGNUP",cred)}/>
+                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:async()=>console.log("TODO")}} isAdmin={isAdmin} isEditor={isEditor}/>
                 </Route>
                 <Route>
                     <Header pageName="404" />

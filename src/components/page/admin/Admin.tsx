@@ -1,40 +1,51 @@
 import React, { ReactNode } from "react";
 import "./Admin.scss";
-import ACLink from "./ACLink";
 import LoginPanel from "./login-panel/LoginPanel";
 import { Trans } from "react-i18next";
 import { CredentialsEnum } from "./login-panel/CredentialsEnum";
+import { Link } from "react-router-dom";
+import EditUsersPanel from "./edit-users-panel/EditUsersPanel";
+import PermsList from "./PermsList";
+import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
 
+export type LoginFunc = (cred:{[x in CredentialsEnum]:string})=>Promise<void>;
 
 // TODO, remake admin signup to reflect new system.
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export function AdminNewPage(props:{signup:(cred:{[x in CredentialsEnum]:string})=>void,signupError?:string}):JSX.Element {
-    return (
-        <AdminPage
-            login={{
-                loggedIn: false,
-                isSignup: true,
-                error: props.signupError, 
-                login: cred=>props.signup(cred)
-            }}
-            adminToken={{create:()=>{}}}/>
-    );
-}
 
+export default class AdminPage extends React.Component<{login: {loggedIn: boolean, email?:string, error?: string, login:LoginFunc, signup:LoginFunc}, isAdmin: boolean, isEditor: boolean}, {awaitingResponse?:boolean}> {
+    constructor(props:AdminPage["props"]) {
+        super(props);
+        this.state = {};
+    }
 
-export default class AdminPage extends React.Component<{login: {loggedIn: boolean, isSignup: boolean, error?: string, login:(cred:{[x in CredentialsEnum]:string})=>void}, adminToken:{url?: string, create:()=>void}}> {
+    /** Handle logging in and signing up. */
+    onLogin = (isSignup:boolean,...args:Parameters<LoginFunc>):void => {
+        const { login: { login, signup } } = this.props;
+        let p;
+        if (isSignup) p = signup(...args);
+        else p = login(...args);
+        this.setState({awaitingResponse:true});
+        p.then(()=>this.setState({awaitingResponse:false}));
+    };
+    
     render():ReactNode {
+        const { login: { loggedIn, error, email }, isAdmin, isEditor } = this.props;
         return (
             <main className="AdminPage">
                 <h1><Trans>page.admin.header</Trans></h1>
                 {
-                    this.props.login.loggedIn ? (
-                        <div>
-                            <ACLink value={this.props.adminToken.url} create={this.props.adminToken.create} />
-                        </div>
+                    loggedIn ? (
+                        <>
+                            <h3><Trans values={{email}}>page.admin.greeting</Trans></h3>
+                            <WidthLimiter>
+                                <Link to="/settings" className="-logout"><Trans>page.admin.logoutPrompt</Trans></Link>
+                                <PermsList isAdmin={isAdmin} isEditor={isEditor} />
+                            </WidthLimiter>
+                            {isAdmin && <EditUsersPanel/>}
+                        </>
                     ) : (
-                        <LoginPanel loginError={this.props.login.error} isSignup={this.props.login.isSignup} login={this.props.login.login}/>
+                        <LoginPanel loginError={error} login={this.onLogin} lockInput={this.state.awaitingResponse ?? false}/>
                     )
                 }
             </main>

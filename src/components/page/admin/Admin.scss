@@ -3,9 +3,13 @@
 @import "../../interactables.scss";
 
 .AdminPage {
-    > h1 {
+    > h1, > h3 {
         text-align: center;
         color: $g-fg2;
+    }
+    > h3 { color: $g-fg; }
+    .WidthLimiter {
+        padding: 0em 1em;
     }
     .-ACLink {
         @include FloatingBox(true);
@@ -49,6 +53,66 @@
         }
         button {
             @include button();
+        }
+        :disabled {
+            opacity: 0.5;
+        }
+    }
+    .-EditUsersPanel {
+        border: 1px solid $g-shadow;
+        border-bottom: none;
+        width: 400px;
+        margin: 1em calc(50% - 200px);
+        .-row {
+            display: flex;
+            border-bottom: 1px solid $g-shadow;
+            .-email {
+                flex: 1;
+                padding: 5px;
+            }
+            .-isEditor { 
+                padding: 5px;
+                flex: 0 1 150px;
+                border: 2px solid transparent;
+                transition: .3s border-color, .3s opacity;
+                &.-is-true {
+                    background: $g-btn-fg;
+                    color: $g-btn-bg;
+                }
+                &.-is-false {
+                    background: $g-btn-bg;
+                    color: $g-btn-fg;
+                }
+                &:hover {
+                    border-color: currentColor;
+                    opacity: .5;
+                }
+            }
+        }
+    }
+    .-logout {
+        padding: .2em;
+        $w: 20em;
+        margin: .2em calc(50% - #{$w/2});
+        padding: .2em;
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        color: $g-btn-fg;
+        background: $g-btn-bg;
+        &:hover {
+            color: $g-btn-bg;
+            background: $g-btn-fg;
+        }
+    }
+    .-PermsList {
+        margin-block-start: 1em;
+        color: $g-fg;
+        span {
+            font-weight: bold;
+        }
+        ul {
+            list-style: square;
         }
     }
 }

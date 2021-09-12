@@ -12,7 +12,8 @@
                     "typeMismatch": "[Format failed: type mismatch]",
                     "noFormat": "[Format failed: no such format]"
                 }
-            }
+            },
+            "undefined":"[null]"
         },
         "header": {
             "settingsLink": "Settings",
@@ -48,12 +49,24 @@
             "admin": {
                 "name": "Admin Home",
                 "header": "Administration Page",
-                "acLink": {
-                    "title": "ACLink",
-                    "create": "Click to generate account creation link.",
-                    "createDescription": "Account Creation Link: when sent to new admin, allows them to create their own account on the linked page.",
-                    "clickToCopy": "New ACLink created. Copied to clipboard, click to re-copy.",
-                    "expired": "Generated ACLink has expired, click to generate a new one."
+                "greeting": "Hello, {{email, possiblyNull}}",
+                "logoutPrompt": "Log out via settings",
+                "userEditor": {
+                    "title": "Manage permissions",
+                    "toggleButton":{
+                        "true":"Is Editor",
+                        "false":"Not Editor"
+                    },
+                    "toggleButtonLabel":{
+                        "true":"{{email}}: Is Editor, click to disable.",
+                        "false":"{{email}}: Not Editor, click to disable."
+                    }
+                },
+                "permission": {
+                    "listTitle": "Your permissions:",
+                    "askForVerification": "Ask a lead admin to verify your account.",
+                    "edit": "Go to the main page and add, edit, and delete apps.",
+                    "admin": "Modify permissions of other accounts."
                 },
                 "login": {
                     "submit": "Login",
@@ -61,7 +74,7 @@
                     "password": "Password"
                 },
                 "signup": {
-                    "infoBlurb": "Create your new administrative account by providing the email and password for the account to use.",
+                    "infoBlurb": "If you are creating a new account, enter the email and password for the account to use.",
                     "submit": "Signup"
                 }
             },

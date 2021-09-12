@@ -31,6 +31,10 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
                 if (typeof(value) === "number")
                     return value.toLocaleString(lang);
                 else return t("general.error.format.typeMismatch");
+            case "possiblyNull":
+                if (value === undefined || value === null)
+                    return t("general.undefined");
+                else return value;
             default: return t("general.error.format.noFormat");
             }
         }

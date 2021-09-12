@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
 import { Trans, Translation } from "react-i18next";
 import WidthLimiter from "../../../leaf-component/WidthLimiter/WidthLimiter";
+import { LoginFunc } from "../Admin";
 import { CredentialsEnum } from "./CredentialsEnum";
-import "./LoginPanel.scss";
 
 
-export default class LoginPanel extends React.Component<{loginError?:string, isSignup:boolean, login:(cred:{[x in CredentialsEnum]:string})=>void}, {[x in CredentialsEnum]: string}> {
+export default class LoginPanel extends React.Component<{loginError?:string, lockInput:boolean, login:(isSignup:boolean,...args:Parameters<LoginFunc>)=>void}, {[x in CredentialsEnum]: string}> {
     constructor(props:LoginPanel["props"]) {
         super(props);
         this.state = {email:"",password:""};
@@ -19,13 +19,14 @@ export default class LoginPanel extends React.Component<{loginError?:string, isS
         this.setState(newData as Required<typeof newData>);
     };
     
-    onSubmit = (e:React.MouseEvent|React.KeyboardEvent):void => {
+    onSubmit = (signup:boolean,e:React.MouseEvent|React.KeyboardEvent):void => {
         if (!e.isTrusted) return;
-        this.props.login(this.state);
+        this.props.login(signup,this.state);
     };
 
     renderCredentialInput(which:CredentialsEnum):ReactNode {
         return (<Translation>{t=>(<input
+            disabled={this.props.lockInput}
             value={this.state[which]}
             onChange={this.onChange.bind(this,which)}
             placeholder={t(`page.admin.login.${which}`)}
@@ -34,16 +35,24 @@ export default class LoginPanel extends React.Component<{loginError?:string, isS
             aria-label={t(`page.admin.login.${which}`)}
         />)}</Translation>);
     }
+    renderSubmitButton(isSignup:boolean):ReactNode {
+        return (<button
+            disabled={this.props.lockInput}
+            onClick={this.onSubmit.bind(this,false)}>
+            <Trans>{`page.admin.${isSignup?"signup":"login"}.submit`}</Trans>
+        </button>);
+    }
 
     render():ReactNode {
         return (
             <div className="-LoginPanel">
                 <WidthLimiter>
-                    {this.props.isSignup && <p><Trans>page.admin.signup.infoBlurb</Trans></p>}
+                    {<p><Trans>page.admin.signup.infoBlurb</Trans></p>}
                     {this.props.loginError && <div className="-loginError"><Trans>{this.props.loginError}</Trans></div>}
                     {this.renderCredentialInput("email")}
                     {this.renderCredentialInput("password")}
-                    <button onClick={this.onSubmit} onKeyPress={this.onSubmit}><Trans>{`page.admin.${this.props.isSignup?"signup":"login"}.submit`}</Trans></button>
+                    {this.renderSubmitButton(false)}
+                    {this.renderSubmitButton(true)}
                 </WidthLimiter>
             </div>
         );
