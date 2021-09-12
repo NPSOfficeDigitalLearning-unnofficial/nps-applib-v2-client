@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
-import Application from "../data-structures/app/Application";
+import ApplicationsManager from "../data-structures/app/ApplicationsManager";
 import SessionManager from "../data-structures/session/SessionManager";
 import "./App.scss";
 import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
@@ -12,19 +12,8 @@ import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
 
-const apps = [
-    new Application({name:"yeetapp",url:"google.com",approval:"PILOT",privacy:"INSTRUCTOR_ONLY"}),
-    new Application({name:"thte",approval:"14_PARENTAL_CONSENT",privacy:"NO_INFO_COLLECTED"}),
-    new Application({name:"thecat",approval:"APPROVED",privacy:"NONCOMPLIANT"}),
-    new Application({name:"anotherOne",url:"https://youtube.com"}),
-    new Application({name:"the yes"}),
-    new Application({name:"stupid thing",url:"#",privacy:"NONCOMPLIANT"}),
-    new Application({name:"newapp",id:"T0T41LY_AN-1D"}),
-    new Application({name:"funny"}),
-    new Application({name:"obnoxios app with stupidly long name"})
-];
 
-export default class App extends React.Component<{sessionManager:SessionManager}> {
+export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager}> {
     readonly errDisplayRef = React.createRef<ErrorDisplay>();
 
     onLogin:(cred:{[x in CredentialsEnum]:string})=>Promise<void> = async(cred)=>{
@@ -44,10 +33,12 @@ export default class App extends React.Component<{sessionManager:SessionManager}
     };
 
     render():ReactNode {
-        const { sessionManager } = this.props;
+        const { sessionManager, appsManager } = this.props;
         const loggedIn = sessionManager.currentSession !== null,
             isEditor = sessionManager.currentSession?.isEditor ?? false,
             isAdmin = sessionManager.currentSession?.isAdmin ?? false;
+
+        const apps = appsManager.allApps;
 
         // eslint-disable-next-line @typescript-eslint/naming-convention
         const Header = (props:{pageName:string}):JSX.Element => (

@@ -1,14 +1,29 @@
+import { apiFetch } from "../../api/apiFetch";
 import { ErrorData } from "../../components/error-display/ErrorDisplay";
+import { apiErrResData } from "../apiErrResData";
 import DataManager from "../DataManager";
 import Application from "./Application";
+import ApplicationInit from "./ApplicationInit";
 
 type AppsChangeWhat = "add"|"del"|"edit";
-type AppsChangeHandler = (manager:ApplicationManager,what:AppsChangeWhat,changedData:Application[])=>void;
+type AppsChangeHandler = (manager:ApplicationsManager,what:AppsChangeWhat,changedData:Application[])=>void;
 
-export default class ApplicationManager extends DataManager<AppsChangeHandler> {
+export default class ApplicationsManager extends DataManager<AppsChangeHandler> {
     
+    /** Use api to fetch information about all apps in the db. */
     async fetchCurrent():Promise<void|ErrorData> {
-
+        // Use `GET /api/app` to get the apps.
+        const res = await apiFetch<never,ApplicationInit[]>(["app"],"GET");
+        let ret:ErrorData|void;
+        if (res.type === "data") {
+            this._allApps.clear();
+            res.data.forEach(v=>this._allApps.add(new Application(v)));
+        } else if (res.type === "error") {
+            this._allApps.clear();
+            ret = apiErrResData(res);
+        }
+        this._onAppsChange();
+        return ret;
     }
 
     /** A set containing all the apps, kept up to date by fetchCurrent. */
@@ -16,11 +31,12 @@ export default class ApplicationManager extends DataManager<AppsChangeHandler> {
     /** Copy of _allApps before the last onChange for tracking differences. */
     private readonly _lastAllApps:Set<Application> = new Set();
 
+    /** Public accessor for the list of all apps. */
+    get allApps():Application[] { return [... this._allApps] }
 
-
-
-
-    private onAppsChange():void {
+    
+    /** Called when the contents of _allApps is changed significantly in order to update things which need to be updated idk. */
+    private _onAppsChange():void {
         const newApps:{[k:string]:Application} = {}, deletedApps:{[k:string]:Application} = {}, editedApps:{[k:string]:Application} = {};
 
         // Compute changes
