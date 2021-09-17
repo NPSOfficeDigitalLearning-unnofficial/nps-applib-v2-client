@@ -4,7 +4,7 @@ import { apiErrResData } from "../apiErrResData";
 import DataManager from "../DataManager";
 import Session, { SessionData } from "./Session";
 
-type SessionChangeHandler = (manager:SessionManager,newSession:Session|null)=>void;
+export type SessionChangeHandler = (manager:SessionManager,newSession:Session|null)=>void;
 
 export default class SessionManager extends DataManager<SessionChangeHandler> {
     
@@ -13,6 +13,7 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
     public set currentSession(value:Session|null) {
         this._currentSession = value;
         this.onSessionChange();
+        
     }
 
     /** Use the API to fetch data on the current logged in user. */
@@ -31,6 +32,19 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
     async login(email:string,password:string):Promise<void|ErrorData> {
         // use `POST /api/session` to log the user in.
         const res = await apiFetch<{email:string,password:string},SessionData>(["session"],"POST",{email,password});
+
+        if (res.type === "data")
+            this.currentSession = new Session(res.data);
+        else if (res.type === "error") {
+            this.currentSession = null;
+            return apiErrResData(res);
+        }
+    }
+
+    /** Use the API to sign the user up. */
+    async signup(email:string,password:string):Promise<void|ErrorData> {
+        // use `POST /api/user` to sign the user up.
+        const res = await apiFetch<{email:string,password:string},SessionData>(["user"],"POST",{email,password});
 
         if (res.type === "data")
             this.currentSession = new Session(res.data);

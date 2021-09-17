@@ -11,7 +11,8 @@ interface Setting {
     elts: ({
         key: string
     } & ({
-        type: "button"
+        type: "button",
+        callback: ()=>void
     } | {
         type: "link",
         link: string
@@ -36,7 +37,7 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
                 key: "adminAccount",
                 elts: [
                     admin.loggedIn ? 
-                        { type: "button", key:  "logout" } :
+                        { type: "button", key:  "logout", callback: admin.logout } :
                         { type: "link", key: "login", link: "/admin" }
                 ]
             }
@@ -56,12 +57,10 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
     };
     onSettingsButtonClick = (row:string,elt:string,e:React.MouseEvent<HTMLButtonElement>) => {
         if (!e.isTrusted) return;
-        switch (row) {
-        case "admin":
-            if (elt === "logout")
-                this.props.admin.logout();
-            break;
-        }
+        const rows = this.settingsRows;
+        const eltE = rows.find(v=>v.key===row)?.elts.find(v=>v.key===elt);
+        if (eltE?.type === "button")
+            eltE.callback();
     };
 
     render():ReactNode {

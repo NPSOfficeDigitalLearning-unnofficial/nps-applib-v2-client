@@ -11,6 +11,8 @@ import reportWebVitals from "./reportWebVitals";
 const session = new SessionManager();
 const apps = new ApplicationsManager();
 
+session.fetchCurrent();
+
 ReactDOM.render(
     <React.StrictMode>
         <I18nextProvider i18n={i18n}>

@@ -14,7 +14,7 @@ function apiURL(path:string[]):string {
 
 export async function apiFetch<B,D>(path:string[],method:FetchMethod,body?:B):Promise<APIResponse<D>> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const res = await fetch(apiURL(path),{method,mode:"cors",body:JSON.stringify(body),headers:{"Content-Type": "application/json"}});
+    const res = await fetch(apiURL(path),{method,mode:"cors",body:JSON.stringify(body),credentials:"include",headers:{"Content-Type": "application/json"}});
     return await res.json();
 }
 

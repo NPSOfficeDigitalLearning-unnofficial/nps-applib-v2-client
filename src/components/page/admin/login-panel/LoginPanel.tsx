@@ -38,7 +38,7 @@ export default class LoginPanel extends React.Component<{loginError?:string, loc
     renderSubmitButton(isSignup:boolean):ReactNode {
         return (<button
             disabled={this.props.lockInput}
-            onClick={this.onSubmit.bind(this,false)}>
+            onClick={this.onSubmit.bind(this,isSignup)}>
             <Trans>{`page.admin.${isSignup?"signup":"login"}.submit`}</Trans>
         </button>);
     }

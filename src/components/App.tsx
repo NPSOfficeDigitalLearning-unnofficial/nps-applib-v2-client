@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
 import ApplicationsManager from "../data-structures/app/ApplicationsManager";
-import SessionManager from "../data-structures/session/SessionManager";
+import SessionManager, { SessionChangeHandler } from "../data-structures/session/SessionManager";
 import { AsyncVoid } from "../util/ts-util";
 import "./App.scss";
 import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
@@ -16,16 +16,33 @@ import SettingsPage from "./page/settings/Settings";
 export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager}> {
     readonly errDisplayRef = React.createRef<ErrorDisplay>();
 
-    onLogin:LoginFunc = async(cred)=>{
+    constructor(props:App["props"]) {
+        super(props);
+        props.sessionManager.addChangeHandler(this.onSessionChange);
+    }
+
+    private _mounted:boolean = false;
+    componentDidMount() { this._mounted = true }
+    componentWillUnmount() { this._mounted = false }
+    onSessionChange:SessionChangeHandler = (manager,sess)=>{
+        if (this._mounted)
+            this.forceUpdate();
+        console.log("sess",sess);
+        
+    };
+
+    onLogin:LoginFunc = async(cred)=>this.onLoginSignup("login",cred);
+    onSignup:LoginFunc = async(cred)=>this.onLoginSignup("signup",cred);
+    async onLoginSignup(which:"login"|"signup",cred:Parameters<LoginFunc>[0]):Promise<void> {
         const { sessionManager } = this.props;
         const { email, password } = cred;
         try {
-            this.showErrorIfExists(await sessionManager.login(email, password));
+            this.showErrorIfExists(await sessionManager[which](email, password));
         } catch (e) {
             console.error(e);
             this.showRawError(e);
         }
-    };
+    }
     onLogout:AsyncVoid = async()=>{
         const { sessionManager } = this.props;
         try {
@@ -73,7 +90,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/admin">
                     <Header pageName="admin" />
-                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:async()=>console.log("TODO")}} isAdmin={isAdmin} isEditor={isEditor}/>
+                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:this.onSignup}} isAdmin={isAdmin} isEditor={isEditor}/>
                 </Route>
                 <Route>
                     <Header pageName="404" />

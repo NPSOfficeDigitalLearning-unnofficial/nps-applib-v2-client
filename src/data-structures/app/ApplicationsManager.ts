@@ -5,8 +5,8 @@ import DataManager from "../DataManager";
 import Application from "./Application";
 import ApplicationInit from "./ApplicationInit";
 
-type AppsChangeWhat = "add"|"del"|"edit";
-type AppsChangeHandler = (manager:ApplicationsManager,what:AppsChangeWhat,changedData:Application[])=>void;
+export type AppsChangeWhat = "add"|"del"|"edit";
+export type AppsChangeHandler = (manager:ApplicationsManager,what:AppsChangeWhat,changedData:Application[])=>void;
 
 export default class ApplicationsManager extends DataManager<AppsChangeHandler> {
     
