@@ -7,13 +7,14 @@ import { Link } from "react-router-dom";
 import EditUsersPanel from "./edit-users-panel/EditUsersPanel";
 import PermsList from "./PermsList";
 import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
+import UsersManager from "../../../data-structures/user/UsersManager";
 
 export type LoginFunc = (cred:{[x in CredentialsEnum]:string})=>Promise<void>;
 
 // TODO, remake admin signup to reflect new system.
 
 
-export default class AdminPage extends React.Component<{login: {loggedIn: boolean, email?:string, error?: string, login:LoginFunc, signup:LoginFunc}, isAdmin: boolean, isEditor: boolean}, {awaitingResponse?:boolean}> {
+export default class AdminPage extends React.Component<{login: {loggedIn: boolean, email?:string, error?: string, login:LoginFunc, signup:LoginFunc}, isAdmin: boolean, isEditor: boolean, usersManager:UsersManager}, {awaitingResponse?:boolean}> {
     constructor(props:AdminPage["props"]) {
         super(props);
         this.state = {};
@@ -30,7 +31,7 @@ export default class AdminPage extends React.Component<{login: {loggedIn: boolea
     };
     
     render():ReactNode {
-        const { login: { loggedIn, error, email }, isAdmin, isEditor } = this.props;
+        const { login: { loggedIn, error, email }, isAdmin, isEditor, usersManager } = this.props;
         return (
             <main className="AdminPage">
                 <h1><Trans>page.admin.header</Trans></h1>
@@ -42,7 +43,7 @@ export default class AdminPage extends React.Component<{login: {loggedIn: boolea
                                 <Link to="/settings" className="-logout"><Trans>page.admin.logoutPrompt</Trans></Link>
                                 <PermsList isAdmin={isAdmin} isEditor={isEditor} />
                             </WidthLimiter>
-                            {isAdmin && <EditUsersPanel/>}
+                            {isAdmin && <EditUsersPanel usersManager={usersManager}/>}
                         </>
                     ) : (
                         <LoginPanel loginError={error} login={this.onLogin} lockInput={this.state.awaitingResponse ?? false}/>

@@ -1,29 +1,35 @@
 import React, { ReactNode } from "react";
 import { Trans } from "react-i18next";
-import Session from "../../../../data-structures/session/Session";
+import UsersManager, { UsersChangeHandler } from "../../../../data-structures/user/UsersManager";
 import EditUserRow from "./EditUserRow";
 
-const users:Session[] = [
-    new Session({id:"1",email:"ay@bnr.com",isAdmin:false,isEditor:true}),
-    new Session({id:"2",email:"t@bryh.com",isAdmin:false,isEditor:true}),
-    new Session({id:"3",email:"tre@bryh.com",isAdmin:true,isEditor:false}),
-    new Session({id:"4",email:"ahtr@bryj.com",isAdmin:true,isEditor:true}),
-    new Session({id:"5",email:"awr@etb.com",isAdmin:false,isEditor:false}),
-    new Session({id:"6",email:"aeb@yjb.com",isAdmin:false,isEditor:true})
-];
 
-export default class EditUsersPanel extends React.Component {
+
+export default class EditUsersPanel extends React.Component<{usersManager:UsersManager}> {
+
+    constructor(props:EditUsersPanel["props"]) {
+        super(props);
+        props.usersManager.addChangeHandler(this.onUserdataChange);
+        props.usersManager.fetchCurrent();
+    }
+    
+    private _mounted:boolean = false;
+    componentDidMount() { this._mounted = true }
+    componentWillUnmount() { this._mounted = false }
+    onUserdataChange:UsersChangeHandler = (manager,what,data)=>{
+        if (this._mounted)
+            this.forceUpdate();
+    };
 
     onRowChange(id:string):void {
-        console.log("TODO change",id);
-        this.forceUpdate();
+        this.props.usersManager.patchUser(id,s=>s.setPermission("editor",!s.isEditor));
     }
 
     render():ReactNode {
         return (<>
             <h3><Trans>page.admin.userEditor.title</Trans></h3>
             <div className="-EditUsersPanel">
-                {users.map(v=>(
+                {this.props.usersManager.allUsers.map(v=>(
                     <EditUserRow key={v.id} user={v} onChange={this.onRowChange.bind(this,v.id)}/>
                 ))}
             </div>

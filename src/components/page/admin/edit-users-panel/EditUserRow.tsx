@@ -4,8 +4,7 @@ import Session from "../../../../data-structures/session/Session";
 
 export default class EditUserRow extends React.Component<{user:Session,onChange:()=>void}> {
     toggleEditor = () => {
-        const { user, onChange } = this.props;
-        user.setPermission("editor", !user.isEditor);
+        const { onChange } = this.props;
         onChange();
     };
     render():ReactNode {

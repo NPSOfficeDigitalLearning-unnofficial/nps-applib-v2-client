@@ -1,6 +1,15 @@
 import { ErrorData } from "../components/error-display/ErrorDisplay";
 
+const CURRENCY_FETCH_COOLDOWN = 10000; // 10s minimum between fetchCurrent calls.
+
 export default abstract class DataManager<ChangeHandler extends (...args:any[])=>void> {
+    
+    private lastCurrencyFetch:number = -Infinity;
+    protected checkNeedsFetch():boolean {
+        return this.lastCurrencyFetch+CURRENCY_FETCH_COOLDOWN < Date.now();
+    }
+    protected onFetchComplete() { this.lastCurrencyFetch = Date.now() }
+
     abstract fetchCurrent():Promise<void|ErrorData>;
 
     

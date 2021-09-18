@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
 import ApplicationsManager from "../data-structures/app/ApplicationsManager";
 import SessionManager, { SessionChangeHandler } from "../data-structures/session/SessionManager";
+import UsersManager from "../data-structures/user/UsersManager";
 import { AsyncVoid } from "../util/ts-util";
 import "./App.scss";
 import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
@@ -13,7 +14,7 @@ import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
 
 
-export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager}> {
+export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager,usersManager:UsersManager}> {
     readonly errDisplayRef = React.createRef<ErrorDisplay>();
 
     constructor(props:App["props"]) {
@@ -27,8 +28,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
     onSessionChange:SessionChangeHandler = (manager,sess)=>{
         if (this._mounted)
             this.forceUpdate();
-        console.log("sess",sess);
-        
+        console.log("LOGGED IN AS:",sess?.id);
     };
 
     onLogin:LoginFunc = async(cred)=>this.onLoginSignup("login",cred);
@@ -90,7 +90,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/admin">
                     <Header pageName="admin" />
-                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:this.onSignup}} isAdmin={isAdmin} isEditor={isEditor}/>
+                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:this.onSignup}} isAdmin={isAdmin} isEditor={isEditor} usersManager={this.props.usersManager}/>
                 </Route>
                 <Route>
                     <Header pageName="404" />

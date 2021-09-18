@@ -18,8 +18,10 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
 
     /** Use the API to fetch data on the current logged in user. */
     async fetchCurrent():Promise<void|ErrorData> {
+        if (!this.checkNeedsFetch()) return;
         // use `GET /api/session` to get the current session data.
         const res = await apiFetch<never,SessionData&{loggedIn:true}|{loggedIn:false}>(["session"],"GET");
+        this.onFetchComplete();
         if (res.type === "data")
             this.currentSession = res.data.loggedIn ? new Session(res.data) : null;
         else if (res.type === "error") {
