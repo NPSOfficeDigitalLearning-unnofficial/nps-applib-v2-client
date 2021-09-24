@@ -34,7 +34,14 @@
                     "appsPerPageLabel": "Results per page:"
                 },
                 "appsHeadingLabel": "Application list:",
-                "pageSelectorLabel": "Application list page selector:"
+                "pageSelectorLabel": "Application list page selector:",
+                "addAppLink": "Add another app"
+            },
+            "app": {
+                "name": "Application Entry",
+                "isCreating": "Creating app...",
+                "appIdMissing": "App [id `{{id}}`] missing or deleted.",
+                "backToMain": "Go back to main menu."
             },
             "settings": {
                 "name": "Settings",

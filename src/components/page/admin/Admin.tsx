@@ -11,8 +11,6 @@ import UsersManager from "../../../data-structures/user/UsersManager";
 
 export type LoginFunc = (cred:{[x in CredentialsEnum]:string})=>Promise<void>;
 
-// TODO, remake admin signup to reflect new system.
-
 
 export default class AdminPage extends React.Component<{login: {loggedIn: boolean, email?:string, error?: string, login:LoginFunc, signup:LoginFunc}, isAdmin: boolean, isEditor: boolean, usersManager:UsersManager}, {awaitingResponse?:boolean}> {
     constructor(props:AdminPage["props"]) {

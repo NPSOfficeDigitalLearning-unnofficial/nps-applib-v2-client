@@ -1,4 +1,6 @@
 import React, { ReactNode } from "react";
+import { Trans } from "react-i18next";
+import { Link } from "react-router-dom";
 import Application from "../../../data-structures/app/Application";
 import { ApprovalStatusEnum, APPROVAL_STATUSES, GradeLevelEnum, GRADE_LEVELS, PlatformEnum, PLATFORMS, PrivacyStatusEnum, PRIVACY_STATUSES, SubjectEnum, SUBJECTS } from "../../../data-structures/app/application-enums";
 import { castSetEltsToEnum } from "../../../util/array-util";
@@ -69,16 +71,19 @@ export default class MainPage extends React.Component<{apps:Application[],canEdi
         return filteredArr;
     }
 
+
     render():ReactNode {
         const { searchOptions } = this.state;
+        const { canEdit } = this.props;
         return (
             <main className="MainPage">
                 <div className="-center">
                     <SearchBar searchParams={searchOptions}
                         onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
+                    {canEdit && <Link to="/new-app" className="-addAppButton"><Trans>page.main.addAppLink</Trans></Link>}
                 </div>
                 <WidthLimiter>
-                    <AppList apps={this.filteredApps} canEdit={this.props.canEdit}/>
+                    <AppList apps={this.filteredApps} canEdit={canEdit}/>
                 </WidthLimiter>
             </main>
         );

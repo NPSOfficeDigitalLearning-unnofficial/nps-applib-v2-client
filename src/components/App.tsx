@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
+import Application from "../data-structures/app/Application";
 import ApplicationsManager from "../data-structures/app/ApplicationsManager";
 import SessionManager, { SessionChangeHandler } from "../data-structures/session/SessionManager";
 import UsersManager from "../data-structures/user/UsersManager";
@@ -9,6 +10,8 @@ import ErrorDisplay, { ErrorData } from "./error-display/ErrorDisplay";
 import Error404Page from "./page/404/404";
 import AboutPage from "./page/about/About";
 import AdminPage, { LoginFunc } from "./page/admin/Admin";
+import AppCreatePage from "./page/app-focus/AppCreatePage";
+import AppFocusPage from "./page/app-focus/AppFocusPage";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -53,6 +56,12 @@ export default class App extends React.Component<{sessionManager:SessionManager,
         }
     };
 
+    doCreateApp = async():Promise<Application>=>{
+        // TODO real implementation of createApp
+        await new Promise<void>(r=>setTimeout(r,2000));
+        return new Application();
+    };
+
     showRawError = (err:any) => this.showError({error:"general",detail:(err instanceof Error)?err.stack:err});
     showErrorIfExists = (errData?:ErrorData|void):void => errData && this.showError(errData);
     showError = (errData:ErrorData):void=>{
@@ -79,6 +88,14 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 <Route path="/" exact>
                     <Header pageName="main" />
                     <MainPage apps={apps} canEdit={isEditor}/>
+                </Route>
+                <Route path="/new-app" exact>
+                    <Header pageName="app" />
+                    <AppCreatePage createApp={this.doCreateApp}/>
+                </Route>
+                <Route path="/app/:id" exact>
+                    <Header pageName="app" />
+                    <AppFocusPage apps={apps} onEdit={()=>console.log("TODO onEdit")} onDelete={()=>console.log("TODO onDelete")}/>
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />

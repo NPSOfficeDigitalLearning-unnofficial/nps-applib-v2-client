@@ -1,0 +1,21 @@
+@import "../../colors.scss";
+
+@mixin hdr {
+    color: $g-fg2;
+    
+}
+
+.AppCreatePage {
+    text-align: center;
+    @include hdr();
+}
+
+.AppFocusPage-missing {
+    text-align: center;
+    .-header {
+        @include hdr();
+    }
+    .-goBack {
+        color: $g-fg;
+    }
+}

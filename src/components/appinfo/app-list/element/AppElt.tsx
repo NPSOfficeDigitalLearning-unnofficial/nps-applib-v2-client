@@ -18,7 +18,7 @@ export default class AppElt extends React.Component<{app:Application,canEdit:boo
                 <div className="-buttons">
                     <ButtonRow
                         text={`app.summary.button.${canEdit?"edit":"info"}`} appName={app.name}
-                        linkType="internal" link="TODO editor page of app"/>
+                        linkType="internal" link={`/app/${app.id}`}/>
                 </div>
             </div></div>
         );
