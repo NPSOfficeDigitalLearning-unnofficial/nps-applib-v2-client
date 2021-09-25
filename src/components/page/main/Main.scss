@@ -1,5 +1,22 @@
+@import "../../colors.scss";
+
 .MainPage {
     .-center {
         text-align: center;
+    }
+    .-addAppButton {
+        display: block;
+        text-align: center;
+        > a {
+            padding: .3em .5em;
+            background: $g-btn-bg;
+            color: $g-btn-fg;
+            text-decoration: none;
+            transition: .3s color, .3s background-color;
+            &:hover {
+                background: $g-btn-fg;
+                color: $g-btn-bg;
+            }
+        }
     }
 }

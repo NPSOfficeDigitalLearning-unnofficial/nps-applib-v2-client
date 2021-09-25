@@ -9,12 +9,15 @@ export default class EditUserRow extends React.Component<{user:Session,onChange:
     };
     render():ReactNode {
         const { user } = this.props;
+        const { isAdmin } = user,
+            isEditor = user.isEditor || isAdmin,
+            transKeySuffix = isAdmin ? "admin" : isEditor.toString();
         return (<Translation>{t=>(<div className="-row">
             <div className="-email">{user.email}</div>
             <button
-                className={`-isEditor -is-${user.isEditor}`} onClick={this.toggleEditor} 
-                aria-label={t(`page.admin.userEditor.toggleButtonLabel.${user.isEditor}`,{email:user.email})}>
-                {t(`page.admin.userEditor.toggleButton.${user.isEditor}`)}
+                className={`-isEditor -is-${isEditor}`} onClick={this.toggleEditor} disabled={isAdmin}
+                aria-label={t(`page.admin.userEditor.toggleButtonLabel.${transKeySuffix}`,{email:user.email})}>
+                {t(`page.admin.userEditor.toggleButton.${transKeySuffix}`)}
             </button>
         </div>)}</Translation>);
     }

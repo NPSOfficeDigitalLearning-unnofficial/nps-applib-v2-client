@@ -62,11 +62,13 @@
                     "title": "Manage permissions",
                     "toggleButton":{
                         "true":"Is Editor",
-                        "false":"Not Editor"
+                        "false":"Not Editor",
+                        "admin":"Is Admin"
                     },
                     "toggleButtonLabel":{
                         "true":"{{email}}: Is Editor, click to disable.",
-                        "false":"{{email}}: Not Editor, click to disable."
+                        "false":"{{email}}: Not Editor, click to disable.",
+                        "admin":"{{email}}: Is Admin."
                     }
                 },
                 "permission": {
@@ -88,7 +90,8 @@
             "about": {
                 "name": "About",
                 "paragraph1": "This app is allows students, teachers, and students to be able to know if the app they need to use is safe and secure. It is currently being developed and maintained by Joseph Huber at NHS, contact through the school email services if there is a problem.",
-                "paragraph2": "This is an open-source project, the code is hosted on GitHub: "
+                "paragraph2": "This is an open-source project, the code is hosted on GitHub: ",
+                "paragraph3": "Project started in 2021 by Joseph Huber. Currently maintained by Joseph Huber."
             }
         },
         "app": {

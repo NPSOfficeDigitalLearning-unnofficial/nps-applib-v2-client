@@ -80,7 +80,11 @@ export default class MainPage extends React.Component<{apps:Application[],canEdi
                 <div className="-center">
                     <SearchBar searchParams={searchOptions}
                         onEnumTermChange={this.updateSearchOptions} onStringTermChange={this.updateSearchOptions} />
-                    {canEdit && <Link to="/new-app" className="-addAppButton"><Trans>page.main.addAppLink</Trans></Link>}
+                    {canEdit && (
+                        <div className="-addAppButton">
+                            <Link to="/new-app"><Trans>page.main.addAppLink</Trans></Link>
+                        </div>
+                    )}
                 </div>
                 <WidthLimiter>
                     <AppList apps={this.filteredApps} canEdit={canEdit}/>

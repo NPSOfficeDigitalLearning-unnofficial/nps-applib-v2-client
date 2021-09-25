@@ -59,6 +59,8 @@
         }
     }
     .-EditUsersPanel {
+        @include FloatingBox();
+
         border: 1px solid $g-shadow;
         border-bottom: none;
         width: 400px;
@@ -72,6 +74,7 @@
             }
             .-isEditor { 
                 padding: 5px;
+                margin: 3px;
                 flex: 0 1 150px;
                 border: 2px solid transparent;
                 transition: .3s border-color, .3s opacity;
@@ -83,8 +86,8 @@
                     background: $g-btn-bg;
                     color: $g-btn-fg;
                 }
-                &:hover {
-                    border-color: currentColor;
+                &:hover, &:disabled {
+                    border-color: $g-btn-fg;
                     opacity: .5;
                 }
             }
