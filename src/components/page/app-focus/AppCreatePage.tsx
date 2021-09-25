@@ -1,27 +1,42 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Trans } from "react-i18next";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import Application from "../../../data-structures/app/Application";
+import { Mutable } from "../../../util/ts-util";
 import "./app-focus-common.scss";
 
-export default class AppCreatePage extends React.Component<{createApp:()=>Promise<Application>},{app?:Application}> {
+export default class AppCreatePage extends React.Component<{createApp:()=>Promise<Application|null>},{app?:Application,failed?:boolean}> {
     constructor(props:AppCreatePage["props"]) {
         super(props);
         this.state = {};
 
         props.createApp().then(app=>{
-            if (this.mounted)
-                this.setState({app});
-            else this.state = {app};
+            // Create partial state depending on if the app was successfully created.
+            const newState:Partial<Mutable<AppCreatePage["state"]>> = {};
+            if (app) newState.app = app;
+            else newState.failed = true;
+            // Merge in the new state.
+            if (this.mounted) this.setState(newState);
+            else this.state = {...this.state, ...newState};
         });
     }
 
+    /** If the component has mounted on the screen yet. */
     private mounted = false;
     componentDidMount() { this.mounted = true }
 
     render() {
-        const {app} = this.state;
-        if (app) return <Redirect to={`/app/${app.id}`}/>;
-        else return <h1 className="AppCreatePage"><Trans>page.app.isCreating</Trans></h1>;
+        const {app,failed} = this.state;
+        let contents:ReactNode;
+
+        if (app) 
+            contents = <Redirect to={`/app/${app.id}`}/>;
+        else if (failed)
+            contents = <><h1><Trans>page.app.createFailed</Trans></h1><Link to="/"><Trans>page.app.backToMain</Trans></Link></>;
+        else 
+            contents = <h1><Trans>page.app.isCreating</Trans></h1>;
+
+        return <main className="AppCreatePage">{contents}</main>;
     }
 }

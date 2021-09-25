@@ -7,7 +7,7 @@ const VD = 300;
 
 export type OptionData<T> = {[key:string]:{name:string,value:T}};
 
-export default class MultiSelect<T> extends React.Component<{text:string,ariaLabel:string,options:OptionData<T>,value:OptionData<T>,onChange:(value:OptionData<T>)=>void},{open:boolean,focused:boolean,optionRefs:RefObject<MultiSelectOption<unknown>>[],visibleTimerId?:NodeJS.Timeout,visible:boolean,focusOption?:number},{}> {
+export default class MultiSelect<T> extends React.Component<{text:string,ariaLabel:string,options:OptionData<T>,value:OptionData<T>,onlyOne?:boolean,onChange:(value:OptionData<T>)=>void},{open:boolean,focused:boolean,optionRefs:RefObject<MultiSelectOption<unknown>>[],visibleTimerId?:NodeJS.Timeout,visible:boolean,focusOption?:number},{}> {
     containerRef:RefObject<HTMLDivElement> = React.createRef();
     constructor(props: MultiSelect<T>["props"]) {
         super(props);
@@ -17,11 +17,15 @@ export default class MultiSelect<T> extends React.Component<{text:string,ariaLab
     get valueKeys() { return Object.entries(this.props.value).map(([key,])=>key) }
 
     onOptionChange = (key:string, sel:boolean) => {
-        if ((key in this.props.value) === sel) return;
-        let newValue = {...this.props.value};
-        if (sel) newValue[key] = this.props.options[key];
-        else delete newValue[key];
-        this.props.onChange(newValue);
+        if (this.props.onlyOne) { // If can only select one thing.
+            this.props.onChange({[key]:this.props.options[key]});
+        } else {
+            if ((key in this.props.value) === sel) return;
+            let newValue = {...this.props.value};
+            if (sel) newValue[key] = this.props.options[key];
+            else delete newValue[key];
+            this.props.onChange(newValue);
+        }
     };
     isChanging:boolean = false;
     willBeOpen:boolean = false;

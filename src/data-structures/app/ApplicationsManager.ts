@@ -1,5 +1,6 @@
 import { apiFetch } from "../../api/apiFetch";
 import { ErrorData } from "../../components/error-display/ErrorDisplay";
+import i18n from "../../i18n";
 import { copySetContents, findChanges } from "../../util/data-util";
 import { apiErrResData } from "../apiErrResData";
 import DataManager from "../DataManager";
@@ -38,6 +39,29 @@ export default class ApplicationsManager extends DataManager<AppsChangeHandler> 
     get allApps():Application[] { return [... this._allApps] }
 
     
+    /** Create a new app and return it. */
+    public async createApp():Promise<Application|ErrorData> {
+        // Create default empty app data. 
+        const defaultData:Required<Omit<ApplicationInit,"id">> = {
+            name: i18n.t("app.name.default"),
+            url: "", approval: "UNK", privacy: "UNK",
+            grades: [], platforms: [], subjects: []
+        }; 
+        // Use `POST /api/app` to create it.
+        const res = await apiFetch<Required<Omit<ApplicationInit,"id">>,ApplicationInit>(["app"],"POST",defaultData);
+        // Parse response.
+        if (res.type === "data") {
+            const app = new Application(res.data);
+            this._allApps.add(app);
+            this._onAppsChange();
+            return app;
+        } else if (res.type === "error")
+            return apiErrResData(res);
+        else
+            throw new Error("POST /api/app responded with type other than data or error, should not happen");
+    }
+
+
     /** Called when the contents of _allApps is changed significantly in order to update things which need to be updated idk. */
     private _onAppsChange():void {
         const {added,changed,removed} = findChanges([...this._lastAllApps],[...this._allApps],Application.equals);

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Route, Switch } from "react-router-dom";
 import Application from "../data-structures/app/Application";
-import ApplicationsManager from "../data-structures/app/ApplicationsManager";
+import ApplicationsManager, { AppsChangeHandler } from "../data-structures/app/ApplicationsManager";
 import SessionManager, { SessionChangeHandler } from "../data-structures/session/SessionManager";
 import UsersManager from "../data-structures/user/UsersManager";
 import { AsyncVoid } from "../util/ts-util";
@@ -23,6 +23,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
     constructor(props:App["props"]) {
         super(props);
         props.sessionManager.addChangeHandler(this.onSessionChange);
+        props.appsManager.addChangeHandler(this.onAppsChange);
     }
 
     private _mounted:boolean = false;
@@ -32,6 +33,10 @@ export default class App extends React.Component<{sessionManager:SessionManager,
         if (this._mounted)
             this.forceUpdate();
         console.log("LOGGED IN AS:",sess?.id);
+    };
+    onAppsChange:AppsChangeHandler = (manager,what,data)=>{
+        if (this._mounted)
+            this.forceUpdate();
     };
 
     onLogin:LoginFunc = async(cred)=>this.onLoginSignup("login",cred);
@@ -56,10 +61,17 @@ export default class App extends React.Component<{sessionManager:SessionManager,
         }
     };
 
-    doCreateApp = async():Promise<Application>=>{
-        // TODO real implementation of createApp
-        await new Promise<void>(r=>setTimeout(r,2000));
-        return new Application();
+    doCreateApp = async():Promise<Application|null>=>{
+        const { appsManager } = this.props;
+        const res = await appsManager.createApp();
+        
+        if (res instanceof Application)
+            return res;
+        else { // It was an ErrorData
+            console.error(res);
+            this.showError(res);
+            return null;
+        }
     };
 
     showRawError = (err:any) => this.showError({error:"general",detail:(err instanceof Error)?err.stack:err});
@@ -95,7 +107,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/app/:id" exact>
                     <Header pageName="app" />
-                    <AppFocusPage apps={apps} onEdit={()=>console.log("TODO onEdit")} onDelete={()=>console.log("TODO onDelete")}/>
+                    <AppFocusPage apps={apps} canEdit={isEditor} onEdit={()=>console.log("TODO onEdit")} onDelete={()=>console.log("TODO onDelete")}/>
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />
