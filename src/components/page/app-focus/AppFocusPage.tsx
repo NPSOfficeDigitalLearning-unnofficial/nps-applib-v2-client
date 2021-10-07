@@ -7,7 +7,7 @@ import AppFocusClass from "./AppFocusClassElt";
 import "./app-focus-common.scss";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export default function AppFocusPage(props:{apps:Application[], canEdit:boolean, onEdit:(app:Application)=>void,onDelete:(app:Application)=>void}):JSX.Element {
+export default function AppFocusPage(props:{apps:Application[], canEdit:boolean, onEdit:(app:Application)=>Promise<void>,onDelete:(app:Application)=>Promise<void>}):JSX.Element {
     const {id} = useParams<{id:string}>();
 
     const app = props.apps.find(v=>v.id===id);
@@ -18,5 +18,5 @@ export default function AppFocusPage(props:{apps:Application[], canEdit:boolean,
             <Link to="/"><Trans>page.app.backToMain</Trans></Link>
         </div>
     );} else
-        return <AppFocusClass app={app} canEdit={props.canEdit} onEdit={()=>props.onEdit(app)} onDelete={()=>props.onDelete(app)}/>;
+        return <AppFocusClass app={app} canEdit={props.canEdit} onEdit={async()=>await props.onEdit(app)} onDelete={async()=>await props.onDelete(app)}/>;
 }

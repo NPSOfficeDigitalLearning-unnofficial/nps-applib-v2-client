@@ -42,7 +42,16 @@
                 "isCreating": "Creating app...",
                 "createFailed": "Failed to create app.",
                 "appIdMissing": "App [id `{{id}}`] missing or deleted.",
-                "backToMain": "Go back to main menu."
+                "backToMain": "Go back to main menu.",
+                "savedBlurb": {
+                    "false": "All changes saved.",
+                    "true": "Data changed, awaiting save..."
+                },
+                "delete": {
+                    "delete": "Delete App",
+                    "confirm": "CONFIRM DELETION OF APP `{{name}}`",
+                    "cancel": "Cancel (do not delete)"
+                }
             },
             "settings": {
                 "name": "Settings",

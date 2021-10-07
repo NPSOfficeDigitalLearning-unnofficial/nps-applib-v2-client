@@ -73,6 +73,12 @@ export default class App extends React.Component<{sessionManager:SessionManager,
             return null;
         }
     };
+    doEditApp = async(app:Application):Promise<void>=>{
+        console.warn("TODO edit app",app);
+    };
+    doDeleteApp = async(app:Application):Promise<void>=>{
+        console.warn("TODO delete app",app);
+    };
 
     showRawError = (err:any) => this.showError({error:"general",detail:(err instanceof Error)?err.stack:err});
     showErrorIfExists = (errData?:ErrorData|void):void => errData && this.showError(errData);
@@ -107,7 +113,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/app/:id" exact>
                     <Header pageName="app" />
-                    <AppFocusPage apps={apps} canEdit={isEditor} onEdit={()=>console.log("TODO onEdit")} onDelete={()=>console.log("TODO onDelete")}/>
+                    <AppFocusPage apps={apps} canEdit={isEditor} onEdit={this.doEditApp} onDelete={this.doDeleteApp}/>
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />

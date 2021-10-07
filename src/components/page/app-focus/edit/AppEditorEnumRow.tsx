@@ -12,10 +12,11 @@ export default class AppEditorEnum<T> extends React.Component<{name:string,optio
     };
 
     render():ReactNode {
-        const { name, options } = this.props;
+        const { name, options, onlyOne } = this.props;
         return (
             <MultiSelect<T>
                 text={`app.${name}.name`}
+                onlyOne={onlyOne}
                 ariaLabel={`app.${name}.name-long`}
                 value={Object.fromEntries((this.props.onlyOne?[this.props.value]:[...this.props.value]).map(v=>[v,{name:`app.${name}.${v}`,value:v}]))}
                 options={Object.fromEntries(options.map(v=>[v,{name:`app.${name}.${v}`,value:v}]))}
