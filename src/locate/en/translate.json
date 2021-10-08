@@ -47,6 +47,7 @@
                     "false": "All changes saved.",
                     "true": "Data changed, awaiting save..."
                 },
+                "unsavedRedirectMessage": "You have unsaved changes, are you sure you want to leave?",
                 "delete": {
                     "delete": "Delete App",
                     "confirm": "CONFIRM DELETION OF APP `{{name}}`",

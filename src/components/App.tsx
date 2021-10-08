@@ -74,10 +74,22 @@ export default class App extends React.Component<{sessionManager:SessionManager,
         }
     };
     doEditApp = async(app:Application):Promise<void>=>{
-        console.warn("TODO edit app",app);
+        const { appsManager } = this.props;
+        const res = await appsManager.editApp(app);
+        
+        if (res) { // It was an ErrorData
+            console.error(res);
+            this.showError(res);
+        }
     };
     doDeleteApp = async(app:Application):Promise<void>=>{
-        console.warn("TODO delete app",app);
+        const { appsManager } = this.props;
+        const res = await appsManager.deleteApp(app);
+        
+        if (res) { // It was an ErrorData
+            console.error(res);
+            this.showError(res);
+        }
     };
 
     showRawError = (err:any) => this.showError({error:"general",detail:(err instanceof Error)?err.stack:err});

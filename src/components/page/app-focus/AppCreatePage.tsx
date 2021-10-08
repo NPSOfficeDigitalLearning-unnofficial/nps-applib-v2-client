@@ -10,21 +10,22 @@ export default class AppCreatePage extends React.Component<{createApp:()=>Promis
     constructor(props:AppCreatePage["props"]) {
         super(props);
         this.state = {};
+    }
 
-        props.createApp().then(app=>{
+    /** Function which creates the new app. (called on mount because that happense once) */
+    create() {
+        this.props.createApp().then(app=>{
             // Create partial state depending on if the app was successfully created.
             const newState:Partial<Mutable<AppCreatePage["state"]>> = {};
             if (app) newState.app = app;
             else newState.failed = true;
             // Merge in the new state.
-            if (this.mounted) this.setState(newState);
-            else this.state = {...this.state, ...newState};
+            this.setState(newState);
         });
     }
 
     /** If the component has mounted on the screen yet. */
-    private mounted = false;
-    componentDidMount() { this.mounted = true }
+    componentDidMount() { this.create() }
 
     render() {
         const {app,failed} = this.state;

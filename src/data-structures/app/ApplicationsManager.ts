@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { apiFetch } from "../../api/apiFetch";
 import { ErrorData } from "../../components/error-display/ErrorDisplay";
 import i18n from "../../i18n";
@@ -60,6 +61,41 @@ export default class ApplicationsManager extends DataManager<AppsChangeHandler> 
         else
             throw new Error("POST /api/app responded with type other than data or error, should not happen");
     }
+    /** Create a new app and return it. */
+    public async editApp(data:Application):Promise<null|ErrorData> {
+        if (data.id === null)
+            throw new Error("Attempt to edit app without id (it has not been uploaded to the server or its id went missing).");
+        const json = data.toJSON(), dataSendable = omit(json,"id") as Omit<ApplicationInit, "id">;
+        // Use `PATCH /api/app/:id` to edit it.
+        const res = await apiFetch<Omit<ApplicationInit,"id">,ApplicationInit>(["app",data.id],"PATCH",dataSendable);
+        // Parse response.
+        if (res.type === "data") {
+            console.log(this._allApps);
+            this._onAppsChange();
+            return null;
+        } else if (res.type === "error")
+            return apiErrResData(res);
+        else
+            throw new Error("PATCH /api/app/:id responded with type other than data or error, should not happen");
+    }
+    /** Create a new app and return it. */
+    public async deleteApp(data:Application):Promise<null|ErrorData> {
+        if (data.id === null)
+            throw new Error("Attempt to delete app without id (it has not been uploaded to the server or its id went missing).");
+        // Use `DELETE /api/app/:id` to delete it.
+        const res = await apiFetch<never,ApplicationInit>(["app",data.id],"DELETE");
+        // Parse response.
+        if (res.type === "success") {
+            this._allApps.delete(data);
+            console.log(this._allApps);
+            
+            this._onAppsChange();
+            return null;
+        } else if (res.type === "error")
+            return apiErrResData(res);
+        else
+            throw new Error("PATCH /api/app/:id responded with type other than success or error, should not happen");
+    }
 
 
     /** Called when the contents of _allApps is changed significantly in order to update things which need to be updated idk. */
@@ -73,6 +109,6 @@ export default class ApplicationsManager extends DataManager<AppsChangeHandler> 
             if (changes[what].length > 0)
                 this._callChangeHandlers(this,what,changes[what]);
         }
-        copySetContents(this._allApps,this._lastAllApps);
+        copySetContents(new Set([...this._allApps].map(v=>new Application(v.toJSON()))),this._lastAllApps);
     };
 }
