@@ -12,6 +12,7 @@ import AboutPage from "./page/about/About";
 import AdminPage, { LoginFunc } from "./page/admin/Admin";
 import AppCreatePage from "./page/app-focus/AppCreatePage";
 import AppFocusPage from "./page/app-focus/AppFocusPage";
+import ExportPage from "./page/export-page/ExportPage";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
@@ -119,13 +120,21 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                     <Header pageName="main" />
                     <MainPage apps={apps} canEdit={isEditor}/>
                 </Route>
+                <Route path="/app/:id" exact>
+                    <Header pageName="app" />
+                    <AppFocusPage apps={apps} canEdit={isEditor} onEdit={this.doEditApp} onDelete={this.doDeleteApp}/>
+                </Route>
                 <Route path="/new-app" exact>
                     <Header pageName="app" />
                     <AppCreatePage createApp={this.doCreateApp}/>
                 </Route>
-                <Route path="/app/:id" exact>
-                    <Header pageName="app" />
-                    <AppFocusPage apps={apps} canEdit={isEditor} onEdit={this.doEditApp} onDelete={this.doDeleteApp}/>
+                <Route path="/export">
+                    <Header pageName="export" />
+                    <ExportPage apps={apps} canEdit={isEditor} />
+                </Route>
+                <Route path="/admin">
+                    <Header pageName="admin" />
+                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:this.onSignup}} isAdmin={isAdmin} isEditor={isEditor} usersManager={this.props.usersManager}/>
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />
@@ -134,10 +143,6 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 <Route path="/about">
                     <Header pageName="about" />
                     <AboutPage />
-                </Route>
-                <Route path="/admin">
-                    <Header pageName="admin" />
-                    <AdminPage login={{loggedIn,email:sessionManager.currentSession?.email,login:this.onLogin,signup:this.onSignup}} isAdmin={isAdmin} isEditor={isEditor} usersManager={this.props.usersManager}/>
                 </Route>
                 <Route>
                     <Header pageName="404" />

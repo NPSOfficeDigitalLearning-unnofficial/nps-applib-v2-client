@@ -83,6 +83,7 @@ export default class MainPage extends React.Component<{apps:Application[],canEdi
                     {canEdit && (
                         <div className="-addAppButton">
                             <Link to="/new-app"><Trans>page.main.addAppLink</Trans></Link>
+                            <Link to="/export"><Trans>page.main.exportLink</Trans></Link>
                         </div>
                     )}
                 </div>

@@ -35,7 +35,8 @@
                 },
                 "appsHeadingLabel": "Application list:",
                 "pageSelectorLabel": "Application list page selector:",
-                "addAppLink": "Add another app"
+                "addAppLink": "Add another app",
+                "exportLink": "Import / Export"
             },
             "app": {
                 "name": "Application Entry",
@@ -53,6 +54,9 @@
                     "confirm": "CONFIRM DELETION OF APP `{{name}}`",
                     "cancel": "Cancel (do not delete)"
                 }
+            },
+            "export": {
+                "name": "Import / Export Data"
             },
             "settings": {
                 "name": "Settings",
