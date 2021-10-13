@@ -145,15 +145,10 @@
             "platforms": {
                 "name":"Platforms",
                 "name-long": "Supported platforms",
-                "WINDOWS": "Windows",
-                "MACOS": "Mac",
-                "LINUX": "Linux",
-                "ANDROID_PHONE": "Android Phone",
-                "ANDROID_TABLET": "Android Tablet",
-                "IOS_PHONE": "iPhone",
-                "IOS_TABLET": "iPad",
-                "WEB": "Web",
-                "CHROMEBOOK": "Chromebook"
+                "WEB": "Web-based",
+                "MOBILE": "Mobile",
+                "CRX": "Chrome Extension",
+                "PC": "PC"
             },
             "grades": {
                 "name":"Grades",
