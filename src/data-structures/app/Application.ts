@@ -47,11 +47,17 @@ export default class Application {
         else if (v) this._id = v;
     }
 
+    toJSON(stringifyArrays:true):Required<{[x in Exclude<keyof ApplicationInit,"id">]:string}&{id:string|null}>;
+    toJSON(stringifyArrays?:false):Required<Omit<ApplicationInit,"id">&{id:string|null}>;
 
-    toJSON():ApplicationInit {
+    toJSON(stringifyArrays?:boolean):any {
         const { id, name, url, approval, privacy, platforms:platformsSet, grades:gradesSet, subjects:subjectsSet } = this;
         const platforms = [...platformsSet], grades = [...gradesSet], subjects = [...subjectsSet];
-        return { id, name, url, approval, privacy, platforms, grades, subjects };
+        if (stringifyArrays) {
+            const platforms = [...platformsSet].join(), grades = [...gradesSet].join(), subjects = [...subjectsSet].join();
+            return { id, name, url, approval, privacy, platforms, grades, subjects };
+        } else
+            return { id, name, url, approval, privacy, platforms, grades, subjects };
     }
     toString():string {
         return `[ApplicationData "${this.name}" (id: ${this.id})]`;

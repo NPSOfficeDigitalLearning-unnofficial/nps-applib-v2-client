@@ -56,7 +56,11 @@
                 }
             },
             "export": {
-                "name": "Import / Export Data"
+                "name": "Import / Export Data",
+                "filename": "apps",
+                "noEdit": "You cannot view this page without editing permissions.",
+                "download": "Export",
+                "selectExportType": "Select file type"
             },
             "settings": {
                 "name": "Settings",
