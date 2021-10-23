@@ -1,10 +1,11 @@
 import React, { ReactNode } from "react";
 import { Trans } from "react-i18next";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import Application from "../../../data-structures/app/Application";
-import { APPROVAL_STATUSES, GRADE_LEVELS, PLATFORMS, PRIVACY_STATUSES, SUBJECTS } from "../../../data-structures/app/application-enums";
 import UnsavedRedirectBlocker from "../../leaf-component/UnsavedRouteBlocker/UnsavedRedirectBlocker";
-import AppEditorEnum from "./edit/AppEditorEnumRow";
+import AppDataView from "./data/AppDataView";
+import AppEditor from "./edit/AppEditor";
 
 const SAVE_DELAY = 1000;
 
@@ -76,21 +77,9 @@ export default class AppFocusClass extends React.Component<{app:Application,canE
         return (
             <main className="AppFocusPage">
                 <UnsavedRedirectBlocker unsaved={unsaved}/>
-                {this.props.canEdit ? (
-                    <>
-                        <p><Trans>{`page.app.savedBlurb.${unsaved}`}</Trans></p>
-                        <input value={app.name} onChange={v=>this.editText("name",v.target.value)}/>
-                        <input value={app.url}  onChange={v=>this.editText("url", v.target.value)}/>
-                        <AppEditorEnum onlyOne name="approval"  options={APPROVAL_STATUSES} value={app.approval}  onChange={v=>this.editOneEnum("approval",v)}/>
-                        <AppEditorEnum onlyOne name="privacy"   options={PRIVACY_STATUSES}  value={app.privacy}   onChange={v=>this.editOneEnum("privacy", v)}/>
-                        <AppEditorEnum         name="grades"    options={GRADE_LEVELS}      value={app.grades}    onChange={v=>this.editManyEnum("grades",   new Set(v))}/>
-                        <AppEditorEnum         name="platforms" options={PLATFORMS}         value={app.platforms} onChange={v=>this.editManyEnum("platforms",new Set(v))}/>
-                        <AppEditorEnum         name="subjects"  options={SUBJECTS}          value={app.subjects}  onChange={v=>this.editManyEnum("subjects", new Set(v))}/>
-                        <button onClick={this.showConfirmDelete}><Trans>page.app.delete.delete</Trans></button>
-                    </>
-                ) : (
-                    "no edit"
-                )}
+                <Link to="/" className="-back"><Trans>page.app.backToMain</Trans></Link>
+                {this.props.canEdit && <AppEditor unsaved={unsaved} app={app} p={this} />}
+                <AppDataView app={app}/>
                 {deleteConfirm && (
                     <div className="-confirmDelete">
                         <button onClick={this.confirmDelete}><Trans values={{name:app.name}}>page.app.delete.confirm</Trans></button>

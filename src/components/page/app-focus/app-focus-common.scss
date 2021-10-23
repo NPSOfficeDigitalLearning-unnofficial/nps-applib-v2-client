@@ -1,8 +1,117 @@
 @import "../../colors.scss";
+@import "../../interactables.scss";
+@import "../../FloatingBox.scss";
 
 
 .AppCreatePage, .AppFocusPage-missing {
     text-align: center;
     h1 { color: $g-fg2; }
     a  { color: $g-fg;  }
+}
+
+.AppFocusPage {
+    .-back {
+        display: block;
+        text-align: center;
+        margin: 1em calc(50% - 10em);
+        padding: .3em;
+        @include button();
+    }
+    .-data {
+        padding-bottom: 2em;
+        h3 { color: $g-fg2; }
+        color: $g-fg;
+    
+        .-center {
+            $w: 200px;
+            text-align: center;
+            margin: 0px calc(50% - #{0.5*$w});
+        }
+
+        .-StatusRow {
+            border: 0px solid var(--status-color);
+            color: var(--status-color-fg);
+            padding: 5px;
+            text-align: center;
+            border-width: 0px 15px;
+            background: var(--status-color-bg);
+        }
+        .-MultiEnumValues {
+            p {
+                margin-bottom: .25em;
+            }
+            ul {
+                margin: 0;
+                list-style: "- ";
+                text-align: start;
+                font-size: .9em;
+            }
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin: 1em calc(50% - 10em);
+            padding: .3em;
+            @include button();
+        }
+        .-iframeBlurb {
+            text-align: center;
+            font-size: .8em;
+            display: block;
+        }
+        iframe {
+            margin: 0 2em;
+            width: calc(100% - 4em);
+            height: calc(100vh - 4em);
+            @include FloatingBox();
+        }
+    }
+    .-edit {
+        border-bottom: 1px solid $g-shadow;
+        .-r {
+            display: block;
+            text-align: center;
+            margin: .3em;
+            > * {
+                max-width: 300px;
+                width: 90%;
+            }
+        }
+        p { text-align: center; }
+        .MultiSelect {
+            --elt-height: 35px;
+            text-align: initial;
+        }
+        input {
+            height: 35px;
+            font: inherit;
+            padding: 8px;
+            @include input();
+        }
+        button {
+            height: 35px;
+            font: inherit;
+            padding: 8px;
+            @include button();
+        }
+    }
+    .-confirmDelete {
+        position: fixed;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+        background: $g-bg3;
+        color: $g-fg2;
+        text-align: center;
+        padding: 25px;
+        button {
+            $bw: 300px;
+            display: inline-block;
+            height: 35px;
+            width: $bw;
+            margin: 25px calc(50% - #{0.5*$bw});
+            font: inherit;
+            padding: 8px;
+            @include button();
+        }
+    }
 }

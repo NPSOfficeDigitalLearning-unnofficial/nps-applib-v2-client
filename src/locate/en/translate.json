@@ -53,7 +53,9 @@
                     "delete": "Delete App",
                     "confirm": "CONFIRM DELETION OF APP `{{name}}`",
                     "cancel": "Cancel (do not delete)"
-                }
+                },
+                "urlBlurb": "View more information.",
+                "iframeBlurb": "If the embed below says 'refused to connect', try the link."
             },
             "export": {
                 "name": "Import / Export Data",
@@ -126,6 +128,9 @@
                 "name": "App name",
                 "name-long": "App name",
                 "default": "New App"
+            },
+            "url": {
+                "name": "App info URL"
             },
             "approval": {
                 "name":"Approval",
