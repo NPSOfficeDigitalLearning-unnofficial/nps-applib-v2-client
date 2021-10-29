@@ -9,7 +9,7 @@ function apiURL(path:string[]):string {
     if (process.env.NODE_ENV==="development")
         return `http://${TEST_API_ORIGIN}/api/${joinedPath}`;
 
-    return `https://${window.location.host}/api/${joinedPath}`;
+    return `http${/^localhost(?::\d+)?$/.test(window.location.host)?"":"s"}://${window.location.host}/api/${joinedPath}`;
 }
 
 export async function apiFetch<B,D>(path:string[],method:FetchMethod,body?:B):Promise<APIResponse<D>> {
