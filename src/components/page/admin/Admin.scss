@@ -96,7 +96,7 @@
     .-logout {
         padding: .2em;
         $w: 20em;
-        margin: .2em calc(50% - #{$w/2});
+        margin: .2em calc(50% - #{$w*0.5});
         padding: .2em;
         display: block;
         text-decoration: none;
