@@ -62,7 +62,8 @@
                 "filename": "apps",
                 "noEdit": "You cannot view this page without editing permissions.",
                 "download": "Export",
-                "selectExportType": "Select file type"
+                "selectExportType": "Select file type",
+                "backToMain": "Back to menu"
             },
             "settings": {
                 "name": "Settings",

@@ -1,8 +1,10 @@
 import React from "react";
 import { Trans, Translation } from "react-i18next";
+import { Link } from "react-router-dom";
 import Application from "../../../data-structures/app/Application";
 import i18n from "../../../i18n";
 import { XSVCodec } from "../../../util/encoding/xsv-codec";
+import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
 import "./ExportPage.scss";
 
 type ExportType = "csv"|"tsv"|"json";
@@ -80,16 +82,19 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
         return (<Translation>{t=>(
             <main className="ExportPage">
                 <a className="hidden" ref={this.downloadLinkRef}></a>
-                
-                <button onClick={this.onDownloadClick}>{t("page.export.download")}</button>
-                <select value={this.state.exportType} onChange={this.onExportTypeChange} aria-label={t("page.export.selectExportType")}>
-                    {["csv","tsv","json"].map(type=>(
-                        // Not including translations here because file extension names don't really translate
-                        <option key={type} value={type}>
-                            {type}
-                        </option>
-                    ))}
-                </select>
+                <WidthLimiter>
+                    <Link to="/" className="-backBtn">{t("page.export.backToMain")}</Link>
+                    <h1><Trans>page.export.name</Trans></h1>
+                    <button onClick={this.onDownloadClick}>{t("page.export.download")}</button>
+                    <select value={this.state.exportType} onChange={this.onExportTypeChange} aria-label={t("page.export.selectExportType")}>
+                        {["csv","tsv","json"].map(type=>(
+                            // Not including translations here because file extension names don't really translate
+                            <option key={type} value={type}>
+                                {type}
+                            </option>
+                        ))}
+                    </select>
+                </WidthLimiter>
             </main>
         )}</Translation>);
     }

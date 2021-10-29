@@ -1,0 +1,30 @@
+@import "../../colors.scss";
+@import "../../interactables.scss";
+
+.ExportPage {
+    text-align: center;
+    h1 {
+        color: $g-fg2;
+    }
+    button, a {
+        @include button();
+    }
+    select {
+        @include input();
+    }
+
+    button, select {
+        font-size: 1.1em;
+        padding: .3em;
+        margin: .5em;
+        height: 50px;
+        width: 150px;
+    }
+    .-backBtn {
+        display: inline-block;
+        padding: .3em;
+        margin: .5em;
+        height: 35px;
+        width: 150px;
+    }
+}
