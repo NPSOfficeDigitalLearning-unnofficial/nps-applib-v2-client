@@ -30,6 +30,10 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
         }
     }
 
+    set(data:SessionData):void {
+        this.currentSession = new Session(data);
+    }
+
     /** Use the API to log the user in. */
     async login(email:string,password:string):Promise<void|ErrorData> {
         // use `POST /api/session` to log the user in.
@@ -44,16 +48,18 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
     }
 
     /** Use the API to sign the user up. */
-    async signup(email:string,password:string):Promise<void|ErrorData> {
+    async signup(email:string,password:string):Promise<boolean|ErrorData> {
         // use `POST /api/user` to sign the user up.
         const res = await apiFetch<{email:string,password:string},SessionData>(["user"],"POST",{email,password});
 
-        if (res.type === "data")
+        if (res.type === "data") {
             this.currentSession = new Session(res.data);
-        else if (res.type === "error") {
+            return true;
+        } else if (res.type === "error") {
             this.currentSession = null;
             return apiErrResData(res);
-        }
+        } else 
+            return false;
     }
 
     /** Use the API to log out the user. */

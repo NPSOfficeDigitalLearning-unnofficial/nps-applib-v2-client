@@ -16,6 +16,8 @@ import ExportPage from "./page/export-page/ExportPage";
 import HeaderCommon from "./page/header-common/Header";
 import MainPage from "./page/main/Main";
 import SettingsPage from "./page/settings/Settings";
+import VerifyLinkAlertPage from "./page/verify-link/VerifyLinkAlertPage";
+import VerifyLinkPage from "./page/verify-link/VerifyLinkPage";
 
 
 export default class App extends React.Component<{sessionManager:SessionManager,appsManager:ApplicationsManager,usersManager:UsersManager}> {
@@ -42,11 +44,15 @@ export default class App extends React.Component<{sessionManager:SessionManager,
 
     onLogin:LoginFunc = async(cred)=>this.onLoginSignup("login",cred);
     onSignup:LoginFunc = async(cred)=>this.onLoginSignup("signup",cred);
-    async onLoginSignup(which:"login"|"signup",cred:Parameters<LoginFunc>[0]):Promise<void> {
+    async onLoginSignup(which:"login"|"signup",cred:Parameters<LoginFunc>[0]):Promise<void|boolean> {
         const { sessionManager } = this.props;
         const { email, password } = cred;
         try {
-            this.showErrorIfExists(await sessionManager[which](email, password));
+            const result = await sessionManager[which](email, password);
+            if (typeof result === "boolean")
+                return result;
+            else
+                this.showErrorIfExists(result);
         } catch (e) {
             console.error(e);
             this.showRawError(e);
@@ -143,6 +149,14 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 <Route path="/about">
                     <Header pageName="about" />
                     <AboutPage />
+                </Route>
+                <Route path="/verify-link/:token">
+                    <Header pageName="verify-link" />
+                    <VerifyLinkPage sessionManager={sessionManager} showError={this.showError.bind(this)} />
+                </Route>
+                <Route path="/verify-link">
+                    <Header pageName="verify-link-alert" />
+                    <VerifyLinkAlertPage />
                 </Route>
                 <Route>
                     <Header pageName="404" />
