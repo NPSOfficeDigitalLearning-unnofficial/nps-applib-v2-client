@@ -20,9 +20,9 @@ export default class AppDataView extends React.Component<{app:Application}> {
                     <MultiEnumValues vals={app.subjects} transKey={"app.subjects"} possibleVals={SUBJECTS}/>
                 </div>
                 {app.url && <a href={prependHttpsToURL(app.url)} target="_blank" rel="noopener noreferrer"><Trans>page.app.urlBlurb</Trans></a>}
-                {true && (/* TODO iframeurl*/<> 
+                {app.embed && (<> 
                     <span className="-iframeBlurb"><Trans>page.app.iframeBlurb</Trans></span>
-                    <iframe src={prependHttpsToURL(app.url)} />
+                    <iframe src={prependHttpsToURL(app.embed)} />
                 </>)}
             </div>
         );

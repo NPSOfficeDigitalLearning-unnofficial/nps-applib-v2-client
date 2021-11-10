@@ -55,7 +55,7 @@
                     "cancel": "Cancel (do not delete)"
                 },
                 "urlBlurb": "View more information.",
-                "iframeBlurb": "If the embed below says 'refused to connect', try the link."
+                "iframeBlurb": "If the embed below says 'refused to connect', try the button above."
             },
             "export": {
                 "name": "Import / Export Data",
@@ -132,6 +132,9 @@
             },
             "url": {
                 "name": "App info URL"
+            },
+            "embedUrl": {
+                "name": "App info embed URL"
             },
             "approval": {
                 "name":"Approval",

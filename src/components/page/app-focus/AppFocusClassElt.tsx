@@ -49,7 +49,7 @@ export default class AppFocusClass extends React.Component<{app:Application,canE
         this.forceUpdate();
         this.markDirty();   
     }
-    editText<T extends "name"|"url">(key:T,value:string)  {
+    editText<T extends "name"|"url"|"embed">(key:T,value:string)  {
         this.props.app[key] = value;
         this.forceUpdate();
         this.markDirty();

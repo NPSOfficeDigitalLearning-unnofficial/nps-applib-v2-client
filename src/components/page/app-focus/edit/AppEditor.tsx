@@ -17,6 +17,7 @@ export default class AppEditor extends React.Component<{unsaved:boolean,app:Appl
                         <p>{t(`page.app.savedBlurb.${unsaved}`)}</p>
                         <ERow><input value={app.name} onChange={v=>p.editText("name",v.target.value)} placeholder={t("app.name.name")} aria-label={t("app.name.name")}/></ERow>
                         <ERow><input value={app.url}  onChange={v=>p.editText("url", v.target.value)} placeholder={t("app.url.name")}  aria-label={t("app.url.name")} /></ERow>
+                        <ERow><input value={app.embed}  onChange={v=>p.editText("embed", v.target.value)} placeholder={t("app.embedUrl.name")}  aria-label={t("app.embedUrl.name")} /></ERow>
                         <ERow><AppEditorEnum onlyOne name="approval"  options={APPROVAL_STATUSES} value={app.approval}  onChange={v=>p.editOneEnum("approval",v)}/></ERow>
                         <ERow><AppEditorEnum onlyOne name="privacy"   options={PRIVACY_STATUSES}  value={app.privacy}   onChange={v=>p.editOneEnum("privacy", v)}/></ERow>
                         <ERow><AppEditorEnum         name="grades"    options={GRADE_LEVELS}      value={app.grades}    onChange={v=>p.editManyEnum("grades",   new Set(v))}/></ERow>

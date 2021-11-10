@@ -45,7 +45,7 @@ export default class ApplicationsManager extends DataManager<AppsChangeHandler> 
         // Create default empty app data. 
         const defaultData:Required<Omit<ApplicationInit,"id">> = {
             name: i18n.t("app.name.default"),
-            url: "", approval: "UNK", privacy: "UNK",
+            url: "", embed: "", approval: "UNK", privacy: "UNK",
             grades: [], platforms: [], subjects: []
         }; 
         // Use `POST /api/app` to create it.
