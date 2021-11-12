@@ -22,7 +22,7 @@ export default class AppDataView extends React.Component<{app:Application}> {
                 {app.url && <a href={prependHttpsToURL(app.url)} target="_blank" rel="noopener noreferrer"><Trans>page.app.urlBlurb</Trans></a>}
                 {app.embed && (<> 
                     <span className="-iframeBlurb"><Trans>page.app.iframeBlurb</Trans></span>
-                    <iframe src={prependHttpsToURL(app.embed)} />
+                    <iframe src={prependHttpsToURL(app.embed)} referrerPolicy="no-referrer" />
                 </>)}
             </div>
         );
