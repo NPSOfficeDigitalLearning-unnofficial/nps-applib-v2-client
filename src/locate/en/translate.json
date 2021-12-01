@@ -62,6 +62,7 @@
                 "filename": "apps",
                 "noEdit": "You cannot view this page without editing permissions.",
                 "download": "Export",
+                "upload": "Import",
                 "selectExportType": "Select file type",
                 "backToMain": "Back to menu"
             },

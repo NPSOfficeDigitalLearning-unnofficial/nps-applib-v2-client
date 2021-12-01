@@ -11,7 +11,8 @@ type ExportType = "csv"|"tsv"|"json";
 const exportMIMEType:{[t in ExportType]:string} = {
     csv: "text/csv", tsv: "text/tab-separated-values",
     json: "application/json"
-};
+},
+    exportAcceptExtensions = ".json,.csv,.tsv";
 
 // Create the csv and tsv encoders.
 const csvCodec = XSVCodec.csv(), tsvCodec = XSVCodec.tsv();
@@ -24,6 +25,7 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
     }
 
     readonly downloadLinkRef = React.createRef<HTMLAnchorElement>();
+    readonly uploadFileRef = React.createRef<HTMLInputElement>();
     
 
 
@@ -54,13 +56,43 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
             [ stringData ],
             { type: exportMIMEType[type] }
         ));
-        downloader.download = `${i18n.t("FILENAME")}.${type}`;
+        downloader.download = `${i18n.t("page.export.filename")}.${type}`;
         downloader.click();
+    }
+
+    /** Import data of any type. */
+    async import():Promise<void> {
+        const uploader = this.uploadFileRef.current;
+        if (!uploader) throw new Error("should not happen, attempt to import before mount likely");
+        if (!uploader.files) throw new Error("uploader input was not of type file, or files field was broken");
+        uploader.click();
+    }
+    async onSelectImportFile():Promise<void> {
+        const uploader = this.uploadFileRef.current;
+        if (!uploader) throw new Error("should not happen, attempt to import before mount likely");
+        if (!uploader.files) throw new Error("uploader input was not of type file, or files field was broken");
+
+
+        if (uploader.files?.length !== 1) {
+            console.warn("No file was selected");
+            return;
+        }
+        
+        console.log(uploader.files.item(0));
+        // TODO read, parse, and upload
     }
 
     onDownloadClick:React.MouseEventHandler = e=>{
         if (!e.isTrusted) return;
         this.exportAs(this.state.exportType);
+    };
+    onUploadClick:React.MouseEventHandler = e=>{
+        if (!e.isTrusted) return;
+        this.import();
+    };
+    onUploadInputChange:React.ChangeEventHandler = e=>{
+        if (!e.isTrusted) return;
+        this.onSelectImportFile();
     };
     onExportTypeChange:React.ChangeEventHandler<HTMLSelectElement> = e=>{
         if (!e.isTrusted) return;
@@ -82,6 +114,7 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
         return (<Translation>{t=>(
             <main className="ExportPage">
                 <a className="hidden" ref={this.downloadLinkRef}></a>
+                <input className="hidden" ref={this.uploadFileRef} type="file" accept={exportAcceptExtensions} onChange={this.onUploadInputChange}/>
                 <WidthLimiter>
                     <Link to="/" className="-backBtn">{t("page.export.backToMain")}</Link>
                     <h1><Trans>page.export.name</Trans></h1>
@@ -94,6 +127,7 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
                             </option>
                         ))}
                     </select>
+                    <button onClick={this.onUploadClick} className="-upload">{t("page.export.upload")} <code>[csv|tsv|json]</code></button>
                 </WidthLimiter>
             </main>
         )}</Translation>);
