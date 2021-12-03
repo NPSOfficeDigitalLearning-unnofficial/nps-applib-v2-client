@@ -1,19 +1,22 @@
 import React, { ReactNode } from "react";
 import Application from "../../../data-structures/app/Application";
+import LocalStorageVar from "../../../util/localStorage/LocalStorageVar";
 import "./AppList.scss";
 import AppPage from "./AppPage";
 import PageSelector from "./page-selector/PageSelector";
 
 export const APPS_PER_PAGE:{
-    readonly default: 8,
+    readonly default: 40,
     readonly min: 4,
-    readonly max: 80
-} = { default: 8, min: 4, max: 80 };
+    readonly max: 100
+} = { default: 40, min: 4, max: 100 };
+
+const appsPerPageVar = new LocalStorageVar("appsPerPage","int",APPS_PER_PAGE.default);
 
 export default class AppList extends React.Component<{apps:Application[],canEdit:boolean},{pageN:number,appsPerPage:number}> {
     constructor(props:AppList["props"]) {
         super(props);
-        this.state = { pageN: 0, appsPerPage: APPS_PER_PAGE.default };
+        this.state = { pageN: 0, appsPerPage: appsPerPageVar.value };
     }
 
 
@@ -39,7 +42,7 @@ export default class AppList extends React.Component<{apps:Application[],canEdit
     get page():number { return this.state.pageN }
 
     setPage = (pageN:number):void => this.setState({pageN});
-    setAppsPerPage = (appsPerPage:number):void => this.setState({appsPerPage});
+    setAppsPerPage = (appsPerPage:number):void => { this.setState({appsPerPage}); appsPerPageVar.value = appsPerPage };
 
     static getDerivedStateFromProps(props: AppList["props"], state: AppList["state"]): Partial<AppList["state"]> {
         // Ensure that when apps are added and removed from the list, that a page number that is empty is not stayed on.
