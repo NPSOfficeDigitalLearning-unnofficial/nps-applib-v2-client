@@ -136,7 +136,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/export">
                     <Header pageName="export" />
-                    <ExportPage apps={apps} canEdit={isEditor} isAdmin={isAdmin} appsManager={appsManager} />
+                    <ExportPage apps={apps} canEdit={isEditor} appsManager={appsManager} />
                 </Route>
                 <Route path="/admin">
                     <Header pageName="admin" />

@@ -20,7 +20,7 @@ const exportMIMEType:{[t in ExportType]:string} = {
 const csvCodec = XSVCodec.csv(), tsvCodec = XSVCodec.tsv();
 
 
-export default class ExportPage extends React.Component<{appsManager:ApplicationsManager,apps:Application[],canEdit:boolean,isAdmin:boolean},{exportType:ExportType,isDroppingFile:boolean,justImported:boolean}> {
+export default class ExportPage extends React.Component<{appsManager:ApplicationsManager,apps:Application[],canEdit:boolean},{exportType:ExportType,isDroppingFile:boolean,justImported:boolean}> {
     constructor(props:ExportPage["props"]) {
         super(props);
         this.state = {exportType:"csv",isDroppingFile:false,justImported:false};
@@ -152,7 +152,7 @@ export default class ExportPage extends React.Component<{appsManager:Application
     };
 
     render() {
-        const { canEdit, isAdmin } = this.props;
+        const { canEdit } = this.props;
 
         if (this.state.justImported)
             return <Redirect to="/"/>;
@@ -188,12 +188,6 @@ export default class ExportPage extends React.Component<{appsManager:Application
                         onDragLeave={this.onFileDragExit}
                         onDrop={this.onFileDrop}
                     >{t("page.export.upload")} <code>[csv|tsv|json]</code></button>
-                    {isAdmin && <div className="-rawSql">
-                        <input />
-                        <button
-                            onClick={this.onRawSql}
-                        >{t("page.export.sendSql")}</button>
-                    </div>}
                 </WidthLimiter>
             </main>
         )}</Translation>);
