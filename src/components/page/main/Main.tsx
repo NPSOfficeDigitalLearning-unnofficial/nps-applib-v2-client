@@ -62,7 +62,7 @@ export default class MainPage extends React.Component<{apps:Application[],canEdi
         const { apps } = this.props, { searchOptions: query } = this.state;
         apps.sort((a,b)=>a.name===b.name?0:a.name>b.name?1:-1);
         let filteredArr = [...apps];
-        if (query.name.length > 0) filteredArr = filteredArr.filter(v=>v.name.includes(query.name));
+        if (query.name.length > 0) filteredArr = filteredArr.filter(v=>v.name.toLowerCase().includes(query.name.toLowerCase()));
         this.filterEnum(filteredArr,a=>new Set([a.approval]),query.approval,false);
         this.filterEnum(filteredArr,a=>new Set([a.privacy]),query.privacy,false);
         this.filterEnum(filteredArr,a=>a.platforms,query.platforms,true);
