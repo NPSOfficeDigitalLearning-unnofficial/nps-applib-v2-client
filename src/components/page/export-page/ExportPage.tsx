@@ -1,7 +1,9 @@
 import React from "react";
 import { Trans, Translation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Application from "../../../data-structures/app/Application";
+import ApplicationInit from "../../../data-structures/app/ApplicationInit";
+import ApplicationsManager from "../../../data-structures/app/ApplicationsManager";
 import i18n from "../../../i18n";
 import { XSVCodec } from "../../../util/encoding/xsv-codec";
 import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
@@ -18,10 +20,10 @@ const exportMIMEType:{[t in ExportType]:string} = {
 const csvCodec = XSVCodec.csv(), tsvCodec = XSVCodec.tsv();
 
 
-export default class ExportPage extends React.Component<{apps:Application[],canEdit:boolean},{exportType:ExportType}> {
+export default class ExportPage extends React.Component<{appsManager:ApplicationsManager,apps:Application[],canEdit:boolean,isAdmin:boolean},{exportType:ExportType,isDroppingFile:boolean,justImported:boolean}> {
     constructor(props:ExportPage["props"]) {
         super(props);
-        this.state = {exportType:"csv"};
+        this.state = {exportType:"csv",isDroppingFile:false,justImported:false};
     }
 
     readonly downloadLinkRef = React.createRef<HTMLAnchorElement>();
@@ -77,9 +79,35 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
             console.warn("No file was selected");
             return;
         }
+        this.importFile(uploader.files.item(0)!);
+    }
+    async importFile(file:File):Promise<void> {
+        console.log(file.type);
         
-        console.log(uploader.files.item(0));
-        // TODO read, parse, and upload
+        if (!Object.values(exportMIMEType).includes(file.type)&&!file.name.endsWith(".tsv"))
+            console.warn("file type wrong, filetype \"%s\" not in %o", file.type, Object.values(exportMIMEType));
+        
+        
+        console.log(file);
+
+        const textData = await file.text();
+        let jsonData:Required<Omit<ApplicationInit, "id">>[];
+
+        console.log(textData);
+        
+
+        if (file.type === "application/json") 
+            jsonData = JSON.parse(textData);
+            // TODO verify
+        else if (file.type === "text/csv") {
+            // TODO
+            jsonData = [];
+        } else {
+            // TODO
+            jsonData = [];
+        }
+        this.props.appsManager.bulkCreateApps(jsonData);
+        this.setState({justImported:true});
     }
 
     onDownloadClick:React.MouseEventHandler = e=>{
@@ -99,8 +127,35 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
         this.setState({exportType: e.target.value as ExportType});
     };
 
+
+    onFileDragHover:React.DragEventHandler<HTMLElement> = e=>{
+        e.stopPropagation();
+        e.preventDefault();
+        // Style the drag-and-drop as a "copy file" operation.
+        e.dataTransfer.dropEffect = "copy";
+        this.setState({isDroppingFile:true});
+    };
+    onFileDragExit:React.DragEventHandler<HTMLElement> = e=>{
+        this.setState({isDroppingFile:false});
+    };
+    onFileDrop:React.DragEventHandler<HTMLElement> = e=>{
+        e.stopPropagation();
+        e.preventDefault();
+        this.setState({isDroppingFile:false});
+        const fileList = e.dataTransfer.files;
+        for (let i = 0; i < fileList.length; i++)
+            this.importFile(fileList.item(i)!);
+    };
+
+    onRawSql:React.MouseEventHandler = e=>{
+        // TODO
+    };
+
     render() {
-        const { canEdit } = this.props;
+        const { canEdit, isAdmin } = this.props;
+
+        if (this.state.justImported)
+            return <Redirect to="/"/>;
 
         // If the user attempting to access the page can't edit go back to the main page.
         if (!canEdit) {
@@ -127,7 +182,18 @@ export default class ExportPage extends React.Component<{apps:Application[],canE
                             </option>
                         ))}
                     </select>
-                    <button onClick={this.onUploadClick} className="-upload">{t("page.export.upload")} <code>[csv|tsv|json]</code></button>
+                    <button
+                        onClick={this.onUploadClick} className={"-upload"+(this.state.isDroppingFile?" -dropping":"")}
+                        onDragOver={this.onFileDragHover}
+                        onDragLeave={this.onFileDragExit}
+                        onDrop={this.onFileDrop}
+                    >{t("page.export.upload")} <code>[csv|tsv|json]</code></button>
+                    {isAdmin && <div className="-rawSql">
+                        <input />
+                        <button
+                            onClick={this.onRawSql}
+                        >{t("page.export.sendSql")}</button>
+                    </div>}
                 </WidthLimiter>
             </main>
         )}</Translation>);

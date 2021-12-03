@@ -13,7 +13,7 @@
         @include input();
     }
 
-    button, select {
+    button, select, input {
         font-size: 1.1em;
         padding: .3em;
         margin: .5em;
@@ -25,6 +25,16 @@
         width: calc(300px + 1em);
         margin-inline-start: calc(50% - 150px - .5em);
         margin-top: 1em;
+        margin-bottom: 1em;
+        &.-dropping {
+            color: $g-bg2;
+            background: $g-fg2;
+        }
+    }
+    .-rawSql {
+        input {
+            font-family: monospace;
+        }
     }
     .-backBtn {
         display: inline-block;

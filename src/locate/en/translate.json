@@ -64,7 +64,8 @@
                 "download": "Export",
                 "upload": "Import",
                 "selectExportType": "Select file type",
-                "backToMain": "Back to menu"
+                "backToMain": "Back to menu",
+                "sendSql": "Run custom SQL"
             },
             "settings": {
                 "name": "Settings",

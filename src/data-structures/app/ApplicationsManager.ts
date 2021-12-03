@@ -62,6 +62,23 @@ export default class ApplicationsManager extends DataManager<AppsChangeHandler> 
             throw new Error("POST /api/app responded with type other than data or error, should not happen");
     }
     /** Create a new app and return it. */
+    public async bulkCreateApps(appDatas:Required<Omit<ApplicationInit,"id">>[]):Promise<Application[]|ErrorData> {
+        // Create default empty app data. 
+        // Use `POST /api/app/bulk` to create all of them.
+        const res = await apiFetch<Required<Omit<ApplicationInit,"id">>[],ApplicationInit[]>(["app","bulk"],"POST",appDatas);
+        // Parse response.
+        if (res.type === "data") {
+            const apps = res.data.map(data=>new Application(data));
+            for (const app of apps)
+                this._allApps.add(app);
+            this._onAppsChange();
+            return apps;
+        } else if (res.type === "error")
+            return apiErrResData(res);
+        else
+            throw new Error("POST /api/app responded with type other than data or error, should not happen");
+    }
+    /** Create a new app and return it. */
     public async editApp(data:Application):Promise<null|ErrorData> {
         if (data.id === null)
             throw new Error("Attempt to edit app without id (it has not been uploaded to the server or its id went missing).");
