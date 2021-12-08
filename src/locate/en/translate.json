@@ -65,7 +65,7 @@
                 "upload": "Import",
                 "selectExportType": "Select file type",
                 "backToMain": "Back to menu",
-                "sendSql": "Run custom SQL"
+                "fileFormatBlurb": "Import and export formats are the same for files of the same type. (eg. json import uses same object structure as json export)"
             },
             "settings": {
                 "name": "Settings",

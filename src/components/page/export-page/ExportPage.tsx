@@ -99,12 +99,11 @@ export default class ExportPage extends React.Component<{appsManager:Application
         if (file.type === "application/json") 
             jsonData = JSON.parse(textData);
             // TODO verify
-        else if (file.type === "text/csv") {
+        else {
             // TODO
             jsonData = [];
-        } else {
-            // TODO
-            jsonData = [];
+            alert("This file format has not yet been implemented, email me if it is desprately needed.");
+            throw new Error("notimplemented");
         }
         this.props.appsManager.bulkCreateApps(jsonData);
         this.setState({justImported:true});
@@ -147,10 +146,6 @@ export default class ExportPage extends React.Component<{appsManager:Application
             this.importFile(fileList.item(i)!);
     };
 
-    onRawSql:React.MouseEventHandler = e=>{
-        // TODO
-    };
-
     render() {
         const { canEdit } = this.props;
 
@@ -187,7 +182,8 @@ export default class ExportPage extends React.Component<{appsManager:Application
                         onDragOver={this.onFileDragHover}
                         onDragLeave={this.onFileDragExit}
                         onDrop={this.onFileDrop}
-                    >{t("page.export.upload")} <code>[csv|tsv|json]</code></button>
+                    >{t("page.export.upload")} <code>[json]</code></button>
+                    <p>{t("page.export.fileFormatBlurb")}</p>
                 </WidthLimiter>
             </main>
         )}</Translation>);
