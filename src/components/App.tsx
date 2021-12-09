@@ -67,6 +67,17 @@ export default class App extends React.Component<{sessionManager:SessionManager,
             this.showRawError(e);
         }
     };
+    onChangePassword = async(password:string)=>{
+        const { sessionManager } = this.props;
+        try {
+            const v = await sessionManager.setPassword(password);
+            this.showErrorIfExists(v);
+            return v === undefined;
+        } catch (e) {
+            console.error(e);
+            this.showRawError(e);
+        }
+    };
 
     doCreateApp = async():Promise<Application|null>=>{
         const { appsManager } = this.props;
@@ -144,7 +155,7 @@ export default class App extends React.Component<{sessionManager:SessionManager,
                 </Route>
                 <Route path="/settings">
                     <Header pageName="settings" />
-                    <SettingsPage admin={{loggedIn,logout:this.onLogout}} />
+                    <SettingsPage admin={{loggedIn,logout:this.onLogout,changePass:this.onChangePassword}} />
                 </Route>
                 <Route path="/about">
                     <Header pageName="about" />

@@ -15,11 +15,12 @@ class VerificationSender extends React.Component<{token:string,sessionManager:Se
 
     async componentDidMount() {
         const res = await apiFetch<undefined,SessionData>(["verify",this.props.token],"POST");
-        if (res.type === "data") {
-            this.props.sessionManager.set(res.data);
-            this.setState({redirect:true});
-        } else if (res.type === "error")
+        if (res.type === "error")
             this.props.showError(res);
+        else
+            this.setState({redirect:true});
+        if (res.type === "data")
+            this.props.sessionManager.set(res.data);
     }
     render() { 
         return this.state.redirect ? <Redirect to="/admin"/> : <></>;
@@ -33,7 +34,7 @@ export default function VerifyLinkPage(props:{sessionManager:SessionManager,show
     return (
         <main className="VerifyLinkPage">
             <VerificationSender token={token} sessionManager={props.sessionManager} showError={props.showError}/>
-            <p><Trans>TODO Verified email, redirecting</Trans> | <code>{token}</code></p>
+            <p><Trans>page.verify-link.blurb</Trans> | <code>{token}</code></p>
         </main>
     );
 }

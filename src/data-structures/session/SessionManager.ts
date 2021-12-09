@@ -72,6 +72,16 @@ export default class SessionManager extends DataManager<SessionChangeHandler> {
             return apiErrResData(res);
     }
 
+    
+    /** Use the API to change the user's password. */
+    async setPassword(password:string):Promise<void|ErrorData> {
+        // use `PATCH /api/user` to edit the user account.
+        const res = await apiFetch<{password:string},SessionData>(["user"],"PATCH",{password});
+
+        if (res.type === "error") 
+            return apiErrResData(res);
+    }
+
     /** Private function which is called to update the client of changes. */
     private onSessionChange():void {
         this._callChangeHandlers(this,this.currentSession);

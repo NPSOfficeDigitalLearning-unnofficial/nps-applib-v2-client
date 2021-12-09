@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Trans } from "react-i18next";
+import { Trans, Translation } from "react-i18next";
 import { Link, Redirect } from "react-router-dom";
 import WidthLimiter from "../../leaf-component/WidthLimiter/WidthLimiter";
 import "./Settings.scss";
@@ -19,26 +19,38 @@ interface Setting {
     } | {
         type: "input",
         currentValue?: string,
-        defaultValue: string
+        defaultValue: string,
+        inputType?: "password"
     }))[];
 }
 
 
-export default class SettingsPage extends React.Component<{admin:{loggedIn:boolean,logout:()=>void}},{redirectToAdminPage?:boolean}> {
+export default class SettingsPage extends React.Component<{admin:{loggedIn:boolean,logout:()=>void,changePass:(str:string)=>Promise<void|boolean>}},{redirectToAdminPage?:boolean,redirectToVerifyPage?:boolean,newPassIn:string}> {
     constructor(props:SettingsPage["props"]) {
         super(props);
-        this.state = {} ?? this.state;
+        this.state = {newPassIn:""} ?? this.state;
     }
 
     get settingsRows():readonly Setting[] {
         const { admin } = this.props;
-        return [
+        return admin.loggedIn ? [
             {
                 key: "adminAccount",
                 elts: [
-                    admin.loggedIn ? 
-                        { type: "button", key:  "logout", callback: admin.logout } :
-                        { type: "link", key: "login", link: "/admin" }
+                    { type: "button", key: "logout", callback: admin.logout }
+                ]
+            }, {
+                key: "adminPassword",
+                elts:  [
+                    { type: "input", key: "newPassIn", defaultValue: "", currentValue: this.state.newPassIn, inputType:"password" },
+                    { type: "button", key: "changeBtn", callback: this.handleChangePassButton }
+                ]
+            }
+        ] : [
+            {
+                key: "adminAccount",
+                elts: [
+                    { type: "link", key: "login", link: "/admin" }
                 ]
             }
         ];
@@ -46,14 +58,14 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
 
     onSettingsInputChange = (row:string,elt:string,e:React.ChangeEvent<HTMLInputElement>) => {
         if (!e.isTrusted) return;
-        /*
-        const newValue = e.target.value;
+        
+        const newValue = e.target.value;        
         switch (row) {
-        case "example":
-            console.log(`New value of input "${elt}" in (example name) is "${newValue}"`);
+        case "adminPassword":
+            this.setState({newPassIn:newValue});
             break;
         }
-        */
+        
     };
     onSettingsButtonClick = (row:string,elt:string,e:React.MouseEvent<HTMLButtonElement>) => {
         if (!e.isTrusted) return;
@@ -63,9 +75,15 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
             eltE.callback();
     };
 
+    handleChangePassButton = async () => {
+        if (await this.props.admin.changePass(this.state.newPassIn))
+            this.setState({redirectToVerifyPage:true});
+    };
+
     render():ReactNode {
-        return (<>
+        return (<Translation>{t=>(<>
             {this.state.redirectToAdminPage && <Redirect to="/admin"/>}
+            {this.state.redirectToVerifyPage && <Redirect to="/verify-link"/>}
             <main className="SettingsPage">
                 <h1><Trans>page.settings.name</Trans></h1>
                 <WidthLimiter>
@@ -73,20 +91,22 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
                         this.settingsRows.map(row=>(
                             <SettingsRow key={row.key} label={`page.settings.row.${row.key}.label`}>{
                                 row.elts.map(elt=>{
-                                    const label = `page.settings.row.${row.key}.${elt.key}`;
+                                    const label = t(`page.settings.row.${row.key}.${elt.key}`);
                                     return {
                                         "button": elt.type==="button" && (
                                             <button key={elt.key} onClick={this.onSettingsButtonClick.bind(this,row.key,elt.key)}>
-                                                <Trans>{label}</Trans></button>
+                                                {label}</button>
                                         ),
                                         "input": elt.type==="input" && (
                                             <input key={elt.key}
+                                                aria-label={label}
                                                 onChange={this.onSettingsInputChange.bind(this,row.key,elt.key)}
-                                                value={elt.currentValue ?? elt.defaultValue}/>
+                                                value={elt.currentValue ?? elt.defaultValue}
+                                                type={elt.inputType}/>
                                         ),
                                         "link": elt.type==="link" && (
                                             <Link key={elt.key} to={elt.link}>
-                                                <Trans>{label}</Trans></Link>
+                                                {label}</Link>
                                         )
                                     }[elt.type];
                                 })
@@ -95,6 +115,6 @@ export default class SettingsPage extends React.Component<{admin:{loggedIn:boole
                     }</div>
                 </WidthLimiter>
             </main>
-        </>);
+        </>)}</Translation>);
     }
 }

@@ -74,6 +74,11 @@
                         "label": "Admin account:",
                         "login": "Login",
                         "logout": "Logout"
+                    },
+                    "adminPassword": {
+                        "label": "Set password:",
+                        "changeBtn": "Set",
+                        "newPassIn": "new password here"
                     }
                 }
             },
@@ -116,6 +121,14 @@
                 "paragraph1": "This app is allows students, teachers, and students to be able to know if the app they need to use is safe and secure. It is currently being developed and maintained by Joseph Huber at NHS, contact through the school email services if there is a problem.",
                 "paragraph2": "This is an open-source project, the code is hosted on GitHub: ",
                 "paragraph3": "Project started in 2021 by Joseph Huber. Currently maintained by Joseph Huber."
+            },
+            "verify-link": {
+                "name": "Link Verification",
+                "blurb": "Email confirmed, verifying and redirecting..."
+            },
+            "verify-link-alert": {
+                "name": "Link Verification Alert",
+                "blurb": "Check your email to verify."
             }
         },
         "app": {

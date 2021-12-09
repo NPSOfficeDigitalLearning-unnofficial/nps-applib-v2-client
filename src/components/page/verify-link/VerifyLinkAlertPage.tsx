@@ -6,7 +6,7 @@ import "./verify-link.scss";
 export default function VerifyLinkAlertPage():JSX.Element {
     return (
         <main className="VerifyLinkAlertPage">
-            <h1><Trans>TODO Check your email to do the thing.</Trans></h1>
+            <h1><Trans>page.verify-link-alert.blurb</Trans></h1>
         </main>
     );
 }
