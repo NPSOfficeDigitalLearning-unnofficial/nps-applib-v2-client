@@ -13,7 +13,7 @@ export default class AboutPage extends React.Component {
                 </p>
                 <p>
                     <Trans>page.about.paragraph2</Trans>
-                    <a href="https://github.com/SciDev5/nps-applib-v2-cli">https://github.com/SciDev5/nps-applib-v2-cli</a>.
+                    <a href="https://github.com/NPSOfficeDigitalLearning-unnofficial/nps-applib-v2-client">https://github.com/NPSOfficeDigitalLearning-unnofficial/nps-applib-v2-client</a>.
                 </p>
                 <p>
                     <Trans>page.about.paragraph3</Trans>
